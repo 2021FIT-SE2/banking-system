@@ -1,9 +1,9 @@
-package com.se2.bankingsystem.domains.Customer;
+package com.se2.bankingsystem.domains.CustomerAccount;
 
 
-import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
-import com.se2.bankingsystem.domains.Customer.dto.UpdateCustomerDTO;
-import com.se2.bankingsystem.domains.Customer.entity.Customer;
+import com.se2.bankingsystem.domains.CustomerAccount.dto.CreateCustomerAccountDTO;
+import com.se2.bankingsystem.domains.CustomerAccount.dto.UpdateCustomerAccountDTO;
+import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -31,82 +31,82 @@ import java.util.List;
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "CustomerAccount Manager", description = "The CustomerAccount API")
-public class CustomerController {
+public class CustomerAccountController {
 
-    private final CustomerService customerService;
+    private final CustomerAccountService customerAccountService;
 
     @Autowired
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
+    public CustomerAccountController(CustomerAccountService customerAccountService) {
+        this.customerAccountService = customerAccountService;
     }
 
     
     @Operation(summary = "Create a new CustomerAccount")
-    @PostMapping("/customers")
+    @PostMapping("/customer_accounts")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "400", description = "Missing Request Parameter"),
         @ApiResponse(responseCode = "422", description = "Input validation(s) failed"),
         @ApiResponse(responseCode = "409", description = "Field value(s) already exists")
     })
-    public Customer create(@Valid @RequestBody CreateCustomerDTO createCustomerDTO) {
-        return customerService.create(createCustomerDTO);
+    public CustomerAccount create(@Valid @RequestBody CreateCustomerAccountDTO createCustomerAccountDTO) {
+        return customerAccountService.create(createCustomerAccountDTO);
     }
 
-    @Operation(summary = "Get course releases with paginating and sorting options")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'STUDENT')")
-    @GetMapping(value = "/customers/all")
-    public List<Customer> getAll() {
-        return customerService.getAll();
+    @Operation(summary = "Get customer account with paginating and sorting options")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CUSTOMER')")
+    @GetMapping(value = "/customer_accounts/all")
+    public List<CustomerAccount> getAll() {
+        return customerAccountService.getAll();
     }
 
     
     @PreAuthorize("hasAuthority('ADMIN')")
-    @Operation(summary = "Get students with paginating options")
-    @GetMapping("/customers")
+    @Operation(summary = "Get customerss with paginating options")
+    @GetMapping("/customer_accounts")
     @PageableAsQueryParam
-    public Page<Customer> getMany(
+    public Page<CustomerAccount> getMany(
         @Parameter(name = "Filter", hidden = true) Pageable pageable
 //        @RequestParam(value = "keyword", required = false) String keyword
     ) {
 //        if (keyword != null)
-//            return customerService.findByKeyWord(keyword, pageable);
+//            return customerAccountService.findByKeyWord(keyword, pageable);
 //        else
-            return customerService.getMany(pageable);
+            return customerAccountService.getMany(pageable);
     }
 
     
-    @Operation(summary = "Get a student by ID")
+    @Operation(summary = "Get a cus by ID")
     @PreAuthorize("hasAuthority('ADMIN') or @authorityServiceImpl.hasStudentAccess(principal.id, #id)")
-    @GetMapping(value = "/customers/{id}")
-    public Customer getByID(@PathVariable Long id) {
-        return customerService.getById(id);
+    @GetMapping(value = "/customer_accounts/{id}")
+    public CustomerAccount getByID(@PathVariable Long id) {
+        return customerAccountService.getById(id);
     }
 
     
     @Operation(summary = "Update a student by ID")
-    @PutMapping(value = "/customers/{id}")
+    @PutMapping(value = "/customer_accounts/{id}")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "400", description = "Missing request parameter(s)"),
         @ApiResponse(responseCode = "422", description = "Input constraints validation(s) failed"),
         @ApiResponse(responseCode = "409", description = "Unique field value(s) already exists")
     })
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Customer updateByID(@PathVariable Long id, @Valid @RequestBody UpdateCustomerDTO updateCustomerDTO) {
-        return customerService.updateById(id, updateCustomerDTO);
+    public CustomerAccount updateByID(@PathVariable Long id, @Valid @RequestBody UpdateCustomerAccountDTO updateCustomerAccountDTO) {
+        return customerAccountService.updateById(id, updateCustomerAccountDTO);
     }
 
     @Operation(summary = "Delete a student by ID")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @DeleteMapping(value = "/customers/{id}")
+    @DeleteMapping(value = "/customer_accounts/{id}")
     public void deleteByID(@PathVariable Long id) {
-        customerService.deleteById(id);
+        customerAccountService.deleteById(id);
     }
 
 //    @Operation(summary = "Get all students of a department")
 //    @PreAuthorize("hasAuthority('ADMIN')")
-//    @GetMapping(value = "departments/{departmentID}/customers")
-//    public Page<Customer> getAllStudentsOfDepartment(@PathVariable Long departmentID, Pageable pageable) {
-//        return customerService.findByDepartmentId(departmentID, pageable);
+//    @GetMapping(value = "departments/{departmentID}/customer_accounts")
+//    public Page<CustomerAccount> getAllStudentsOfDepartment(@PathVariable Long departmentID, Pageable pageable) {
+//        return customerAccountService.findByDepartmentId(departmentID, pageable);
 //    }
 }

@@ -1,6 +1,6 @@
-package com.se2.bankingsystem.domains.Customer;
+package com.se2.bankingsystem.domains.CustomerAccount;
 
-import com.se2.bankingsystem.domains.Customer.entity.Customer;
+import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,20 +11,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional(readOnly = true)
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface CustomerAccountRepository extends JpaRepository<CustomerAccount, Long> {
 
-//    Page<Customer> findByDepartmentId(Long departmentId, Pageable pageable);
+//    Page<CustomerAccount> findByDepartmentId(Long departmentId, Pageable pageable);
 //
 //    @Query("SELECT s FROM CustomerAccount s " +
 //        "JOIN s.enrollments e " +
 //        "WHERE e.courseRelease.id = ?1")
-//    Page<Customer> findByCourseReleaseId(Long courseReleaseId, Pageable pageable);
+//    Page<CustomerAccount> findByCourseReleaseId(Long courseReleaseId, Pageable pageable);
 //
 //    @Query("SELECT s FROM CustomerAccount s " +
 //        "JOIN s.enrollments e " +
 //        "JOIN e.courseRelease cr " +
 //        "WHERE cr.course.id = ?1")
-//    Page<Customer> findByCourseId(Long courseId, Pageable pageable);
+//    Page<CustomerAccount> findByCourseId(Long courseId, Pageable pageable);
 //
 //    @Query("SELECT s FROM CustomerAccount s " +
 //            "JOIN User u ON s.id = u.id " +
@@ -32,5 +32,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 //            "OR u.phoneNumber LIKE %?1% " +
 //            "OR u.email LIKE %?1% " +
 //            "OR u.lastName LIKE %?1%")
-//    Page<Customer> findByKeyword(String keyword, Pageable pageable);
+//    Page<CustomerAccount> findByKeyword(String keyword, Pageable pageable);
 }

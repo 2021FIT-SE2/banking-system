@@ -1,29 +1,51 @@
 package com.se2.bankingsystem.domains.Customer.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import com.se2.bankingsystem.domains.Authority.entity.AuthorityName;
+import com.se2.bankingsystem.domains.Customer.entity.Customer;
+import com.se2.bankingsystem.domains.User.dto.CreateUserDTO;
+import com.se2.bankingsystem.domains.User.entity.Gender;
+import com.se2.bankingsystem.domains.User.entity.User;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
+import javax.persistence.Column;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 
-@Getter
-@Setter
-public class CreateCustomerDTO {
+import java.time.LocalDate;
 
-    @NotNull
-    private String name;
+import static com.se2.bankingsystem.domains.Customer.entity.Customer.MAX_LENGTH_FULL_ADDRESS;
+import static com.se2.bankingsystem.domains.Customer.entity.Customer.MIN_LENGTH_FULL_ADDRESS;
 
-    @NotNull
+@EqualsAndHashCode(callSuper = true)
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+public class CreateCustomerDTO extends CreateUserDTO {
+
+    @Column(unique = true)
+    @Email
+    private String email;
+
+    @Column(unique = true)
+    @Size(min = User.MIN_LENGTH_PHONE_NUMBER, max = User.MAX_LENGTH_PHONE_NUMBER)
     private String phoneNumber;
 
     @NotNull
-    private String email;
+    private Gender gender;
+
+    @PastOrPresent
+    private LocalDate dob;
 
     @JsonIgnore
-    private final LocalDateTime createdAt = LocalDateTime.now();
-
-    @JsonIgnore
-    private final LocalDateTime editedAt = LocalDateTime.now();
+    private final AuthorityName role = AuthorityName.CUSTOMER;
 }

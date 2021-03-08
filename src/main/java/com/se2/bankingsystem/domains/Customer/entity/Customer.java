@@ -1,36 +1,76 @@
 package com.se2.bankingsystem.domains.Customer.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
+import com.se2.bankingsystem.domains.User.entity.User;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.Singular;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
+import java.util.List;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
-@Getter
-@Setter
 @Table(name = "customers")
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+public class Customer extends User {
 
-    @Column(name = "first_name")
-    private String firstName;
+    public static final int MIN_LENGTH_PHONE_NUMBER = 9;
+    public static final int MAX_LENGTH_PHONE_NUMBER = 10;
 
-    @Column(name = "last_name")
-    private String lastName;
+    public static final int MIN_LENGTH_FULL_ADDRESS = 2;
+    public static final int MAX_LENGTH_FULL_ADDRESS = 255;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @NotNull
+    private com.se2.bankingsystem.domains.User.entity.Gender gender;
 
-    @Column(name = "email")
+    @Column(unique = true)
+    @Email
     private String email;
 
-    @NotNull
-    private LocalDateTime createdAt;
+    @Column(unique = true)
+    @Size(min = MIN_LENGTH_PHONE_NUMBER, max = MAX_LENGTH_PHONE_NUMBER)
+    private String phoneNumber;
 
     @NotNull
-    private LocalDateTime editedAt;
+    @Size(min = MIN_LENGTH_FULL_ADDRESS, max = MAX_LENGTH_FULL_ADDRESS)
+    private String address;
+
+    @PastOrPresent
+    private java.time.LocalDate dob;
+
+    @Singular
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    List<CustomerAccount> accounts;
+
+//    @NotNull
+//    @ManyToOne
+//    @JoinColumn(name = "department_id", nullable = false)
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    private Department department;
+//
+//    @JsonIgnore
+//    @Singular
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+//    private List<Enrollment> enrollments;
 }

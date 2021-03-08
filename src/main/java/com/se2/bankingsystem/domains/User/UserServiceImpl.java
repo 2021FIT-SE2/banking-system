@@ -1,65 +1,82 @@
 package com.se2.bankingsystem.domains.User;
 
-import com.se2.bankingsystem.domains.Auth.AuthorityService;
-import com.se2.bankingsystem.domains.Auth.entity.Authority;
+import com.se2.bankingsystem.domains.Authority.AuthorityRepository;
+import com.se2.bankingsystem.domains.Authority.entity.Authority;
+import com.se2.bankingsystem.domains.User.dto.CreateUserDTO;
+import com.se2.bankingsystem.domains.User.dto.UpdateUserDTO;
 import com.se2.bankingsystem.domains.User.entity.User;
-import com.se2.bankingsystem.exception.CustomException;
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.Collections;
 import java.util.List;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    private AuthenticationManager authenticationManager;
 
-    private final AuthorityService authorityService;
+    private final AuthorityRepository authorityRepository;
+
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityService authorityService) {
+    public UserServiceImpl(AuthorityRepository authorityRepository, ModelMapper modelMapper) {
+        this.authorityRepository = authorityRepository;
+        this.modelMapper = modelMapper;
+    }
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.authorityService = authorityService;
+    }
+
+    @Autowired
+    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
-    public User createOne(User data) {
-        if (!userRepository.existsByUsername(data.getUsername())) {
-            User newUser = new User();
-            newUser.setUsername(data.getUsername());
-            newUser.setPassword(passwordEncoder.encode(data.getPassword()));
-            newUser.setFullName(data.getFullName());
+    public User create(CreateUserDTO createUserDTO) {
+        User user = modelMapper.map(createUserDTO, User.class);
 
-            // TODO : What the fuck can I implement .getRole()
-            List<Authority> authorities = authorityService.findByName("CUSTOMER"); // "CUSTOMER" was data.getRole()
-            newUser.setAuthorities(authorities);
-            userRepository.save(newUser);
-            return newUser;
-        } else {
-            throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+        Authority authority = authorityRepository.findByName(createUserDTO.getRole());
+        user.setAuthorities(Collections.singletonList(authority));
+
+        return userRepository.save(user);
     }
 
     @Override
-    public User updateOneWithID(Long id, User data) {
-        User user = userRepository.getOne(id);
+    public User updateById(Long id, UpdateUserDTO updateUserDTO) {
+        User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        modelMapper.map(updateUserDTO, user);
 
-        if (!userRepository.existsByUsername(data.getUsername())) {
-            user.setUsername(data.getUsername());
-            if (data.getPassword() != null) {
-                user.setPassword(passwordEncoder.encode(data.getPassword()));
-            }
-            user.setFullName(data.getFullName());
-            userRepository.save(user);
-            return user;
-        } else {
-            throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteById(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+        userRepository.delete(user);
+    }
+
+    @Override
+    public List<User> getAll() {
+    return userRepository.findAll();
     }
 
     @Override
@@ -68,25 +85,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void resetCredentials(String username) {
-        User user = userRepository.findByUsername(username);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public void changePassword(String oldPassword, String newPassword) {
+        Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = currentUser.getName();
+
+        if (authenticationManager != null) {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
+        } else {
+            return;
+        }
+        User user = (User) loadUserByUsername(username);
         userRepository.save(user);
     }
 
     @Override
-    public User getOneWithID(Long id) {
-        return userRepository
-                .findById(id).orElse(null);
+    public User getById(Long id) {
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public Page<User> getMany(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     @Override
-    public void deleteOneWithID(Long id) {
-        userRepository.deleteById(id);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username);
     }
 }

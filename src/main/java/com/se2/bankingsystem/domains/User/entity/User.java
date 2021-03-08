@@ -1,82 +1,100 @@
 package com.se2.bankingsystem.domains.User.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.se2.bankingsystem.domains.Auth.entity.Authority;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.se2.bankingsystem.base.TimeStamps;
+import com.se2.bankingsystem.domains.Authority.entity.Authority;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Singular;
+import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * User object to store user data.
- */
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Data
 @Table(name = "users")
-@Getter
-@Setter
-public class User implements UserDetails, Serializable {
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+@EntityListeners(UserEntityListener.class)
+public class User implements UserDetails, Serializable, TimeStamps {
 
-    /**
-     * Id field [GENERATED AUTOMATICALLY].
-     */
+    public static final int MIN_LENGTH_FIRST_NAME = 1;
+    public static final int MAX_LENGTH_FIRST_NAME = 50;
+
+    public static final int MIN_LENGTH_LAST_NAME = 1;
+    public static final int MAX_LENGTH_LAST_NAME = 50;
+
+    public static final int MIN_LENGTH_USERNAME = 4;
+    public static final int MAX_LENGTH_USERNAME = 25;
+
+    public static final int MIN_LENGTH_PASSWORD = 8;
+    public static final int MAX_LENGTH_PASSWORD = 100;
+
+    public static final int MIN_LENGTH_PHONE_NUMBER = 9;
+    public static final int MAX_LENGTH_PHONE_NUMBER = 10;
+
+    public static final int MIN_LENGTH_FULL_ADDRESS = 2;
+    public static final int MAX_LENGTH_FULL_ADDRESS = 255;
+
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /**
-     * User username.
-     */
-    @Column(name = "username", nullable = false, length = 16)
+    @Column(unique = true)
+    @Size(min = MIN_LENGTH_USERNAME, max = MAX_LENGTH_USERNAME)
     private String username;
 
-    /**
-     * User password.
-     */
-    @JsonIgnore
-    @Column(name = "password", nullable = false)
+    @NotNull
+    @Size(min = MIN_LENGTH_PASSWORD, max = MAX_LENGTH_PASSWORD)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    /**
-     * User full name.
-     */
-    @Column(name = "full_name", nullable = false, length = 32)
-    private String fullName;
+    @Size(min = MIN_LENGTH_FIRST_NAME, max = MAX_LENGTH_FIRST_NAME)
+    private String firstName;
 
-    /**
-     * Empty constructor.
-     */
-    public User() {
-    }
+    @Size(min = MIN_LENGTH_LAST_NAME, max = MAX_LENGTH_LAST_NAME)
+    private String lastName;
 
-    /**
-     * Constructor to make a new instance.
-     *
-     * @param username User username.
-     * @param password User password.
-     * @param fullName User full name.
-     */
-    public User(String username, String password, String fullName) {
-        this.username = username;
-        this.password = password;
-        this.fullName = fullName;
-    }
-
+    @Singular
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
-    }
+    @PastOrPresent
+    private LocalDateTime createdAt;
+
+    @PastOrPresent
+    private LocalDateTime updatedAt;
 
     @JsonIgnore
     @Override
@@ -100,5 +118,10 @@ public class User implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
     }
 }

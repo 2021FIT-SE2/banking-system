@@ -1,8 +1,6 @@
 package com.se2.bankingsystem.domains.User.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.se2.bankingsystem.base.TimeStamps;
-import com.se2.bankingsystem.domains.Authority.entity.AuthorityName;
 import com.se2.bankingsystem.domains.User.entity.Gender;
 import com.se2.bankingsystem.domains.User.entity.User;
 import lombok.AllArgsConstructor;
@@ -11,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -23,10 +20,7 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateUserDTO implements TimeStamps {
-
-    @Size(min = User.MIN_LENGTH_USERNAME, max = User.MAX_LENGTH_USERNAME)
-    private String username;
+public class UpdateUserDTO {
 
     @Size(min = User.MIN_LENGTH_PASSWORD, max = User.MAX_LENGTH_PASSWORD)
     private String password;
@@ -37,12 +31,17 @@ public class CreateUserDTO implements TimeStamps {
     @Size(min = User.MIN_LENGTH_LAST_NAME, max = User.MAX_LENGTH_LAST_NAME)
     private String lastName;
 
-    @NotNull
-    private AuthorityName role;
+    @Email
+    private String email;
 
-    @JsonIgnore
-    @Builder.Default
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Size(min = User.MIN_LENGTH_PHONE_NUMBER, max = User.MAX_LENGTH_PHONE_NUMBER)
+    private String phoneNumber;
+
+    @NotNull
+    private Gender gender;
+
+    @PastOrPresent
+    private LocalDate dob;
 
     @JsonIgnore
     @Builder.Default

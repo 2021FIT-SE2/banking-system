@@ -1,4 +1,4 @@
-package com.se2.bankingsystem.domains.CustomerAccount.entity;
+package com.se2.bankingsystem.domains.FakeEWallet.entity;
 
 import com.se2.bankingsystem.domains.Customer.entity.Customer;
 import lombok.AllArgsConstructor;
@@ -17,12 +17,12 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "customer_accounts")
+@Table(name = "fake_e_wallets")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class CustomerAccount {
+public class FakeEWallet {
     @Id
     private Long id;
 

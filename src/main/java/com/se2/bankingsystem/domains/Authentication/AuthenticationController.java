@@ -28,7 +28,6 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/auth")
 @Tag(name = "Authentication Manager", description = "The Authentication API")
-@Slf4j
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
@@ -48,8 +47,6 @@ public class AuthenticationController {
     public String authenticate(@Valid @RequestBody LoginRequestDTO loginRequestDTO) throws BadCredentialsException {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsername(), loginRequestDTO.getPassword()));
         final UserDetails userDetails = userService.loadUserByUsername(loginRequestDTO.getUsername());
-        log.info("UserDetails: ");
-        log.info(userDetails.toString());
         return jwtUtil.generateToken(userDetails);
     }
 

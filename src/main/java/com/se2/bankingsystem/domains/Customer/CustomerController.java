@@ -1,6 +1,5 @@
 package com.se2.bankingsystem.domains.Customer;
 
-
 import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.dto.UpdateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.entity.Customer;
@@ -22,15 +21,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-@Tag(name = "CustomerAccount Manager", description = "The CustomerAccount API")
+@Tag(name = "Customer Manager", description = "The Customer API")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -40,8 +39,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    
-    @Operation(summary = "Create a new CustomerAccount")
+    @Operation(summary = "Create a new Customer")
     @PostMapping("/customers")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ApiResponses(value = {
@@ -53,38 +51,29 @@ public class CustomerController {
         return customerService.create(createCustomerDTO);
     }
 
-    @Operation(summary = "Get course releases with paginating and sorting options")
+    @Operation(summary = "Get customers with paginating and sorting options")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'STUDENT')")
     @GetMapping(value = "/customers/all")
     public List<Customer> getAll() {
         return customerService.getAll();
     }
 
-    
     @PreAuthorize("hasAuthority('ADMIN')")
-    @Operation(summary = "Get students with paginating options")
+    @Operation(summary = "Get customers with paginating options")
     @GetMapping("/customers")
     @PageableAsQueryParam
-    public Page<Customer> getMany(
-        @Parameter(name = "Filter", hidden = true) Pageable pageable
-//        @RequestParam(value = "keyword", required = false) String keyword
-    ) {
-//        if (keyword != null)
-//            return customerService.findByKeyWord(keyword, pageable);
-//        else
-            return customerService.getMany(pageable);
+    public Page<Customer> getMany(@Parameter(name = "Filter", hidden = true) Pageable pageable) {
+        return customerService.getMany(pageable);
     }
 
-    
-    @Operation(summary = "Get a student by ID")
+    @Operation(summary = "Get a customer by ID")
     @PreAuthorize("hasAuthority('ADMIN') or @authorityServiceImpl.hasStudentAccess(principal.id, #id)")
     @GetMapping(value = "/customers/{id}")
     public Customer getByID(@PathVariable Long id) {
         return customerService.getById(id);
     }
 
-    
-    @Operation(summary = "Update a student by ID")
+    @Operation(summary = "Update a customer by ID")
     @PutMapping(value = "/customers/{id}")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "400", description = "Missing request parameter(s)"),
@@ -96,17 +85,16 @@ public class CustomerController {
         return customerService.updateById(id, updateCustomerDTO);
     }
 
-    @Operation(summary = "Delete a student by ID")
+    @Operation(summary = "Delete a customer by ID")
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping(value = "/customers/{id}")
     public void deleteByID(@PathVariable Long id) {
         customerService.deleteById(id);
     }
 
-//    @Operation(summary = "Get all students of a department")
-//    @PreAuthorize("hasAuthority('ADMIN')")
-//    @GetMapping(value = "departments/{departmentID}/customers")
-//    public Page<Customer> getAllStudentsOfDepartment(@PathVariable Long departmentID, Pageable pageable) {
-//        return customerService.findByDepartmentId(departmentID, pageable);
-//    }
+    public ModelAndView showCreateView() {
+        ModelAndView modelAndView = new ModelAndView("createCustomer");
+
+        return modelAndView;
+    }
 }

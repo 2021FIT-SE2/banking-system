@@ -1,9 +1,9 @@
-package com.se2.bankingsystem.domains.CustomerAccount;
+package com.se2.bankingsystem.domains.FakeEWallet;
 
 
-import com.se2.bankingsystem.domains.CustomerAccount.dto.CreateCustomerAccountDTO;
-import com.se2.bankingsystem.domains.CustomerAccount.dto.UpdateCustomerAccountDTO;
-import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
+import com.se2.bankingsystem.domains.FakeEWallet.dto.CreateFakeEWalletDTO;
+import com.se2.bankingsystem.domains.FakeEWallet.dto.UpdateFakeEWalletDTO;
+import com.se2.bankingsystem.domains.FakeEWallet.entity.FakeEWallet;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,68 +29,68 @@ import java.util.List;
 
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-@Tag(name = "Customer Account Manager", description = "The Customer Account API")
-public class CustomerAccountController {
+@Tag(name = "Wallet Manager", description = "The Wallet API")
+public class FakeEWalletController {
 
-    private final CustomerAccountService customerAccountService;
+    private final FakeEWalletService fakeEWalletService;
 
     @Autowired
-    public CustomerAccountController(CustomerAccountService customerAccountService) {
-        this.customerAccountService = customerAccountService;
+    public FakeEWalletController(FakeEWalletService fakeEWalletService) {
+        this.fakeEWalletService = fakeEWalletService;
     }
-
-    @Operation(summary = "Create a new Customer Account")
-    @PostMapping("/customer_accounts")
+    
+    @Operation(summary = "Create a new E-wallet")
+    @PostMapping("/e_wallets")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "400", description = "Missing Request Parameter"),
         @ApiResponse(responseCode = "422", description = "Input validation(s) failed"),
         @ApiResponse(responseCode = "409", description = "Field value(s) already exists")
     })
-    public CustomerAccount create(@Valid @RequestBody CreateCustomerAccountDTO createCustomerAccountDTO) {
-        return customerAccountService.create(createCustomerAccountDTO);
+    public FakeEWallet create(@Valid @RequestBody CreateFakeEWalletDTO createFakeEWalletDTO) {
+        return fakeEWalletService.create(createFakeEWalletDTO);
     }
 
-    @Operation(summary = "Get all customer accounts")
+    @Operation(summary = "Get E-Wallets with paginating and sorting options")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'CUSTOMER')")
-    @GetMapping(value = "/customer_accounts/all")
-    public List<CustomerAccount> getAll() {
-        return customerAccountService.getAll();
+    @GetMapping(value = "/e_wallets/all")
+    public List<FakeEWallet> getAll() {
+        return fakeEWalletService.getAll();
     }
 
-    
     @PreAuthorize("hasAuthority('ADMIN')")
-    @Operation(summary = "Get customer accounts with paginating options")
-    @GetMapping("/customer_accounts")
+    @Operation(summary = "Get E-Wallets with paginating options")
+    @GetMapping("/e_wallets")
     @PageableAsQueryParam
-    public Page<CustomerAccount> getMany(@Parameter(name = "Filter", hidden = true) Pageable pageable) {
-        return customerAccountService.getMany(pageable);
+    public Page<FakeEWallet> getMany(
+        @Parameter(name = "Filter", hidden = true) Pageable pageable
+    ) {
+        return fakeEWalletService.getMany(pageable);
     }
 
-    @Operation(summary = "Get a cus by ID")
+    @Operation(summary = "Get a E-Wallet by ID")
     @PreAuthorize("hasAuthority('ADMIN') or @authorityServiceImpl.hasStudentAccess(principal.id, #id)")
-    @GetMapping(value = "/customer_accounts/{id}")
-    public CustomerAccount getByID(@PathVariable Long id) {
-        return customerAccountService.getById(id);
+    @GetMapping(value = "/e_wallets/{id}")
+    public FakeEWallet getByID(@PathVariable Long id) {
+        return fakeEWalletService.getById(id);
     }
 
-    
-    @Operation(summary = "Update a student by ID")
-    @PutMapping(value = "/customer_accounts/{id}")
+    @Operation(summary = "Update an E-Wallet by ID")
+    @PutMapping(value = "/e_wallets/{id}")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "400", description = "Missing request parameter(s)"),
         @ApiResponse(responseCode = "422", description = "Input constraints validation(s) failed"),
         @ApiResponse(responseCode = "409", description = "Unique field value(s) already exists")
     })
     @PreAuthorize("hasAuthority('ADMIN')")
-    public CustomerAccount updateByID(@PathVariable Long id, @Valid @RequestBody UpdateCustomerAccountDTO updateCustomerAccountDTO) {
-        return customerAccountService.updateById(id, updateCustomerAccountDTO);
+    public FakeEWallet updateByID(@PathVariable Long id, @Valid @RequestBody UpdateFakeEWalletDTO updateFakeEWalletDTO) {
+        return fakeEWalletService.updateById(id, updateFakeEWalletDTO);
     }
 
-    @Operation(summary = "Delete a student by ID")
+    @Operation(summary = "Delete an E-Wallet by ID")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @DeleteMapping(value = "/customer_accounts/{id}")
+    @DeleteMapping(value = "/e_wallets/{id}")
     public void deleteByID(@PathVariable Long id) {
-        customerAccountService.deleteById(id);
+        fakeEWalletService.deleteById(id);
     }
 }

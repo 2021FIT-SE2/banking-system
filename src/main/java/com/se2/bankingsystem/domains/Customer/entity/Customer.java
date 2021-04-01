@@ -1,6 +1,7 @@
 package com.se2.bankingsystem.domains.Customer.entity;
 
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
+import com.se2.bankingsystem.domains.User.entity.Gender;
 import com.se2.bankingsystem.domains.User.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 
@@ -37,7 +39,7 @@ public class Customer extends User {
     public static final int MAX_LENGTH_FULL_ADDRESS = 255;
 
     @NotNull
-    private com.se2.bankingsystem.domains.User.entity.Gender gender;
+    private Gender gender;
 
     @Column(unique = true)
     @Email
@@ -52,25 +54,11 @@ public class Customer extends User {
     private String address;
 
     @PastOrPresent
-    private java.time.LocalDate dob;
+    private LocalDate dob;
 
     @Singular
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     List<CustomerAccount> accounts;
-
-//    @NotNull
-//    @ManyToOne
-//    @JoinColumn(name = "department_id", nullable = false)
-//    @EqualsAndHashCode.Exclude
-//    @ToString.Exclude
-//    private Department department;
-//
-//    @JsonIgnore
-//    @Singular
-//    @EqualsAndHashCode.Exclude
-//    @ToString.Exclude
-//    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-//    private List<Enrollment> enrollments;
 }

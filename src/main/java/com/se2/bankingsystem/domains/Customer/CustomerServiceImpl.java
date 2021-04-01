@@ -7,6 +7,8 @@ import com.se2.bankingsystem.domains.Authority.entity.AuthorityName;
 import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.dto.UpdateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.entity.Customer;
+import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountRepository;
+import com.se2.bankingsystem.domains.CustomerAccount.entity.sub.NormalAccount;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
 
-//    private final DepartmentRepository departmentRepository;
+    private final CustomerAccountRepository customerAccountRepository;
 
     private final AuthorityRepository authorityRepository;
 
@@ -32,30 +34,37 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     public CustomerServiceImpl(
         CustomerRepository customerRepository,
-//        DepartmentRepository departmentRepository,
+        CustomerAccountRepository customerAccountRepository,
         AuthorityRepository authorityRepository,
         ModelMapper modelMapper
     ) {
         this.customerRepository = customerRepository;
-//        this.departmentRepository = departmentRepository;
+        this.customerAccountRepository = customerAccountRepository;
         this.authorityRepository = authorityRepository;
         this.modelMapper = modelMapper;
     }
 
     @Override
     public Customer create(CreateCustomerDTO createCustomerDTO) {
-        Customer customer = convertToStudent(createCustomerDTO);
+        Customer customer = convertToCustomer(createCustomerDTO);
+
+        NormalAccount normalAccount = NormalAccount.builder()
+            .balance(0L)
+            .minBalance(0L)
+            .build();
+
+        normalAccount.setCustomer(customer);
+        normalAccount = customerAccountRepository.save(normalAccount);
+        customer.setAccounts(Collections.singletonList(normalAccount));
+
         return customerRepository.save(customer);
     }
 
-    private Customer convertToStudent(CreateCustomerDTO createCustomerDTO) {
+    private Customer convertToCustomer(CreateCustomerDTO createCustomerDTO) {
         Customer customer = modelMapper.map(createCustomerDTO, Customer.class);
 
         Authority authority = authorityRepository.findByName(AuthorityName.CUSTOMER);
         customer.setAuthorities(Collections.singletonList(authority));
-
-//        Department department = departmentRepository.findById(createCustomerDTO.getDepartmentID()).orElseThrow(EntityNotFoundException::new);
-//        customer.setDepartment(department);
 
         return customer;
     }
@@ -66,9 +75,6 @@ public class CustomerServiceImpl implements CustomerService {
 
         modelMapper.map(updateCustomerDTO, modelMapper);
 
-//        Department department = departmentRepository.findById(updateCustomerDTO.getDepartmentID()).orElseThrow(EntityNotFoundException::new);
-//        customer.setDepartment(department);
-
         return customerRepository.save(customer);
     }
 
@@ -78,12 +84,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> getAll() {
+    public List<Customer> findAll() {
         return customerRepository.findAll();
     }
 
     @Override
-    public Page<Customer> getMany(Pageable pageable) {
+    public Page<Customer> findAll(Pageable pageable) {
         return customerRepository.findAll(pageable);
     }
 
@@ -92,31 +98,11 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findById(id).orElse(null);
     }
 
-//    @Override
-//    public Page<Customer> findByDepartmentId(Long departmentId, Pageable pageable) {
-//        return customerRepository.findByDepartmentId(departmentId, pageable);
-//    }
-//
-//    @Override
-//    public Page<Customer> findByCourseReleaseId(Long courseReleaseId, Pageable pageable) {
-//        return customerRepository.findByCourseReleaseId(courseReleaseId, pageable);
-//    }
-//
-//    @Override
-//    public Page<Customer> findByCourseId(Long courseId, Pageable pageable) {
-//        return customerRepository.findByCourseId(courseId, pageable);
-//    }
-//
-//    @Override
-//    public Page<Customer> findByKeyWord(String keyword, Pageable pageable) {
-//        return customerRepository.findByKeyword(keyword, pageable);
-//    }
-
-    public List<Customer> createManyStudents(List<CreateCustomerDTO> createCustomerDTOList) {
+    public List<Customer> createManyCustomers(List<CreateCustomerDTO> createCustomerDTOList) {
         List<Customer> customers = new ArrayList<>();
 
         for (CreateCustomerDTO createCustomerDTO : createCustomerDTOList) {
-            Customer customer = convertToStudent(createCustomerDTO);
+            Customer customer = convertToCustomer(createCustomerDTO);
             customers.add(customer);
         }
         return customerRepository.saveAll(customers);

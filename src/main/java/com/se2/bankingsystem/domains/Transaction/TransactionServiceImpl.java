@@ -1,43 +1,47 @@
 package com.se2.bankingsystem.domains.Transaction;
 
-import com.se2.bankingsystem.domains.Transaction.dto.CreateTransactionDTO;
-import com.se2.bankingsystem.domains.Transaction.dto.UpdateTransactionDTO;
+import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountRepository;
+import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
-public class TransactionServiceImpl implements TransactionService {
-    @Override
-    public Transaction create(CreateTransactionDTO modelType) {
-        return null;
+public class TransactionServiceImpl<T extends Transaction> implements TransactionService {
+
+    protected final TransactionRepository<T> transactionRepository;
+    protected final ModelMapper modelMapper;
+    protected final CustomerAccountRepository customerAccountRepository;
+
+    protected TransactionServiceImpl(TransactionRepository<T> transactionRepository, ModelMapper modelMapper, CustomerAccountRepository customerAccountRepository) {
+        this.transactionRepository = transactionRepository;
+        this.modelMapper = modelMapper;
+        this.customerAccountRepository = customerAccountRepository;
     }
 
-    @Override
-    public Transaction updateById(Long id, UpdateTransactionDTO modelType) {
-        return null;
+    protected void setCustomerAccount(T transaction, Long customerAccountID) {
+        CustomerAccount customerAccount = customerAccountRepository.findById(customerAccountID).orElseThrow(EntityNotFoundException::new);
+        transaction.setCustomerAccount(customerAccount);
     }
 
-    @Override
     public void deleteById(Long id) {
-
+        transactionRepository.deleteById(id);
     }
 
-    @Override
-    public List<Transaction> getAll() {
-        return null;
+    public List<T> findAll() {
+        return transactionRepository.findAll();
     }
 
-    @Override
-    public Transaction getById(Long id) {
-        return null;
+    public T getById(Long id) {
+        return transactionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    @Override
-    public Page<Transaction> getMany(Pageable pageable) {
-        return null;
+    public Page<T> findAll(Pageable pageable) {
+        return transactionRepository.findAll(pageable);
     }
 }

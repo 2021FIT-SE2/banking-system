@@ -44,7 +44,7 @@ public class AuthorityServiceImpl implements AuthorityService {
     }
 
     @Override
-    public List<Authority> getAll() {
+    public List<Authority> findAll() {
         return authorityRepository.findAll();
     }
 
@@ -54,7 +54,7 @@ public class AuthorityServiceImpl implements AuthorityService {
     }
 
     @Override
-    public Page<Authority> getMany(Pageable pageable) {
+    public Page<Authority> findAll(Pageable pageable) {
         return authorityRepository.findAll(pageable);
     }
 

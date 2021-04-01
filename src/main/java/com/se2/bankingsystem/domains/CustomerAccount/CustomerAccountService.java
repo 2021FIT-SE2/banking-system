@@ -21,7 +21,7 @@ public interface CustomerAccountService extends CRUDService<CustomerAccount, Lon
 //
 //    Page<CustomerAccount> findByKeyWord(String keyword, Pageable pageRequest);
 
-    Page<CustomerAccount> getMany(Pageable pageRequest);
+    Page<CustomerAccount> findAll(Pageable pageRequest);
 
 //    List<CustomerAccount> createManyStudents(List<CreateCustomerAccountDTO> createCustomerAccountDTOList);
 }

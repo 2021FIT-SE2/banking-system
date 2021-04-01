@@ -75,12 +75,12 @@ public class FakeEWalletServiceImpl implements FakeEWalletService {
     }
 
     @Override
-    public List<FakeEWallet> getAll() {
+    public List<FakeEWallet> findAll() {
         return fakeEWalletRepository.findAll();
     }
 
     @Override
-    public Page<FakeEWallet> getMany(Pageable pageable) {
+    public Page<FakeEWallet> findAll(Pageable pageable) {
         return fakeEWalletRepository.findAll(pageable);
     }
 

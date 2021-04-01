@@ -32,11 +32,4 @@ public class CustomerAccount {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Customer customer;
-//
-//    @JsonIgnore
-//    @Singular
-//    @EqualsAndHashCode.Exclude
-//    @ToString.Exclude
-//    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-//    private List<Enrollment> enrollments;
 }

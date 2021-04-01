@@ -18,7 +18,7 @@ public interface FakeEWalletService extends CRUDService<FakeEWallet, Long, Creat
 //
 //    Page<CustomerAccount> findByKeyWord(String keyword, Pageable pageRequest);
 
-    Page<FakeEWallet> getMany(Pageable pageRequest);
+    Page<FakeEWallet> findAll(Pageable pageRequest);
 
 //    List<CustomerAccount> createManyStudents(List<CreateCustomerAccountDTO> createCustomerAccountDTOList);
 }

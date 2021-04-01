@@ -21,7 +21,7 @@ public interface CustomerService extends CRUDService<Customer, Long, CreateCusto
 //
 //    Page<Customer> findByKeyWord(String keyword, Pageable pageRequest);
 
-    Page<Customer> getMany(Pageable pageRequest);
+    Page<Customer> findAll(Pageable pageRequest);
 
 //    List<Customer> createManyStudents(List<CreateCustomerDTO> createCustomerDTOList);
 }

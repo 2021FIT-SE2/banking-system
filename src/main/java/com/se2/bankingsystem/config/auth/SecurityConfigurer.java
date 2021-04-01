@@ -1,6 +1,8 @@
 package com.se2.bankingsystem.config.auth;
 
 import com.se2.bankingsystem.domains.User.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,29 +29,28 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_WHITELIST = {
-        // -- Swagger UI v2
-        "/v2/api-docs",
-        "/swagger-resources",
-        "/swagger-resources/**",
-        "/configuration/ui",
-        "/configuration/security",
-        "/swagger-ui.html",
+        "/",
+        "/favicon.ico",
         "/webjars/**",
-        // -- Swagger UI v3 (OpenAPI)
-        "/v3/api-docs/**",
-        "/swagger-ui/**",
-        // Redirect to Swagger
-        "/"
+        "/resources/**",
+        "/login",
         // other public endpoints of your API may be appended to this array
     };
 
     private UserService userService;
 
-    private final JwtRequestFilter jwtRequestFilter;
+    private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfiguration.class);
 
-    @Autowired
-    public SecurityConfigurer(JwtRequestFilter jwtRequestFilter) {
-        this.jwtRequestFilter = jwtRequestFilter;
+    /**
+     * Use to create instance of {@link FirebaseAuthenticationTokenFilter}.
+     *
+     * @return instance of {@link FirebaseAuthenticationTokenFilter}
+     */
+    public FirebaseAuthenticationTokenFilter firebaseAuthenticationFilterBean() {
+        logger.debug(
+            "firebaseAuthenticationFilterBean():: creating instance of FirebaseAuthenticationFilter.");
+
+        return new FirebaseAuthenticationTokenFilter();
     }
 
     @Autowired
@@ -66,10 +68,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
             .cors().and()
             .authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll()
-            .and().authorizeRequests().antMatchers("/auth/login", "/auth/whoami").permitAll()
             .anyRequest().authenticated()
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(firebaseAuthenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }
 
 
@@ -83,17 +84,4 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
-//    RestTemplate restTemplate() throws Exception {
-//
-//        SSLContext sslContext = new SSLContextBuilder()
-//            .loadTrustMaterial(trustStore.getURL(), trustStorePassword.toCharArray())
-//            .build();
-//        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContext);
-//        HttpClient httpClient = HttpClients.custom()
-//            .setSSLSocketFactory(socketFactory)
-//            .build();
-//        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory(httpClient);
-//        return new RestTemplate(factory);
-//    }
 }

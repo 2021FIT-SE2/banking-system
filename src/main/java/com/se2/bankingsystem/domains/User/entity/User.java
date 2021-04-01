@@ -2,7 +2,6 @@ package com.se2.bankingsystem.domains.User.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import com.se2.bankingsystem.base.TimeStamps;
 import com.se2.bankingsystem.domains.Authority.entity.Authority;
 import lombok.AllArgsConstructor;
@@ -26,12 +25,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -76,6 +73,10 @@ public class User implements UserDetails, Serializable, TimeStamps {
     @Size(min = MIN_LENGTH_PASSWORD, max = MAX_LENGTH_PASSWORD)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    @NotNull
+    @Size(min = MIN_LENGTH_PHONE_NUMBER, max = MAX_LENGTH_PHONE_NUMBER)
+    private String phoneNumber;
 
     @Size(min = MIN_LENGTH_FIRST_NAME, max = MAX_LENGTH_FIRST_NAME)
     private String firstName;

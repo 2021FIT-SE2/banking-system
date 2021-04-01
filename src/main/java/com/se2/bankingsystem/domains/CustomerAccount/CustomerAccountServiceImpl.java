@@ -75,12 +75,12 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
     }
 
     @Override
-    public List<CustomerAccount> getAll() {
+    public List<CustomerAccount> findAll() {
         return customerAccountRepository.findAll();
     }
 
     @Override
-    public Page<CustomerAccount> getMany(Pageable pageable) {
+    public Page<CustomerAccount> findAll(Pageable pageable) {
         return customerAccountRepository.findAll(pageable);
     }
 

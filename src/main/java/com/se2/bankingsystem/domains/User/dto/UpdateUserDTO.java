@@ -22,9 +22,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class UpdateUserDTO {
 
-    @Size(min = User.MIN_LENGTH_PASSWORD, max = User.MAX_LENGTH_PASSWORD)
-    private String password;
-
     @Size(min = User.MIN_LENGTH_FIRST_NAME, max = User.MAX_LENGTH_FIRST_NAME)
     private String firstName;
 
@@ -33,9 +30,6 @@ public class UpdateUserDTO {
 
     @Email
     private String email;
-
-    @Size(min = User.MIN_LENGTH_PHONE_NUMBER, max = User.MAX_LENGTH_PHONE_NUMBER)
-    private String phoneNumber;
 
     @NotNull
     private Gender gender;

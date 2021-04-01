@@ -75,13 +75,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> findAll() {
     return userRepository.findAll();
     }
 
     @Override
     public boolean isUsernameUnique(String username) {
         return !userRepository.existsByUsername(username);
+    }
+
+    @Override
+    public boolean isPhoneNumberUnique(String phoneNumber) {
+        return !userRepository.existsByPhoneNumber(phoneNumber);
     }
 
     @Override
@@ -104,7 +109,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> getMany(Pageable pageable) {
+    public Page<User> findAll(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
 

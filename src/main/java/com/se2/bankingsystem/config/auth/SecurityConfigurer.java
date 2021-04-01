@@ -73,7 +73,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(firebaseAuthenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }
 
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

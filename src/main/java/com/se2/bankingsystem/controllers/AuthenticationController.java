@@ -65,6 +65,13 @@ public class AuthenticationController {
         return modelAndView;
     }
 
+    @GetMapping(path = "/register")
+    public ModelAndView showRegisterView() {
+        ModelAndView modelAndView = new ModelAndView("public/register");
+
+        return modelAndView;
+    }
+
     @PostMapping(value = "/changePassword")
     public ResponseEntity<Boolean> changePassword(@ModelAttribute ChangePasswordDTO changePasswordDTO, BindingResult result) {
         String oldPassword = changePasswordDTO.getOldPassword();

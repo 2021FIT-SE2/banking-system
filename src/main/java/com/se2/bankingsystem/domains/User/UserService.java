@@ -13,4 +13,6 @@ public interface UserService extends CRUDService<User, Long, CreateUserDTO, Upda
     boolean isPhoneNumberUnique(String phoneNumber);
 
     void changePassword(String oldPassword, String newPassword);
+
+    User loadUserByPhoneNumber(String phoneNumber);
 }

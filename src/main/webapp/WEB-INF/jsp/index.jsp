@@ -23,7 +23,6 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/lib/slicknav.min.css"/>">
 
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/style.css"/>">
-
     <!-- Custom styles for this page -->
 </head>
 <body>
@@ -622,6 +621,10 @@
 <script src="<c:url value="/resources/js/lib/jquery.slicknav.js"/>"></script>
 <script src="<c:url value="/resources/js/lib/owl.carousel.min.js"/>"></script>
 <script src="<c:url value="/resources/js/lib/index.js"/>"></script>
+
+<script>
+    console.log(firebase.auth().currentUser());
+</script>
 
 </body>
 </html>

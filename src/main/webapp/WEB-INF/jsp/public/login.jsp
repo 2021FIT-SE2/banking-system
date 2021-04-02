@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html lang="en">
@@ -8,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sign In Template for Bootstrap</title>
+    <title>Sign In</title>
 
     <!-- Bootstrap core CSS -->
     <script src="<c:url value="/webjars/jquery/3.6.0/jquery.min.js"/>"></script>
@@ -40,30 +41,45 @@
                     <div class="col-md-8">
                         <div class="mb-4">
                             <h3>Sign In</h3>
-                            <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur
+                            <p class="mb-4 mt-1">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur
                                 adipisicing.</p>
                         </div>
-                        <form action="#" method="POST">
-                            <div class="form-group first">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" id="username">
 
-                            </div>
-                            <div class="form-group last mb-4">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password">
-                            </div>
+                        <div class="form-group last mb-4">
+                            <label for="phone-number-input">Phone Number</label>
+                            <input type="text" class="form-control" id="phone-number-input">
+                        </div>
 
-                            <div class="d-flex mb-5 align-items-center">
-                                <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
-                                    <input type="checkbox" checked="checked"/>
-                                    <div class="control__indicator"></div>
-                                </label>
-                                <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
-                            </div>
+                        <div class="form-group last mb-4" id="verification-code-container"
+                             style="display: none !important;">
+                            <label for="verification-code-input">Verification Code</label>
+                            <input type="text" class="form-control" id="verification-code-input">
+                        </div>
 
-                            <input type="submit" value="Log In" class="btn btn-block btn-primary">
-                        </form>
+                        <div class="d-flex mb-5 align-items-center">
+                            <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
+                                <input id="remember-me" type="checkbox" checked="checked"/>
+                                <div class="control__indicator"></div>
+                            </label>
+                            <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
+                        </div>
+
+                        <button id="send-sms-code-button" type="submit" class="btn btn-block btn-primary">Send SMS
+                            Code
+                        </button>
+
+                        <form:form id="sign-in-form" method="post" modelAttribute="loginRequestDTO">
+                            
+                            <form:input id="token" type="hidden" path="token" name="token" value="" />
+                            
+                            <button id="verify-sms-code-button" type="submit" class="btn btn-block btn-primary"
+                                    style="display: none !important;">Sign In
+                            </button>
+                        </form:form>
+                        <p class="mb-4 mt-1">Don't have an account? <a href="<c:url value="/register"/>">Sign Up</a></p>
+
+                        <div style="margin-top: 20px" id="recaptcha-container"></div>
+                        <%--                        </form>--%>
                     </div>
                 </div>
 
@@ -73,7 +89,6 @@
     </div>
 </div>
 
-<div id="recaptcha-container"></div>
 
 <script src="<c:url value="/webjars/jquery/3.6.0/jquery.min.js"/>"></script>
 <script src="<c:url value="/webjars/bootstrap/4.6.0/js/bootstrap.min.js"/>"></script>

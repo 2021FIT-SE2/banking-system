@@ -2,6 +2,7 @@ package com.se2.bankingsystem.controllers;
 
 import com.se2.bankingsystem.domains.Authentication.dto.ChangePasswordDTO;
 import com.se2.bankingsystem.domains.Authentication.dto.LoginRequestDTO;
+import com.se2.bankingsystem.domains.Authentication.dto.RegisterDTO;
 import com.se2.bankingsystem.domains.User.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
@@ -46,14 +49,19 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ModelAndView login(@Valid @ModelAttribute LoginRequestDTO loginRequestDTO, BindingResult result) throws BadCredentialsException {
+    public ModelAndView login(@Valid @ModelAttribute LoginRequestDTO loginRequestDTO, HttpServletResponse response) throws BadCredentialsException {
+
+        log.info(loginRequestDTO.toString());
+
         ModelAndView modelAndView = new ModelAndView();
 
-        log.info("INVOKED");
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsername(), loginRequestDTO.getPassword()));
-        log.info("INVOKED 2");
         final UserDetails userDetails = userService.loadUserByUsername(loginRequestDTO.getUsername());
-        log.info("INVOKED 3");
+
+        Cookie cookie = new Cookie("token", loginRequestDTO.getToken());
+
+        response.addCookie(cookie);
+
         for (GrantedAuthority grantedAuthority: userDetails.getAuthorities()) {
             if (grantedAuthority.getAuthority().equals("ADMIN")) {
                 modelAndView.setViewName("redirect:admin/dashboard");
@@ -65,11 +73,45 @@ public class AuthenticationController {
         return modelAndView;
     }
 
+    @GetMapping(path = "/register")
+    public ModelAndView showRegisterView() {
+        ModelAndView modelAndView = new ModelAndView("public/register");
+
+        RegisterDTO registerDTO = new RegisterDTO();
+
+        modelAndView.addObject(registerDTO);
+
+        return modelAndView;
+    }
+
+    @PostMapping(path = "/register")
+    public ModelAndView register(@Valid @ModelAttribute RegisterDTO registerDTO, HttpServletResponse response) {
+
+        ModelAndView modelAndView = new ModelAndView("public/register");
+
+        Cookie cookie = new Cookie("token", registerDTO.getToken());
+
+        response.addCookie(cookie);
+
+        return modelAndView;
+    }
+
     @PostMapping(value = "/changePassword")
     public ResponseEntity<Boolean> changePassword(@ModelAttribute ChangePasswordDTO changePasswordDTO, BindingResult result) {
         String oldPassword = changePasswordDTO.getOldPassword();
         String newPassword = changePasswordDTO.getNewPassword();
         userService.changePassword(oldPassword, newPassword);
         return ResponseEntity.accepted().body(true);
+    }
+
+    @PostMapping(value = "/logout")
+    public ModelAndView logout(HttpServletResponse response) {
+
+        ModelAndView modelAndView = new ModelAndView("redirect:");
+
+        // Remove token cookie
+        response.addCookie(new Cookie("token", null));
+
+        return modelAndView;
     }
 }

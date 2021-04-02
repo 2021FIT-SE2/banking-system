@@ -53,8 +53,9 @@ public class CustomerServiceImpl implements CustomerService {
             .minBalance(0L)
             .build();
 
-        normalAccount.setCustomer(customer);
         normalAccount = customerAccountRepository.save(normalAccount);
+
+        normalAccount.setCustomer(customer);
         customer.setAccounts(Collections.singletonList(normalAccount));
 
         return customerRepository.save(customer);

@@ -67,7 +67,7 @@ public class InitData {
                 .build();
 
             userService.create(createUserDTO);
-            customerService.create(createCustomerDTO);
+//            customerService.create(createCustomerDTO);
 
             testData();
         } else {

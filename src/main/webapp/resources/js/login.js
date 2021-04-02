@@ -8,9 +8,6 @@ $(function () {
 
     const sendSmsCodeButton = $("#send-sms-code-button");
 
-    verificationCodeContainer.hide();
-    verificationCodeButton.hide();
-
     $('.form-control').on('input', function () {
         const $field = $(this).closest('.form-group');
         if (this.value) {
@@ -60,7 +57,7 @@ $(function () {
         window.confirmationResult.confirm(inputVerificationCode);
 
         firebase.auth().currentUser.getIdToken().then(token => {
-            window.localStorage.setItem("token", token.toString());
+            $("token").prop("value", token);
         });
 
         setTimeout(() => {

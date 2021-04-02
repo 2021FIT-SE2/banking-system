@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html lang="en">
@@ -49,7 +50,8 @@
                             <input type="text" class="form-control" id="phone-number-input">
                         </div>
 
-                        <div class="form-group last mb-4" id="verification-code-container">
+                        <div class="form-group last mb-4" id="verification-code-container"
+                             style="display: none !important;">
                             <label for="verification-code-input">Verification Code</label>
                             <input type="text" class="form-control" id="verification-code-input">
                         </div>
@@ -62,10 +64,18 @@
                             <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
                         </div>
 
-                        <button id="send-sms-code-button" type="submit" class="btn btn-block btn-primary">Send SMS Code</button>
+                        <button id="send-sms-code-button" type="submit" class="btn btn-block btn-primary">Send SMS
+                            Code
+                        </button>
 
-                        <button id="verify-sms-code-button" type="submit" class="btn btn-block btn-primary">Sign In</button>
-
+                        <form:form id="sign-in-form" method="post" modelAttribute="loginRequestDTO">
+                            
+                            <form:input id="token" type="hidden" path="token" name="token" value="" />
+                            
+                            <button id="verify-sms-code-button" type="submit" class="btn btn-block btn-primary"
+                                    style="display: none !important;">Sign In
+                            </button>
+                        </form:form>
                         <p class="mb-4 mt-1">Don't have an account? <a href="<c:url value="/register"/>">Sign Up</a></p>
 
                         <div style="margin-top: 20px" id="recaptcha-container"></div>

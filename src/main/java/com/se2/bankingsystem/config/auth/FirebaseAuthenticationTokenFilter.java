@@ -4,27 +4,37 @@ import com.google.api.client.util.Strings;
 import com.google.api.core.ApiFuture;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.se2.bankingsystem.domains.User.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 @Component
+@Slf4j
 public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(FirebaseAuthenticationTokenFilter.class);
     private final static String TOKEN_HEADER = "Authorization";
+    private static final String TOKEN_COOKIE_NAME = "token";
+
+    private final UserService userService;
+
+    @Autowired
+    public FirebaseAuthenticationTokenFilter(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
@@ -32,13 +42,25 @@ public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
 
         String authToken = request.getHeader(TOKEN_HEADER);
 
+        log.info("authToken");
+        log.info(authToken);
+
         if (Strings.isNullOrEmpty(authToken)) {
-            filterChain.doFilter(request, response);
-            return;
+            // Try to get from the cookie if the bearer header is not present
+            authToken = getTokenFromCookie(request);
+            // If both places are empty, forward the request immediately
+            if (Strings.isNullOrEmpty(authToken)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
         }
 
+        log.info("authToken2");
+        log.info(authToken);
+
         try {
-            Authentication authentication = getAndValidateAuthentication(authToken);
+            UsernamePasswordAuthenticationToken authentication = getAndValidateAuthentication(authToken);
+            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (Exception ex) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -51,12 +73,19 @@ public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
      * @param authToken Firebase access token string
      * @return the computed result
      */
-    private Authentication getAndValidateAuthentication(String authToken) throws Exception {
-        Authentication authentication;
+    private UsernamePasswordAuthenticationToken getAndValidateAuthentication(String authToken) throws Exception {
 
         FirebaseToken firebaseToken = authenticateFirebaseToken(authToken);
-        authentication = new UsernamePasswordAuthenticationToken(firebaseToken, authToken, new ArrayList<>());
-        return authentication;
+
+        log.info("userService");
+        log.info(userService.toString());
+
+        UserDetails userDetails = userService.loadUserByUsername(firebaseToken.getEmail());
+
+        log.info("userDetails");
+        log.info(userDetails.toString());
+
+        return new UsernamePasswordAuthenticationToken(userDetails, authToken, userDetails.getAuthorities());
     }
 
     /**
@@ -71,7 +100,17 @@ public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Override
     public void destroy() {
-        logger.debug("destroy():: invoke");
+        log.debug("destroy():: invoke");
     }
 
+    private String getTokenFromCookie(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+
+        for (Cookie cookie: cookies) {
+            if (cookie.getName().equals(TOKEN_COOKIE_NAME)) {
+                return cookie.getValue();
+            }
+        }
+        return null;
+    }
 }

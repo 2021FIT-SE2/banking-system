@@ -4,6 +4,7 @@ import com.se2.bankingsystem.domains.User.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
 @Configuration
 @EnableGlobalMethodSecurity(
     prePostEnabled = true,
@@ -28,12 +28,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
+    @Value("${security.enabled:true}")
+    private boolean securityEnabled;
+
     private static final String[] AUTH_WHITELIST = {
         "/",
         "/favicon.ico",
         "/webjars/**",
         "/resources/**",
         "/login",
+        "/register",
         // other public endpoints of your API may be appended to this array
     };
 
@@ -50,7 +54,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         logger.debug(
             "firebaseAuthenticationFilterBean():: creating instance of FirebaseAuthenticationFilter.");
 
-        return new FirebaseAuthenticationTokenFilter();
+        return new FirebaseAuthenticationTokenFilter(userService);
     }
 
     @Autowired
@@ -65,12 +69,14 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-            .cors().and()
-            .authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll()
-            .anyRequest().authenticated()
-            .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(firebaseAuthenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);
+        if (securityEnabled) {
+            http.csrf().disable()
+                .cors().and()
+                .authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll()
+                .anyRequest().authenticated()
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            http.addFilterBefore(firebaseAuthenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);
+        }
     }
 
     @Bean

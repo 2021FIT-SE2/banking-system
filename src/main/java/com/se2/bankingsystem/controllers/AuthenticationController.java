@@ -64,7 +64,7 @@ public class AuthenticationController {
 
         for (GrantedAuthority grantedAuthority: userDetails.getAuthorities()) {
             if (grantedAuthority.getAuthority().equals("ADMIN")) {
-                modelAndView.setViewName("redirect:admin/dashboard");
+                modelAndView.setViewName("admin/dashboard");
             } else if (grantedAuthority.getAuthority().equals("CUSTOMER")) {
                 modelAndView.setViewName("redirect:customer/dashboard");
             }

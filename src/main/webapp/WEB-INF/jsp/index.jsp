@@ -43,7 +43,7 @@
     <nav class="offcanvas__menu mobile-menu">
         <ul>
             <li class="active"><a href="./index.html">Home</a></li>
-            <li><a href="./about.html">About</a></li>
+            <li><a href="/admin/dashboard">Admin</a></li>
             <li><a href="./hosting.html">Hosting</a></li>
             <li><a href="#">Pages</a>
                 <ul class="dropdown">
@@ -65,8 +65,8 @@
     </div>
     <div class="offcanvas__info">
         <ul>
-            <li><span class="icon_phone"></span> +1 123-456-7890</li>
-            <li><span class="fa fa-envelope"></span> Support@gmail.com</li>
+            <li><span class="icon_phone"></span>012345678</li>
+            <li><span class="fa fa-envelope"></span>Banking support@gmail.com</li>
         </ul>
     </div>
 </div>
@@ -80,7 +80,7 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="header__info-left">
                         <ul>
-                            <li><span class="icon_phone"></span> +1 123-456-7890</li>
+                            <li><span class="icon_phone"></span>012345678</li>
                             <li><span class="fa fa-envelope"></span> Support@gmail.com</li>
                         </ul>
                     </div>

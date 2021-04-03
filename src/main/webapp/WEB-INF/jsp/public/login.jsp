@@ -41,8 +41,7 @@
                     <div class="col-md-8">
                         <div class="mb-4">
                             <h3>Sign In</h3>
-                            <p class="mb-4 mt-1">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur
-                                adipisicing.</p>
+                            <p class="mb-4 mt-1">Welcome back!</p>
                         </div>
 
                         <div class="form-group last mb-4">

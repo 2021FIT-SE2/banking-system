@@ -22,7 +22,7 @@ public class AdminController {
 
     @GetMapping(path="/customer-list")
     public ModelAndView showCustomerList(){
-        ModelAndView modelAndView = new ModelAndView("admin/customer/customerList");
+        ModelAndView modelAndView = new ModelAndView("admin/customer/customersList");
         return modelAndView;
     }
 

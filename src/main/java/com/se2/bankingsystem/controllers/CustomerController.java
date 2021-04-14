@@ -28,7 +28,7 @@ public class CustomerController {
 
     @GetMapping("/customers/create")
     public ModelAndView showCreateView() {
-        ModelAndView modelAndView = new ModelAndView("admin/createCustomer");
+        ModelAndView modelAndView = new ModelAndView("admin/customer/createCustomer");
 
         CreateCustomerDTO createCustomerDTO = CreateCustomerDTO.builder().build();
         modelAndView.addObject("createDTO", createCustomerDTO);
@@ -38,12 +38,12 @@ public class CustomerController {
     @PostMapping("/customers")
     public String create(@Valid CreateCustomerDTO createCustomerDTO) {
         customerService.create(createCustomerDTO);
-        return "admin/customerList";
+        return "admin/customer/customerList";
     }
 
     @GetMapping("/customers/{customerID}/edit")
     public ModelAndView showUpdateView(@PathVariable Long customerID) {
-        ModelAndView modelAndView = new ModelAndView("admin/editCustomer");
+        ModelAndView modelAndView = new ModelAndView("admin/customer/editCustomer");
 
         Customer customer = customerService.getById(customerID);
         modelAndView.addObject("customer", customer);
@@ -56,12 +56,12 @@ public class CustomerController {
     @PutMapping("/customers/{customerID}")
     public String update(@PathVariable Long customerID, @Valid @ModelAttribute("updateCustomerDTO") UpdateCustomerDTO updateCustomerDTO) {
         customerService.updateById(customerID, updateCustomerDTO);
-        return "admin/customerList";
+        return "admin/customer/customerList";
     }
 
     @DeleteMapping("/customers/{customerID}")
     public String delete(@PathVariable Long customerID) {
         customerService.deleteById(customerID);
-        return "admin/customerList";
+        return "admin/customer/customerList";
     }
 }

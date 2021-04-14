@@ -3,12 +3,12 @@ package com.se2.bankingsystem.domains.Customer.dto;
 import com.se2.bankingsystem.domains.Authority.entity.AuthorityName;
 import com.se2.bankingsystem.domains.User.dto.UpdateUserDTO;
 import com.se2.bankingsystem.domains.User.entity.Gender;
-import com.se2.bankingsystem.domains.User.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
@@ -27,24 +27,15 @@ import static com.se2.bankingsystem.domains.Customer.entity.Customer.MIN_LENGTH_
 @SuperBuilder
 public class UpdateCustomerDTO extends UpdateUserDTO {
 
-    @Column(unique = true)
     @Email
     private String email;
 
-    @Column(unique = true)
-    @Size(min = User.MIN_LENGTH_PHONE_NUMBER, max = User.MAX_LENGTH_PHONE_NUMBER)
-    private String phoneNumber;
-
-    @NotNull
     @Size(min = MIN_LENGTH_FULL_ADDRESS, max = MAX_LENGTH_FULL_ADDRESS)
     private String address;
 
-    @NotNull
     private Gender gender;
 
     @PastOrPresent
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
-
-    @NotNull
-    private AuthorityName role;
 }

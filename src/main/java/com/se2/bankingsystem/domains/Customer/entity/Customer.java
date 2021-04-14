@@ -45,10 +45,6 @@ public class Customer extends User {
     @Email
     private String email;
 
-    @Column(unique = true)
-    @Size(min = MIN_LENGTH_PHONE_NUMBER, max = MAX_LENGTH_PHONE_NUMBER)
-    private String phoneNumber;
-
     @NotNull
     @Size(min = MIN_LENGTH_FULL_ADDRESS, max = MAX_LENGTH_FULL_ADDRESS)
     private String address;

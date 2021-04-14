@@ -7,8 +7,8 @@ import com.se2.bankingsystem.domains.Authority.entity.AuthorityName;
 import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.dto.UpdateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.entity.Customer;
-import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountRepository;
-import com.se2.bankingsystem.domains.CustomerAccount.entity.sub.NormalAccount;
+import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.NormalAccountRepository;
+import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.entity.NormalAccount;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,7 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
 
-    private final CustomerAccountRepository customerAccountRepository;
+    private final NormalAccountRepository normalAccountRepository;
 
     private final AuthorityRepository authorityRepository;
 
@@ -34,31 +34,33 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     public CustomerServiceImpl(
         CustomerRepository customerRepository,
-        CustomerAccountRepository customerAccountRepository,
+        NormalAccountRepository normalAccountRepository,
         AuthorityRepository authorityRepository,
         ModelMapper modelMapper
     ) {
         this.customerRepository = customerRepository;
-        this.customerAccountRepository = customerAccountRepository;
+        this.normalAccountRepository = normalAccountRepository;
         this.authorityRepository = authorityRepository;
         this.modelMapper = modelMapper;
     }
 
     @Override
     public Customer create(CreateCustomerDTO createCustomerDTO) {
-        Customer customer = convertToCustomer(createCustomerDTO);
 
+        // Save a new Customer first
+        Customer customer = convertToCustomer(createCustomerDTO);
+        customer = customerRepository.save(customer);
+
+        // Automatically create a new Normal Account for this Customer
         NormalAccount normalAccount = NormalAccount.builder()
             .balance(0L)
             .minBalance(0L)
             .build();
-
-        normalAccount = customerAccountRepository.save(normalAccount);
-
         normalAccount.setCustomer(customer);
-        customer.setAccounts(Collections.singletonList(normalAccount));
+        normalAccountRepository.save(normalAccount);
 
-        return customerRepository.save(customer);
+        // Then return the created Customer
+        return customer;
     }
 
     private Customer convertToCustomer(CreateCustomerDTO createCustomerDTO) {
@@ -74,7 +76,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer updateById(Long id, UpdateCustomerDTO updateCustomerDTO) {
         Customer customer = customerRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
-        modelMapper.map(updateCustomerDTO, modelMapper);
+        modelMapper.map(updateCustomerDTO, customer);
 
         return customerRepository.save(customer);
     }

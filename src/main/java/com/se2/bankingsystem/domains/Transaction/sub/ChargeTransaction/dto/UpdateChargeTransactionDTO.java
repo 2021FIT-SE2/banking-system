@@ -1,4 +1,6 @@
 package com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.dto;
 
-public class UpdateChargeTransactionDTO {
+import com.se2.bankingsystem.domains.Transaction.dto.UpdateTransactionDTO;
+
+public class UpdateChargeTransactionDTO extends UpdateTransactionDTO {
 }

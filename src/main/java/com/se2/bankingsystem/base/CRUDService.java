@@ -13,9 +13,9 @@ public interface CRUDService<ModelType, IdType, CreateDTOType, UpdateDTOType> {
 
     void deleteById(IdType id);
 
-    List<? extends ModelType> findAll();
+    List<ModelType> findAll();
 
     ModelType getById(IdType id);
 
-    Page<? extends ModelType> findAll(Pageable pageable);
+    Page<ModelType> findAll(Pageable pageable);
 }

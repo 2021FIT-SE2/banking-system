@@ -6,5 +6,5 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class CreateWithDrawTransactionDTO extends CreateTransactionDTO {
+public class CreateWithdrawTransactionDTO extends CreateTransactionDTO {
 }

@@ -42,9 +42,6 @@ public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
 
         String authToken = request.getHeader(TOKEN_HEADER);
 
-        log.info("authToken");
-        log.info(authToken);
-
         if (Strings.isNullOrEmpty(authToken)) {
             // Try to get from the cookie if the bearer header is not present
             authToken = getTokenFromCookie(request);
@@ -54,9 +51,6 @@ public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
                 return;
             }
         }
-
-        log.info("authToken2");
-        log.info(authToken);
 
         try {
             UsernamePasswordAuthenticationToken authentication = getAndValidateAuthentication(authToken);

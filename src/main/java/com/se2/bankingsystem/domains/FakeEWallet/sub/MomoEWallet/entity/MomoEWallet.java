@@ -1,4 +1,4 @@
-package com.se2.bankingsystem.domains.FakeEWallet.sub.MomoEWallet;
+package com.se2.bankingsystem.domains.FakeEWallet.sub.MomoEWallet.entity;
 
 import com.se2.bankingsystem.domains.FakeEWallet.entity.FakeEWallet;
 import lombok.AllArgsConstructor;

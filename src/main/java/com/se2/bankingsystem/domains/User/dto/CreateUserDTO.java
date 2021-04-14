@@ -38,7 +38,6 @@ public class CreateUserDTO implements TimeStamps {
     @Size(min = User.MIN_LENGTH_LAST_NAME, max = User.MAX_LENGTH_LAST_NAME)
     private String lastName;
 
-    @NotNull
     private AuthorityName role;
 
     @JsonIgnore

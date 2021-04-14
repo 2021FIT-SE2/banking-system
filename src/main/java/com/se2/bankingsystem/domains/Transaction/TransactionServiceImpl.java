@@ -3,7 +3,7 @@ package com.se2.bankingsystem.domains.Transaction;
 import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountRepository;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,36 +12,44 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
-public class TransactionServiceImpl<T extends Transaction> implements TransactionService {
+public class TransactionServiceImpl implements TransactionService {
 
-    protected final TransactionRepository<T> transactionRepository;
-    protected final ModelMapper modelMapper;
-    protected final CustomerAccountRepository customerAccountRepository;
+    private CustomerAccountRepository customerAccountRepository;
 
-    protected TransactionServiceImpl(TransactionRepository<T> transactionRepository, ModelMapper modelMapper, CustomerAccountRepository customerAccountRepository) {
+    private TransactionRepository transactionRepository;
+
+    @Autowired
+    public void setTransactionRepository(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
-        this.modelMapper = modelMapper;
+    }
+
+    @Autowired
+    public void setCustomerAccountRepository(CustomerAccountRepository customerAccountRepository) {
         this.customerAccountRepository = customerAccountRepository;
     }
 
-    protected void setCustomerAccount(T transaction, Long customerAccountID) {
+    public void setCustomerAccount(Transaction transaction, Long customerAccountID) {
         CustomerAccount customerAccount = customerAccountRepository.findById(customerAccountID).orElseThrow(EntityNotFoundException::new);
         transaction.setCustomerAccount(customerAccount);
     }
 
+    @Override
     public void deleteById(Long id) {
-        transactionRepository.deleteById(id);
+        this.transactionRepository.deleteById(id);
     }
 
-    public List<T> findAll() {
-        return transactionRepository.findAll();
+    @Override
+    public List<Transaction> findAll() {
+        return this.transactionRepository.findAll();
     }
 
-    public T getById(Long id) {
-        return transactionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    @Override
+    public Transaction getById(Long id) {
+        return this.transactionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    public Page<T> findAll(Pageable pageable) {
-        return transactionRepository.findAll(pageable);
+    @Override
+    public Page<Transaction> findAll(Pageable pageable) {
+        return this.transactionRepository.findAll(pageable);
     }
 }

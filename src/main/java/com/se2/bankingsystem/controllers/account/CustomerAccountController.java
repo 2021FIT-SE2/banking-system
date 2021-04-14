@@ -35,7 +35,7 @@ public class CustomerAccountController {
         return modelAndView;
     }
 
-    @GetMapping("/customerAccounts/{id}")
+    @GetMapping({"/customerAccounts/{id}"})
     public ModelAndView showProfile(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
         CustomerAccount customer = customerAccountService.getById(id);
@@ -45,7 +45,7 @@ public class CustomerAccountController {
 
     @GetMapping("/customerAccounts/create")
     public ModelAndView showCreateView() {
-        ModelAndView modelAndView = new ModelAndView("admin/customerDetails");
+        ModelAndView modelAndView = new ModelAndView("admin/customer/customerDetails");
 
         CreateCustomerDTO createCustomerDTO = CreateCustomerDTO.builder().build();
         modelAndView.addObject(createCustomerDTO);
@@ -54,14 +54,14 @@ public class CustomerAccountController {
 
     @PostMapping("/customerAccounts")
     public ModelAndView create(@Valid @ModelAttribute CreateCustomerAccountDTO createCustomerAccountDTO) {
-        ModelAndView modelAndView = new ModelAndView("admin/customerList");
+        ModelAndView modelAndView = new ModelAndView("customersList");
         customerAccountService.create(createCustomerAccountDTO);
         return modelAndView;
     }
 
     @GetMapping("/customerAccounts/{customerAccountID}/edit")
     public ModelAndView showUpdateView(@PathVariable Long customerAccountID) {
-        ModelAndView modelAndView = new ModelAndView("admin/editCustomer");
+        ModelAndView modelAndView = new ModelAndView("admin/customer/editCustomer");
 
         CustomerAccount customer = customerAccountService.getById(customerAccountID);
         modelAndView.addObject("customer", customer);
@@ -74,12 +74,12 @@ public class CustomerAccountController {
     @PostMapping("/customerAccounts/{customerAccountID}/edit")
     public String update(@PathVariable Long customerAccountID, @Valid @ModelAttribute UpdateCustomerAccountDTO updateCustomerAccountDTO) {
         customerAccountService.updateById(customerAccountID, updateCustomerAccountDTO);
-        return "admin/customerList";
+        return "customersList";
     }
 
     @PostMapping("/customerAccounts/{customerAccountID}/delete")
     public String delete(@PathVariable Long customerAccountID) {
         customerAccountService.deleteById(customerAccountID);
-        return "admin/customerList";
+        return "customersList";
     }
 }

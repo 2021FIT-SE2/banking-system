@@ -1,4 +1,4 @@
-package com.se2.bankingsystem.domains.CustomerAccount.sub;
+package com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.entity;
 
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import lombok.AllArgsConstructor;

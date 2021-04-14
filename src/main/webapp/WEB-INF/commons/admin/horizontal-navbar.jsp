@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: duong
-  Date: 4/12/21
-  Time: 7:09 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>

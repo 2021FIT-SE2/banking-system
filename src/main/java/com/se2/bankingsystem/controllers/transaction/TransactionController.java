@@ -1,14 +1,7 @@
 package com.se2.bankingsystem.controllers.transaction;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-
 import com.se2.bankingsystem.domains.Transaction.TransactionService;
 import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
-import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.ChargeTransactionService;
-import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.TransferTransactionService;
-import com.se2.bankingsystem.domains.Transaction.sub.WithdrawTransaction.WithdrawTransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -22,24 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Controller
 public class TransactionController {
 
     private final TransactionService transactionService;
 
-    private final TransferTransactionService transferTransactionService;
-
-    private final ChargeTransactionService chargeTransactionService;
-
-    private final WithdrawTransactionService withdrawTransactionService;
-
     @Autowired
-    public TransactionController(@Qualifier("transactionServiceImpl") TransactionService transactionService, TransferTransactionService transferTransactionService, ChargeTransactionService chargeTransactionService, WithdrawTransactionService withdrawTransactionService) {
+    public TransactionController(@Qualifier("transactionServiceImpl") TransactionService transactionService) {
         this.transactionService = transactionService;
-
-        this.transferTransactionService = transferTransactionService;
-        this.chargeTransactionService = chargeTransactionService;
-        this.withdrawTransactionService = withdrawTransactionService;
     }
 
     @InitBinder
@@ -48,14 +34,6 @@ public class TransactionController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
-
-//    @RequestMapping(value = "/list-transactions", method = RequestMethod.GET)
-//    public String showTransactions(ModelMap model) {
-//        String name = getLoggedInUserName(model);
-//        model.put("transactions", transactionService.getTransactionsByUser(name));
-//        // model.put("transactions", service.retrieveTransactions(name));
-//        return "list-transactions";
-//    }
 
     private String getLoggedInUserName(ModelMap model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

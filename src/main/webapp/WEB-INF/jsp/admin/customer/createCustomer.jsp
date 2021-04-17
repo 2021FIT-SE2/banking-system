@@ -32,7 +32,7 @@
                     </fieldset>
 
                     <fieldset class="form-group row">
-                        <form:label cssClass="col-sm-2 col-form-label" path="password">Password</form:label>
+                        <form:label cssClass="col-sm-3 col-form-label" path="password">Password</form:label>
                         <div class="col-sm-9">
                             <form:input path="password" type="text" class="form-control"
                                         required="required"/>

@@ -13,9 +13,9 @@
             <div class="main-menu-content">
                 <ul>
                     <li class="more-details">
-                        <a href="admin-profile"><i class="ti-user"></i>View Profile</a>
-                        <a href="#"><i class="ti-settings"></i>Settings</a>
-                        <a href="auth-normal-sign-in.html"><i class="ti-layout-sidebar-left"></i>Logout</a>
+                        <a href="<c:url value="/admin/profile" />"><i class="ti-user"></i>View Profile</a>
+                        <a href="<c:url value="/admin/settings" />"><i class="ti-settings"></i>Settings</a>
+                        <a href="<c:url value="/logout" />"><i class="ti-layout-sidebar-left"></i>Logout</a>
                     </li>
                 </ul>
             </div>

@@ -1,92 +1,85 @@
 package com.se2.bankingsystem.controllers.account;
 
-import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
-import com.se2.bankingsystem.domains.Customer.dto.UpdateCustomerDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.NormalAccountService;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.dto.CreateNormalAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.dto.UpdateNormalAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.entity.NormalAccount;
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@Slf4j
+@RequestMapping("/admin")
 public class NormalAccountController {
 
     private final NormalAccountService normalAccountService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public NormalAccountController(NormalAccountService normalAccountService) {
+    public NormalAccountController(NormalAccountService normalAccountService, ModelMapper modelMapper) {
         this.normalAccountService = normalAccountService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/normalAccounts")
     public ModelAndView showTableView() {
-        ModelAndView modelAndView = new ModelAndView();
-        List<NormalAccount> customers = normalAccountService.findAll();
-        modelAndView.addObject(customers);
+        ModelAndView modelAndView = new ModelAndView("admin/customer/account/normalAccount/normalAccountList");
+        List<NormalAccount> normalAccounts = normalAccountService.findAll();
+        modelAndView.addObject(normalAccounts);
         return modelAndView;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @GetMapping("/normalAccounts/{id}")
     public ModelAndView showProfile(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView();
-        NormalAccount customer = normalAccountService.getById(id);
-        modelAndView.addObject(customer);
+        ModelAndView modelAndView = new ModelAndView("admin/customer/account/normalAccount/normalAccountDetails");
+        NormalAccount normalAccount = normalAccountService.getById(id);
+        modelAndView.addObject(normalAccount);
         return modelAndView;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @GetMapping("/normalAccounts/create")
     public ModelAndView showCreateView() {
-        ModelAndView modelAndView = new ModelAndView("");
+        ModelAndView modelAndView = new ModelAndView("admin/customer/account/normalAccount/createNormalAccount");
 
-        CreateCustomerDTO createCustomerDTO = CreateCustomerDTO.builder().build();
-        modelAndView.addObject(createCustomerDTO);
+        CreateNormalAccountDTO createNormalAccountDTO = CreateNormalAccountDTO.builder().build();
+        modelAndView.addObject(createNormalAccountDTO);
         return modelAndView;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
-    @PostMapping("/normalAccounts")
-    public ModelAndView create(@Valid @ModelAttribute CreateNormalAccountDTO createNormalAccountDTO) {
-        ModelAndView modelAndView = new ModelAndView("");
+    @PostMapping("/normalAccounts/create")
+    public String create(@Valid @ModelAttribute CreateNormalAccountDTO createNormalAccountDTO) {
         normalAccountService.create(createNormalAccountDTO);
-        return modelAndView;
+        return "redirect:/admin/normalAccounts";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @GetMapping("/normalAccounts/{normalAccountID}/edit")
     public ModelAndView showUpdateView(@PathVariable Long normalAccountID) {
-        ModelAndView modelAndView = new ModelAndView("");
+        ModelAndView modelAndView = new ModelAndView("admin/customer/account/normalAccount/editNormalAccount");
 
-        NormalAccount customer = normalAccountService.getById(normalAccountID);
-        modelAndView.addObject(customer);
+        NormalAccount normalAccount = normalAccountService.getById(normalAccountID);
+        modelAndView.addObject("normalAccount", normalAccount);
 
-        UpdateCustomerDTO updateCustomerDTO = UpdateCustomerDTO.builder().build();
-        modelAndView.addObject(updateCustomerDTO);
+        UpdateNormalAccountDTO updatenormalAccountDTO = modelMapper.map(normalAccount, UpdateNormalAccountDTO.class);
+        modelAndView.addObject(updatenormalAccountDTO);
         return modelAndView;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @PostMapping("/normalAccounts/{normalAccountID}/edit")
     public String update(@PathVariable Long normalAccountID, @Valid @ModelAttribute UpdateNormalAccountDTO updateNormalAccountDTO) {
         normalAccountService.updateById(normalAccountID, updateNormalAccountDTO);
-        return "";
+        return "redirect:/admin/normalAccounts";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @PostMapping("/normalAccounts/{normalAccountID}/delete")
     public String delete(@PathVariable Long normalAccountID) {
         normalAccountService.deleteById(normalAccountID);
-        return "";
+        return "redirect:/admin/normalAccounts";
     }
 }

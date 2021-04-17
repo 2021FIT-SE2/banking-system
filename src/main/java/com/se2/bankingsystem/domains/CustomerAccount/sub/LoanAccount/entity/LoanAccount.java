@@ -1,18 +1,18 @@
 package com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.entity;
 
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;import java.time.LocalDateTime;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "customers")
+@Table(name = "loanAccounts")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,7 +26,8 @@ public class LoanAccount extends CustomerAccount {
 
     private LocalDateTime endAt;
 
-    private Long principalAmount;
+    private Long principal;
 
     private Long interest;
+
 }

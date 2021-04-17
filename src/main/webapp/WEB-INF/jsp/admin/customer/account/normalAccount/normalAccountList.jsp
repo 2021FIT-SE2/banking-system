@@ -4,9 +4,9 @@
 <!-- START HERE -->
 <div class="card">
     <div class="card-header">
-        <h5>savingAccounts</h5>
+        <h5>normalAccounts</h5>
         <div class="card-header-right" style="margin-right: 10px">
-            <a href="<c:url value="/admin/savingAccounts/create"/>">
+            <a href="<c:url value="/admin/normalAccounts/create"/>">
                 <button type="submit" class="btn btn-primary">Create New</button>
             </a>
         </div>
@@ -19,32 +19,20 @@
                     <th>ID</th>
                     <th>Customer ID</th>
                     <th>Balance</th>
-                    <th>Principal</th>
-                    <th>Interest</th>
-                    <th>Rate</th>
-                    <th>Duration</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="savingAccount" items="${savingAccountList}">
+                <c:forEach var="normalAccount" items="${normalAccountList}">
                     <tr>
-                        <td>${savingAccount.id}</td>
+                        <td>${normalAccount.id}</td>
                         <td>
-                            <a href="/admin/savingAccounts/${savingAccount.customerID}">${savingAccount.customerID}</a>
+                            <a href="/admin/normalAccounts/${normalAccount.customerID}">${normalAccount.customerID}</a>
                         </td>
-                        <td>${savingAccount.balance}</td>
-                        <td>${savingAccount.principal}</td>
-                        <td>${savingAccount.interest}</td>
-                        <td>${savingAccount.rate}</td>
-                        <td>${savingAccount.duration}</td>
-                        <td>${savingAccount.startDate}</td>
-                        <td>${savingAccount.endDate}</td>
+                        <td>${normalAccount.balance}</td>
 
                         <td>
-                            <a href="/admin/savingAccounts/${savingAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
+                            <a href="/admin/normalAccounts/${normalAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
                             <i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                         </td>
                     </tr>
@@ -58,7 +46,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-footer d-flex justify-content-md-center">
-                                    <a href="/admin/savingAccounts/${savingAccount.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
+                                    <a href="/admin/normalAccounts/${normalAccount.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 
                                 </div>

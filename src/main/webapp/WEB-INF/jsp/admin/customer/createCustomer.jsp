@@ -22,8 +22,8 @@
             <div class="card-block">
                 <form:form method="post" modelAttribute="createCustomerDTO" cssClass="form-material">
                     <fieldset class="form-group row row">
-                        <form:label cssClass="col-sm-2 col-form-label" path="username">Username</form:label>
-                        <div class="col-sm-10">
+                        <form:label cssClass="col-sm-3 col-form-label" path="username">Username</form:label>
+                        <div class="col-sm-9">
                             <form:input path="username" type="text" class="form-control"
                                         required="required"/>
                             <span class="form-bar"></span>
@@ -33,7 +33,7 @@
 
                     <fieldset class="form-group row">
                         <form:label cssClass="col-sm-2 col-form-label" path="password">Password</form:label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-9">
                             <form:input path="password" type="text" class="form-control"
                                         required="required"/>
                             <span class="form-bar"></span>
@@ -42,8 +42,8 @@
                     </fieldset>
 
                     <fieldset class="form-group row">
-                        <form:label cssClass="col-sm-2 col-form-label" path="email">Email</form:label>
-                        <div class="col-sm-10">
+                        <form:label cssClass="col-sm-3 col-form-label" path="email">Email</form:label>
+                        <div class="col-sm-9">
                             <form:input path="email" type="email" class="form-control"
                                         required="required"/>
                             <span class="form-bar"></span>
@@ -53,8 +53,8 @@
                     </fieldset>
 
                     <fieldset class="form-group row">
-                        <form:label cssClass="col-sm-2 col-form-label" path="phoneNumber">Phone Number</form:label>
-                        <div class="col-sm-10"><form:input path="phoneNumber" type="text" class="form-control"
+                        <form:label cssClass="col-sm-3 col-form-label" path="phoneNumber">Phone Number</form:label>
+                        <div class="col-sm-9"><form:input path="phoneNumber" type="text" class="form-control"
                                                            required="required"/>
                             <span class="form-bar"></span>
                             <form:errors path="phoneNumber" cssClass="text-warning"/>
@@ -62,8 +62,8 @@
                     </fieldset>
 
                     <fieldset class="form-group row">
-                        <form:label cssClass="col-sm-2 col-form-label" path="firstName">First Name</form:label>
-                        <div class="col-sm-10">
+                        <form:label cssClass="col-sm-3 col-form-label" path="firstName">First Name</form:label>
+                        <div class="col-sm-9">
                             <form:input path="firstName" type="text" class="form-control"
                                         required="required"/>
                             <span class="form-bar"></span>
@@ -73,8 +73,8 @@
                     </fieldset>
 
                     <fieldset class="form-group row">
-                        <form:label cssClass="col-sm-2 col-form-label" path="lastName">Last Name</form:label>
-                        <div class="col-sm-10">
+                        <form:label cssClass="col-sm-3 col-form-label" path="lastName">Last Name</form:label>
+                        <div class="col-sm-9">
                             <form:input path="lastName" type="text" class="form-control"
                                         required="required"/>
                             <span class="form-bar"></span>
@@ -84,9 +84,9 @@
                     </fieldset>
 
                     <fieldset class="form-group row">
-                        <form:label cssClass="col-sm-2 col-form-label" path="gender">Gender</form:label>
+                        <form:label cssClass="col-sm-3 col-form-label" path="gender">Gender</form:label>
 
-                        <div class="col-sm-10"><form:select path="gender" type="text" class="form-control form-select"
+                        <div class="col-sm-9"><form:select path="gender" type="text" class="form-control form-select"
                                                             required="required">
                             <form:option value="MALE" label="Male"/>
                             <form:option value="FEMALE" label="Female"/>
@@ -98,8 +98,8 @@
                     </fieldset>
 
                     <fieldset class="form-group row">
-                        <form:label cssClass="col-sm-2 col-form-label" path="dob">Date Of Birth</form:label>
-                        <div class="col-sm-10"><form:input path="dob" type="date" class="form-control"
+                        <form:label cssClass="col-sm-3 col-form-label" path="dob">Date Of Birth</form:label>
+                        <div class="col-sm-9"><form:input path="dob" type="date" class="form-control"
                                                            required="required"/>
                             <span class="form-bar"></span>
                             <form:errors path="dob" cssClass="text-warning"/>
@@ -107,19 +107,23 @@
                     </fieldset>
 
                     <fieldset class="form-group row">
-                        <form:label cssClass="col-sm-2 col-form-label" path="address">Address</form:label>
-                        <div class="col-sm-10"><form:input path="address" type="text" class="form-control"
+                        <form:label cssClass="col-sm-3 col-form-label" path="address">Address</form:label>
+                        <div class="col-sm-9"><form:input path="address" type="text" class="form-control"
                                                            required="required"/>
                             <span class="form-bar"></span>
                             <form:errors path="address" cssClass="text-warning"/>
                         </div>
                     </fieldset>
-
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <br><br>
+                    <div class="d-flex justify-content-md-center">
+                        <button id="btn-save" type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAdd">Add</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button id="btn-reset" type="button" class="btn btn-danger">Reset</button>
+                    </div>
                 </form:form>
             </div>
         </div>
     </div>
 </div>
+<jsp:include page="/WEB-INF/commons/admin/add-confirm.jsp"/>
 <!-- END HERE -->
 <jsp:include page="/WEB-INF/commons/admin/suffix.jsp"/>

@@ -1,85 +1,90 @@
 package com.se2.bankingsystem.controllers.transaction;
 
-import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
-import com.se2.bankingsystem.domains.Customer.dto.UpdateCustomerDTO;
+import com.se2.bankingsystem.domains.Customer.entity.Customer;
+import com.se2.bankingsystem.domains.Transaction.dto.CreateTransactionDTO;
+import com.se2.bankingsystem.domains.Transaction.dto.UpdateTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.ChargeTransactionService;
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.dto.CreateChargeTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.dto.UpdateChargeTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.entity.ChargeTransaction;
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@Slf4j
+@RequestMapping("/admin")
 public class ChargeTransactionController {
 
     private final ChargeTransactionService chargeTransactionService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public ChargeTransactionController(ChargeTransactionService chargeTransactionService) {
+    public ChargeTransactionController(ChargeTransactionService chargeTransactionService, ModelMapper modelMapper) {
         this.chargeTransactionService = chargeTransactionService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/chargeTransactions")
     public ModelAndView showTableView() {
-        ModelAndView modelAndView = new ModelAndView();
-        List<ChargeTransaction> customers = chargeTransactionService.findAll();
-        modelAndView.addObject(customers);
+        ModelAndView modelAndView = new ModelAndView("admin/transaction/sub/charge/chargeTransactionList");
+        List<ChargeTransaction> chargeTransactions = chargeTransactionService.findAll();
+        modelAndView.addObject(chargeTransactions);
         return modelAndView;
     }
 
     @GetMapping("/chargeTransactions/{id}")
-    public ModelAndView showProfile(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView();
-        ChargeTransaction customer = chargeTransactionService.getById(id);
-        modelAndView.addObject(customer);
+    public ModelAndView showChargeDetails(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("admin/transaction/sub/charge/chargeTransactionDetails");
+        ChargeTransaction chargeTransaction = chargeTransactionService.getById(id);
+        modelAndView.addObject(chargeTransaction);
         return modelAndView;
     }
 
     @GetMapping("/chargeTransactions/create")
     public ModelAndView showCreateView() {
-        ModelAndView modelAndView = new ModelAndView("");
+        ModelAndView modelAndView = new ModelAndView("admin/transaction/sub/charge/createChargeTransaction");
 
-        CreateCustomerDTO createCustomerDTO = CreateCustomerDTO.builder().build();
-        modelAndView.addObject(createCustomerDTO);
+        CreateChargeTransactionDTO createChargeTransactionDTO = CreateChargeTransactionDTO.builder().build();
+        modelAndView.addObject(createChargeTransactionDTO);
         return modelAndView;
     }
 
-    @PostMapping("/chargeTransactions")
-    public ModelAndView create(@Valid @ModelAttribute CreateChargeTransactionDTO createChargeTransactionDTO) {
-        ModelAndView modelAndView = new ModelAndView("");
+    @PostMapping("/chargeTransactions/create")
+    public String create(@Valid @ModelAttribute CreateChargeTransactionDTO createChargeTransactionDTO) {
+        log.info(createChargeTransactionDTO.toString());
         chargeTransactionService.create(createChargeTransactionDTO);
-        return modelAndView;
+        return "redirect:/admin/chargeTransactions";
     }
 
     @GetMapping("/chargeTransactions/{chargeTransactionID}/edit")
     public ModelAndView showUpdateView(@PathVariable Long chargeTransactionID) {
-        ModelAndView modelAndView = new ModelAndView("");
+        ModelAndView modelAndView = new ModelAndView("admin/transaction/sub/charge/editChargeTransaction");
 
-        ChargeTransaction customer = chargeTransactionService.getById(chargeTransactionID);
-        modelAndView.addObject("customer", customer);
+        ChargeTransaction chargeTransaction = chargeTransactionService.getById(chargeTransactionID);
+        modelAndView.addObject("chargeTransaction", chargeTransaction);
 
-        UpdateCustomerDTO updateCustomerDTO = UpdateCustomerDTO.builder().build();
-        modelAndView.addObject(updateCustomerDTO);
+        UpdateChargeTransactionDTO updateChargeTransactionDTO = modelMapper.map(chargeTransaction, UpdateChargeTransactionDTO.class);
+        modelAndView.addObject(updateChargeTransactionDTO);
         return modelAndView;
     }
 
     @PostMapping("/chargeTransactions/{chargeTransactionID}/edit")
     public String update(@PathVariable Long chargeTransactionID, @Valid @ModelAttribute UpdateChargeTransactionDTO updateChargeTransactionDTO) {
+
         chargeTransactionService.updateById(chargeTransactionID, updateChargeTransactionDTO);
-        return "";
+        return "redirect:/admin/chargeTransactions";
     }
 
     @PostMapping("/chargeTransactions/{chargeTransactionID}/delete")
     public String delete(@PathVariable Long chargeTransactionID) {
         chargeTransactionService.deleteById(chargeTransactionID);
-        return "";
+        return "redirect:/admin/chargeTransactions";
     }
 }

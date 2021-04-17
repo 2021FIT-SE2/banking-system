@@ -4,9 +4,9 @@
 <!-- START HERE -->
 <div class="card">
     <div class="card-header">
-        <h5>savingAccounts</h5>
+        <h5>loanAccounts</h5>
         <div class="card-header-right" style="margin-right: 10px">
-            <a href="<c:url value="/admin/savingAccounts/create"/>">
+            <a href="<c:url value="/admin/loanAccounts/create"/>">
                 <button type="submit" class="btn btn-primary">Create New</button>
             </a>
         </div>
@@ -29,22 +29,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="savingAccount" items="${savingAccountList}">
+                <c:forEach var="loanAccount" items="${loanAccountList}">
                     <tr>
-                        <td>${savingAccount.id}</td>
+                        <td>${loanAccount.id}</td>
                         <td>
-                            <a href="/admin/savingAccounts/${savingAccount.customerID}">${savingAccount.customerID}</a>
+                            <a href="/admin/loanAccounts/${loanAccount.customerID}">${loanAccount.customerID}</a>
                         </td>
-                        <td>${savingAccount.balance}</td>
-                        <td>${savingAccount.principal}</td>
-                        <td>${savingAccount.interest}</td>
-                        <td>${savingAccount.rate}</td>
-                        <td>${savingAccount.duration}</td>
-                        <td>${savingAccount.startDate}</td>
-                        <td>${savingAccount.endDate}</td>
+                        <td>${loanAccount.balance}</td>
+                        <td>${loanAccount.principal}</td>
+                        <td>${loanAccount.interest}</td>
+                        <td>${loanAccount.rate}</td>
+                        <td>${loanAccount.duration}</td>
+                        <td>${loanAccount.startDate}</td>
+                        <td>${loanAccount.endDate}</td>
 
                         <td>
-                            <a href="/admin/savingAccounts/${savingAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
+                            <a href="/admin/loanAccounts/${loanAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
                             <i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                         </td>
                     </tr>
@@ -58,7 +58,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-footer d-flex justify-content-md-center">
-                                    <a href="/admin/savingAccounts/${savingAccount.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
+                                    <a href="/admin/loanAccounts/${loanAccount.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 
                                 </div>

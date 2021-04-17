@@ -1,5 +1,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<jsp:include page="/WEB-INF/commons/admin/prefix.jsp"/>
+
+<jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
+
+    <jsp:param name="title" value="Create Customer" />
+
+    <jsp:param name="parentLinkText" value="Manage Customer" />
+    <jsp:param name="parentLinkUrl" value="/admin/customers" />
+
+    <jsp:param name="childLinkText" value="Create New" />
+    <jsp:param name="childLinkUrl" value="/admin/customers/1/edit" />
+
+    <jsp:param name="activeSidebarElementID" value="add-customer" />
+</jsp:include>
 
 <!-- START HERE -->
 <div class="row h-100 justify-content-center align-items-center">

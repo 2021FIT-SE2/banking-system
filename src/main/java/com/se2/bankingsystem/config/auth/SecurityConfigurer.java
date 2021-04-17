@@ -1,8 +1,6 @@
 package com.se2.bankingsystem.config.auth;
 
 import com.se2.bankingsystem.domains.User.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -12,12 +10,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableGlobalMethodSecurity(
@@ -38,23 +37,16 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         "/resources/**",
         "/login",
         "/register",
-        // other public endpoints of your API may be appended to this array
+        // other public endpoints
     };
 
     private UserService userService;
 
-    private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfiguration.class);
+    private DataSource dataSource;
 
-    /**
-     * Use to create instance of {@link FirebaseAuthenticationTokenFilter}.
-     *
-     * @return instance of {@link FirebaseAuthenticationTokenFilter}
-     */
-    public FirebaseAuthenticationTokenFilter firebaseAuthenticationFilterBean() {
-        logger.debug(
-            "firebaseAuthenticationFilterBean():: creating instance of FirebaseAuthenticationFilter.");
-
-        return new FirebaseAuthenticationTokenFilter(userService);
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     @Autowired
@@ -70,12 +62,26 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         if (securityEnabled) {
-            http.csrf().disable()
-                .cors().and()
-                .authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll()
-                .anyRequest().authenticated()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-            http.addFilterBefore(firebaseAuthenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);
+
+            http.csrf().disable();
+
+            http.authorizeRequests()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .anyRequest().authenticated();
+
+            http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+
+            // Config for Login Form
+            http.authorizeRequests().and().formLogin()
+                // Submit URL of login page.
+                .loginProcessingUrl("/login")
+                .loginPage("/login")
+                .defaultSuccessUrl("/admin/dashboard")
+                .failureUrl("/login?error=true")
+//                .usernameParameter("username")
+//                .passwordParameter("password")
+                // Config for Logout Page
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/");
         }
     }
 
@@ -88,5 +94,12 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+        db.setDataSource(dataSource);
+        return db;
     }
 }

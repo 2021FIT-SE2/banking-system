@@ -7,8 +7,13 @@ import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.entity.Sa
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -36,6 +41,7 @@ public class SavingAccountController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @GetMapping("/savingAccounts/{id}")
     public ModelAndView showProfile(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("admin/customer/account/savingAccount/savingAccountDetails");
@@ -44,6 +50,7 @@ public class SavingAccountController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @GetMapping("/savingAccounts/create")
     public ModelAndView showCreateView() {
         ModelAndView modelAndView = new ModelAndView("admin/customer/account/savingAccount/createSavingAccount");
@@ -53,6 +60,7 @@ public class SavingAccountController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @PostMapping("/savingAccounts/create")
     public String create(@Valid @ModelAttribute CreateSavingAccountDTO createsavingAccountDTO) {
         savingAccountService.create(createsavingAccountDTO);
@@ -71,12 +79,14 @@ public class SavingAccountController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @PostMapping("/savingAccounts/{savingAccountID}/edit")
     public String update(@PathVariable Long savingAccountID, @Valid @ModelAttribute UpdateSavingAccountDTO updateSavingAccountDTO) {
         savingAccountService.updateById(savingAccountID, updateSavingAccountDTO);
         return "redirect:/admin/savingAccounts";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @PostMapping("/savingAccounts/{savingAccountID}/delete")
     public String delete(@PathVariable Long savingAccountID) {
         savingAccountService.deleteById(savingAccountID);

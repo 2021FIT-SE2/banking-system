@@ -1,15 +1,15 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
 
-    <jsp:param name="title" value="Create Customer"/>
+    <jsp:param name="title" value="Create Customer" />
 
-    <jsp:param name="parentLink" value="Manage Customer"/>
-    <jsp:param name="parentLinkUrl" value=""/>
+    <jsp:param name="parentLinkText" value="Manage Customer" />
+    <jsp:param name="parentLinkUrl" value="/admin/customers" />
 
-    <jsp:param name="childLink" value="Create New Customer"/>
-    <jsp:param name="childLinkUrl" value=""/>
+    <jsp:param name="childLinkText" value="Create New" />
+    <jsp:param name="childLinkUrl" value="/admin/customers/create" />
 
-    <jsp:param name="activeSidebarElementID" value="add-customer"/>
+    <jsp:param name="activeSidebarElementID" value="customer-create" />
 </jsp:include>
 
 <!-- START HERE -->
@@ -32,7 +32,7 @@
                     </fieldset>
 
                     <fieldset class="form-group row">
-                        <form:label cssClass="col-sm-3 col-form-label" path="password">Password</form:label>
+                        <form:label cssClass="col-sm-2 col-form-label" path="password">Password</form:label>
                         <div class="col-sm-9">
                             <form:input path="password" type="text" class="form-control"
                                         required="required"/>
@@ -55,7 +55,7 @@
                     <fieldset class="form-group row">
                         <form:label cssClass="col-sm-3 col-form-label" path="phoneNumber">Phone Number</form:label>
                         <div class="col-sm-9"><form:input path="phoneNumber" type="text" class="form-control"
-                                                          required="required"/>
+                                                           required="required"/>
                             <span class="form-bar"></span>
                             <form:errors path="phoneNumber" cssClass="text-warning"/>
                         </div>
@@ -87,7 +87,7 @@
                         <form:label cssClass="col-sm-3 col-form-label" path="gender">Gender</form:label>
 
                         <div class="col-sm-9"><form:select path="gender" type="text" class="form-control form-select"
-                                                           required="required">
+                                                            required="required">
                             <form:option value="MALE" label="Male"/>
                             <form:option value="FEMALE" label="Female"/>
                         </form:select>
@@ -100,7 +100,7 @@
                     <fieldset class="form-group row">
                         <form:label cssClass="col-sm-3 col-form-label" path="dob">Date Of Birth</form:label>
                         <div class="col-sm-9"><form:input path="dob" type="date" class="form-control"
-                                                          required="required"/>
+                                                           required="required"/>
                             <span class="form-bar"></span>
                             <form:errors path="dob" cssClass="text-warning"/>
                         </div>
@@ -109,7 +109,7 @@
                     <fieldset class="form-group row">
                         <form:label cssClass="col-sm-3 col-form-label" path="address">Address</form:label>
                         <div class="col-sm-9"><form:input path="address" type="text" class="form-control"
-                                                          required="required"/>
+                                                           required="required"/>
                             <span class="form-bar"></span>
                             <form:errors path="address" cssClass="text-warning"/>
                         </div>

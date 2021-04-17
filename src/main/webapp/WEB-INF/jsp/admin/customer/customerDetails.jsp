@@ -1,4 +1,17 @@
-<jsp:include page="/WEB-INF/commons/admin/prefix.jsp"/>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
+
+    <jsp:param name="title" value="Customer Details" />
+
+    <jsp:param name="parentLinkText" value="Manage Customer" />
+    <jsp:param name="parentLinkUrl" value="/admin/customers" />
+
+    <jsp:param name="childLinkText" value="Customer Details" />
+    <jsp:param name="childLinkUrl" value="/admin/customers/1/details" />
+
+    <jsp:param name="activeSidebarElementID" value="add-customer" />
+</jsp:include>
 <!-- START HERE -->
 <div class="card">
     <div class="card-header">

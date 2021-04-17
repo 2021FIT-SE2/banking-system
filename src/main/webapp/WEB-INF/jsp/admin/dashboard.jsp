@@ -1,8 +1,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--<jsp:include page="/WEB-INF/commons/admin/css.jsp"/>--%>
+<jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
 
-<jsp:include page="/WEB-INF/commons/admin/prefix.jsp"/>
+    <jsp:param name="title" value="Dashboard" />
+
+    <jsp:param name="parentLinkText" value="Admin" />
+    <jsp:param name="parentLinkUrl" value="/admin/dashboard" />
+
+    <jsp:param name="childLinkText" value="Dashboard" />
+    <jsp:param name="childLinkUrl" value="/admin/dashboard" />
+
+    <jsp:param name="activeSidebarElementID" value="dashboard" />
+</jsp:include>
 
 <div class="row">
     <!-- Material statustic card start -->

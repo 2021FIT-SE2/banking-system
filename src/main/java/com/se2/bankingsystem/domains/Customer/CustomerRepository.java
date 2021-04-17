@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.Email;
+
 
 @Repository
 @Transactional(readOnly = true)
@@ -33,4 +35,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 //            "OR u.email LIKE %?1% " +
 //            "OR u.lastName LIKE %?1%")
 //    Page<Customer> findByKeyword(String keyword, Pageable pageable);
+
+    boolean existsByEmail(@Email String email);
 }

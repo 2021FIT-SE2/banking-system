@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sign In Template for Bootstrap</title>
+    <title>Register</title>
 
     <!-- Bootstrap core CSS -->
     <script src="<c:url value="/webjars/jquery/3.6.0/jquery.min.js"/>"></script>
@@ -37,10 +37,9 @@
             <img src="https://res.cloudinary.com/mhmd/image/upload/v1569543678/form_d9sh6m.svg" alt=""
                  class="img-fluid mb-3 d-none d-md-block">
             <h1>Create an Account</h1>
-            <p class="font-italic text-muted mb-0">Create a minimal registeration page using Bootstrap 4 HTML form
-                elements.</p>
+            <p class="font-italic text-muted mb-0">Create an account to become our customer. We are there for you!</p>
             <p class="font-italic text-muted">Snippet By <a href="https://bootstrapious.com" class="text-muted">
-                <u>Bootstrapious</u></a>
+                <u>CodersBank</u></a>
             </p>
         </div>
 

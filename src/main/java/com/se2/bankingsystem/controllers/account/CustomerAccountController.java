@@ -1,12 +1,11 @@
 package com.se2.bankingsystem.controllers.account;
 
-import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.dto.UpdateCustomerDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountService;
-import com.se2.bankingsystem.domains.CustomerAccount.dto.CreateCustomerAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.dto.UpdateCustomerAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,6 +26,7 @@ public class CustomerAccountController {
         this.customerAccountService = customerAccountService;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or principal.id == #id")
     @GetMapping("/customerAccounts")
     public ModelAndView showTableView() {
         ModelAndView modelAndView = new ModelAndView();
@@ -35,6 +35,7 @@ public class CustomerAccountController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or principal.id == #id")
     @GetMapping({"/customerAccounts/{id}"})
     public ModelAndView showProfile(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -43,28 +44,13 @@ public class CustomerAccountController {
         return modelAndView;
     }
 
-    @GetMapping("/customerAccounts/create")
-    public ModelAndView showCreateView() {
-        ModelAndView modelAndView = new ModelAndView("admin/customer/customerDetails");
-
-        CreateCustomerDTO createCustomerDTO = CreateCustomerDTO.builder().build();
-        modelAndView.addObject(createCustomerDTO);
-        return modelAndView;
-    }
-
-    @PostMapping("/customerAccounts")
-    public ModelAndView create(@Valid @ModelAttribute CreateCustomerAccountDTO createCustomerAccountDTO) {
-        ModelAndView modelAndView = new ModelAndView("customersList");
-        customerAccountService.create(createCustomerAccountDTO);
-        return modelAndView;
-    }
-
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #customerAccountID)")
     @GetMapping("/customerAccounts/{customerAccountID}/edit")
     public ModelAndView showUpdateView(@PathVariable Long customerAccountID) {
-        ModelAndView modelAndView = new ModelAndView("admin/customer/editCustomer");
+        ModelAndView modelAndView = new ModelAndView("admin/customerAccount/customerAccountsList");
 
-        CustomerAccount customer = customerAccountService.getById(customerAccountID);
-        modelAndView.addObject("customer", customer);
+        CustomerAccount customerAccount = customerAccountService.getById(customerAccountID);
+        modelAndView.addObject("customer", customerAccount);
 
         UpdateCustomerDTO updateCustomerDTO = UpdateCustomerDTO.builder().build();
         modelAndView.addObject(updateCustomerDTO);

@@ -20,20 +20,9 @@
                 </ul>
             </div>
         </div>
-<%--        <div class="p-15 p-b-0">--%>
-<%--            <form class="form-material">--%>
-<%--                <div class="form-group form-primary">--%>
-<%--                    <label>--%>
-<%--                        <input type="text" name="footer-email" class="form-control">--%>
-<%--                    </label>--%>
-<%--                    <span class="form-bar"></span>--%>
-<%--                    <label class="float-label"><i class="fa fa-search m-r-10"></i>Search Friend</label>--%>
-<%--                </div>--%>
-<%--            </form>--%>
-<%--        </div>--%>
-<%--        <div class="pcoded-navigation-label">Navigation</div>--%>
+
         <ul class="pcoded-item pcoded-left-item">
-            <li class="active">
+            <li class="${param.activeSidebarElementID == "dashboard" ? " active" : ""}">
                 <a href="<c:url value="/admin/dashboard"/>" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                     <span class="pcoded-mtext">Dashboard</span>
@@ -43,21 +32,21 @@
         </ul>
 <%--        <div class="pcoded-navigation-label">Customer</div>--%>
         <ul class="pcoded-item pcoded-left-item">
-            <li class="pcoded-hasmenu">
+            <li class="pcoded-hasmenu${param.activeSidebarElementID.startsWith("customer-") ? " active" : ""}">
                 <a href="javascript:void(0)" class="waves-effect waves-dark">
                         <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
                     <span class="pcoded-mtext">Manage Customer</span>
                     <span class="pcoded-mcaret"></span>
                 </a>
-                <ul class="pcoded-submenu">
-                    <li class=" ">
+                <ul class="pcoded-submenu expand">
+                    <li class="${param.activeSidebarElementID.equals("customer-create") ? "active" : ""}">
                         <a href="<c:url value="/admin/customers/create"/>" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext">Add Customer</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
-                    <li class=" ">
+                    <li class="${param.activeSidebarElementID.equals("customer-list") ? "active" : ""}">
                         <a href="<c:url value="/admin/customers"/>" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext">Customer List</span>
@@ -69,7 +58,7 @@
         </ul>
 <%--        <div class="pcoded-navigation-label">Transaction</div>--%>
         <ul class="pcoded-item pcoded-left-item">
-            <li class="pcoded-hasmenu">
+            <li class="pcoded-hasmenu ${param.activeSidebarElementID.startsWith("transfer-transaction") ? "active" : ""}">
                 <a href="javascript:void(0)" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
                     <span class="pcoded-mtext">Transfer Transaction</span>

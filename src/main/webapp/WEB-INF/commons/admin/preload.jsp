@@ -1,22 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: duong
-  Date: 4/12/21
-  Time: 7:09 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<c:set var="baseURL"
-       value="${pageContext.request.requestURL.substring(0, pageContext.request.requestURL.length() - pageContext.request.requestURI.length())}${pageContext.request.contextPath}/"/>
-<html>
-<head>
-    <base href="${baseURL}">
-    <title>Preload</title>
-</head>
-<body>
 <div class="theme-loader">
     <div class="loader-track">
         <div class="preloader-wrapper">
@@ -69,5 +53,3 @@
         </div>
     </div>
 </div>
-</body>
-</html>

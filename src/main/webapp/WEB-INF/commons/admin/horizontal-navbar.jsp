@@ -1,36 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<c:set var="baseURL"
-       value="${pageContext.request.requestURL.substring(0, pageContext.request.requestURL.length() - pageContext.request.requestURI.length())}${pageContext.request.contextPath}/"/>
-<html>
-<head>
-    <base href="${baseURL}">
-    <title>Header</title>
-</head>
-<body>
 <nav class="navbar header-navbar pcoded-header">
     <div class="navbar-wrapper">
         <div class="navbar-logo">
-            <a class="mobile-menu waves-effect waves-light" id="mobile-collapse" href="#">
+            <a class="mobile-menu waves-effect waves-light" id="mobile-collapse">
                 <i class="ti-menu"></i>
             </a>
-            <div class="mobile-search waves-effect waves-light">
-                <div class="header-search">
-                    <div class="main-search morphsearch-search">
-                        <div class="input-group">
-                                    <span class="input-group-prepend search-close"><i
-                                            class="ti-close input-group-text"></i></span>
-                            <label>
-                                <input type="text" class="form-control" placeholder="Enter Keyword">
-                            </label>
-                            <span class="input-group-append search-btn"><i
-                                    class="ti-search input-group-text"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <a href="<c:url value="/"/>">
                 <img class="img-fluid" src="<c:url value="resources/img/codersBank-logo.png"/>"
                      alt="Theme-Logo"/>
@@ -45,14 +21,14 @@
                     <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
                 </li>
                 <li>
-                    <a href="#" onclick="toggleFullScreen()" class="waves-effect waves-light">
+                    <a onclick="toggleFullScreen()" class="waves-effect waves-light">
                         <i class="ti-fullscreen"></i>
                     </a>
                 </li>
             </ul>
             <ul class="nav-right">
                 <li class="header-notification">
-                    <a href="#" class="waves-effect waves-light">
+                    <a class="waves-effect waves-light">
                         <i class="ti-bell"></i>
                         <span class="badge bg-c-red"></span>
                     </a>
@@ -103,7 +79,7 @@
                     </ul>
                 </li>
                 <li class="user-profile header-notification">
-                    <a href="#" class="waves-effect waves-light">
+                    <a class="waves-effect waves-light">
                         <img src="<c:url value="resources/img/avatar-4.jpg" />" class="img-radius"
                              alt="User-Profile-Image">
                         <span>Admin</span>
@@ -111,7 +87,7 @@
                     </a>
                     <ul class="show-notification profile-notification">
                         <li class="waves-effect waves-light">
-                            <a href="#">
+                            <a>
                                 <i class="ti-settings"></i> Settings
                             </a>
                         </li>
@@ -141,5 +117,4 @@
         </div>
     </div>
 </nav>
-</body>
-</html>
+

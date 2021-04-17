@@ -5,14 +5,11 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class LoginRequestDTO {
+public class LoginDTO {
 
     @NotNull
     private String username;
 
     @NotNull
     private String password;
-
-    @NotNull
-    private String token;
 }

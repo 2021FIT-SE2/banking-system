@@ -1,6 +1,5 @@
 package com.se2.bankingsystem.domains.Customer;
 
-
 import com.se2.bankingsystem.domains.Authority.AuthorityRepository;
 import com.se2.bankingsystem.domains.Authority.entity.Authority;
 import com.se2.bankingsystem.domains.Authority.entity.AuthorityName;
@@ -16,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -97,17 +95,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getById(Long id) {
-        return customerRepository.findById(id).orElse(null);
+    public boolean isEmailUnique(String email) {
+        return !customerRepository.existsByEmail(email);
     }
 
-    public List<Customer> createManyCustomers(List<CreateCustomerDTO> createCustomerDTOList) {
-        List<Customer> customers = new ArrayList<>();
-
-        for (CreateCustomerDTO createCustomerDTO : createCustomerDTOList) {
-            Customer customer = convertToCustomer(createCustomerDTO);
-            customers.add(customer);
-        }
-        return customerRepository.saveAll(customers);
+    @Override
+    public Customer getById(Long id) {
+        return customerRepository.findById(id).orElse(null);
     }
 }

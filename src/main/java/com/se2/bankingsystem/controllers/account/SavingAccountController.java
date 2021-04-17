@@ -7,6 +7,7 @@ import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.dto.Creat
 import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.dto.UpdateSavingAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.entity.SavingAccount;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,6 +36,7 @@ public class SavingAccountController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @GetMapping("/savingAccounts/{id}")
     public ModelAndView showProfile(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -43,6 +45,7 @@ public class SavingAccountController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @GetMapping("/savingAccounts/create")
     public ModelAndView showCreateView() {
         ModelAndView modelAndView = new ModelAndView("");
@@ -52,6 +55,7 @@ public class SavingAccountController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @PostMapping("/savingAccounts")
     public ModelAndView create(@Valid @ModelAttribute CreateSavingAccountDTO createSavingAccountDTO) {
         ModelAndView modelAndView = new ModelAndView("");
@@ -71,12 +75,14 @@ public class SavingAccountController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @PostMapping("/savingAccounts/{savingAccountID}/edit")
     public String update(@PathVariable Long savingAccountID, @Valid @ModelAttribute UpdateSavingAccountDTO updateSavingAccountDTO) {
         savingAccountService.updateById(savingAccountID, updateSavingAccountDTO);
         return "";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @PostMapping("/savingAccounts/{savingAccountID}/delete")
     public String delete(@PathVariable Long savingAccountID) {
         savingAccountService.deleteById(savingAccountID);

@@ -1,4 +1,4 @@
-package com.se2.bankingsystem.controllers;
+package com.se2.bankingsystem.controllers.wallet;
 
 import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.dto.UpdateCustomerDTO;

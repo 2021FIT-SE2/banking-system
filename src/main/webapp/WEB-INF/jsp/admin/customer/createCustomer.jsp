@@ -3,13 +3,13 @@
 
     <jsp:param name="title" value="Create Customer" />
 
-    <jsp:param name="parentLink" value="Manage Customer" />
-    <jsp:param name="parentLinkUrl" value="" />
+    <jsp:param name="parentLinkText" value="Manage Customer" />
+    <jsp:param name="parentLinkUrl" value="/admin/customers" />
 
-    <jsp:param name="childLink" value="Create New" />
-    <jsp:param name="childLinkUrl" value="" />
+    <jsp:param name="childLinkText" value="Create New" />
+    <jsp:param name="childLinkUrl" value="/admin/customers/create" />
 
-    <jsp:param name="activeSidebarElementID" value="add-customer" />
+    <jsp:param name="activeSidebarElementID" value="customer-create" />
 </jsp:include>
 
 <!-- START HERE -->

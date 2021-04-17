@@ -6,4 +6,6 @@ import com.se2.bankingsystem.domains.Authority.entity.Authority;
 
 public interface AuthorityService extends CRUDService<Authority, Long, CreateAuthorityDTO, CreateAuthorityDTO> {
     boolean hasCustomerAccess(Long currentUserID, Long studentID);
+
+    boolean hasCustomerAccountAccess(Long currentUserID, Long customerAccountID);
 }

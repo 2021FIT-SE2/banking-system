@@ -1,4 +1,4 @@
-package com.se2.bankingsystem.controllers;
+package com.se2.bankingsystem.controllers.customer;
 
 import com.se2.bankingsystem.domains.Customer.CustomerService;
 import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
@@ -82,7 +82,6 @@ public class CustomerController {
 
     @PostMapping("/customers/{customerID}/edit")
     public String update(@PathVariable Long customerID, @Valid @ModelAttribute UpdateCustomerDTO updateCustomerDTO) {
-        log.info(updateCustomerDTO.toString());
         customerService.updateById(customerID, updateCustomerDTO);
         return "redirect:/admin/customers";
     }

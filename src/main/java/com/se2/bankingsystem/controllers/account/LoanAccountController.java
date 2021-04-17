@@ -7,6 +7,7 @@ import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.dto.CreateL
 import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.dto.UpdateLoanAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.entity.LoanAccount;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,6 +36,7 @@ public class LoanAccountController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #customerAccountID)")
     @GetMapping("/loanAccounts/{id}")
     public ModelAndView showProfile(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -52,6 +54,7 @@ public class LoanAccountController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CUSTOMER')")
     @PostMapping("/loanAccounts")
     public ModelAndView create(@Valid @ModelAttribute CreateLoanAccountDTO createLoanAccountDTO) {
         ModelAndView modelAndView = new ModelAndView("");
@@ -59,6 +62,7 @@ public class LoanAccountController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @GetMapping("/loanAccounts/{loanAccountID}/edit")
     public ModelAndView showUpdateView(@PathVariable Long loanAccountID) {
         ModelAndView modelAndView = new ModelAndView("");
@@ -71,12 +75,14 @@ public class LoanAccountController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @PostMapping("/loanAccounts/{loanAccountID}/edit")
     public String update(@PathVariable Long loanAccountID, @Valid @ModelAttribute UpdateLoanAccountDTO updateLoanAccountDTO) {
         loanAccountService.updateById(loanAccountID, updateLoanAccountDTO);
         return "";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
     @PostMapping("/loanAccounts/{loanAccountID}/delete")
     public String delete(@PathVariable Long loanAccountID) {
         loanAccountService.deleteById(loanAccountID);

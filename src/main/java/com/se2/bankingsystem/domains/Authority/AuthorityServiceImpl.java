@@ -4,6 +4,8 @@ import com.se2.bankingsystem.domains.Authority.dto.CreateAuthorityDTO;
 import com.se2.bankingsystem.domains.Authority.entity.Authority;
 import com.se2.bankingsystem.domains.Customer.CustomerRepository;
 import com.se2.bankingsystem.domains.Customer.entity.Customer;
+import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountRepository;
+import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,10 +21,13 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     private final CustomerRepository customerRepository;
 
+    private final CustomerAccountRepository customerAccountRepository;
+
     @Autowired
-    public AuthorityServiceImpl(AuthorityRepository authorityRepository, CustomerRepository customerRepository) {
+    public AuthorityServiceImpl(AuthorityRepository authorityRepository, CustomerRepository customerRepository, CustomerAccountRepository customerAccountRepository) {
         this.authorityRepository = authorityRepository;
         this.customerRepository = customerRepository;
+        this.customerAccountRepository = customerAccountRepository;
     }
 
     @Override
@@ -62,5 +67,11 @@ public class AuthorityServiceImpl implements AuthorityService {
     public boolean hasCustomerAccess(Long currentUserID, Long studentID) {
         Customer customer = customerRepository.findById(studentID).orElseThrow(EntityNotFoundException::new);
         return customer.getId().equals(currentUserID);
+    }
+
+    @Override
+    public boolean hasCustomerAccountAccess(Long currentUserID, Long customerAccountID) {
+        CustomerAccount customerAccount = customerAccountRepository.findById(customerAccountID).orElseThrow(EntityNotFoundException::new);
+        return customerAccount.getCustomer().getId().equals(currentUserID);
     }
 }

@@ -8,13 +8,13 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AdminController {
 
-    @GetMapping(path = "/dashboard")
+    @GetMapping(path = "/admin/dashboard")
     public ModelAndView showDashboard() {
         ModelAndView modelAndView = new ModelAndView("admin/dashboard");
         return modelAndView;
     }
 
-    @GetMapping(path="/create-customer")
+    @GetMapping(path="/admin/create-customer")
     public ModelAndView createCustomer(){
         ModelAndView modelAndView = new ModelAndView("admin/customer/createCustomer");
         return modelAndView;
@@ -34,12 +34,12 @@ public class AdminController {
 
     @GetMapping(path="/saving-account-add")
     public ModelAndView addSavingAccount(){
-        ModelAndView modelAndView = new ModelAndView("admin/customer/account/savingAccount/savingAccountAdd");
+        ModelAndView modelAndView = new ModelAndView("createSavingAccount");
         return modelAndView;
     }
     @GetMapping(path="/loan-account-add")
     public ModelAndView addLoanAccount(){
-        ModelAndView modelAndView = new ModelAndView("admin/customer/account/loanAccount/loanAccountAdd");
+        ModelAndView modelAndView = new ModelAndView("createLoanAccount");
         return modelAndView;
     }
 
@@ -74,12 +74,12 @@ public class AdminController {
 
     @GetMapping(path="/create-charge")
     public ModelAndView addChargeTransaction(){
-        ModelAndView modelAndView = new ModelAndView("admin/transaction/charge/chargeTransactionAdd");
+        ModelAndView modelAndView = new ModelAndView("createChargeTransaction");
         return modelAndView;
     }
     @GetMapping(path="/charge-list")
     public ModelAndView showChargeTransactionList(){
-        ModelAndView modelAndView = new ModelAndView("admin/transaction/charge/chargeTransactionList");
+        ModelAndView modelAndView = new ModelAndView("editChargeTransaction");
         return modelAndView;
     }
 

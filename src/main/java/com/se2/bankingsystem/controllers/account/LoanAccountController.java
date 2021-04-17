@@ -6,80 +6,83 @@ import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.LoanAccount
 import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.dto.CreateLoanAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.dto.UpdateLoanAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.entity.LoanAccount;
+import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.dto.UpdateChargeTransactionDTO;
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@Slf4j
+@RequestMapping("/admin")
 public class LoanAccountController {
 
     private final LoanAccountService loanAccountService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public LoanAccountController(LoanAccountService loanAccountService) {
+    public LoanAccountController(LoanAccountService loanAccountService, ModelMapper modelMapper) {
         this.loanAccountService = loanAccountService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/loanAccounts")
     public ModelAndView showTableView() {
-        ModelAndView modelAndView = new ModelAndView();
-        List<LoanAccount> customers = loanAccountService.findAll();
-        modelAndView.addObject(customers);
+        ModelAndView modelAndView = new ModelAndView("admin/customer/account/loanAccount/loanAccountList");
+        List<LoanAccount> loanAccounts = loanAccountService.findAll();
+        modelAndView.addObject(loanAccounts);
         return modelAndView;
     }
 
     @GetMapping("/loanAccounts/{id}")
     public ModelAndView showProfile(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView();
-        LoanAccount customer = loanAccountService.getById(id);
-        modelAndView.addObject(customer);
+        ModelAndView modelAndView = new ModelAndView("admin/customer/account/loanAccount/loanAccountDetails");
+        LoanAccount loanAccount = loanAccountService.getById(id);
+        modelAndView.addObject(loanAccount);
         return modelAndView;
     }
 
     @GetMapping("/loanAccounts/create")
     public ModelAndView showCreateView() {
-        ModelAndView modelAndView = new ModelAndView("");
+        ModelAndView modelAndView = new ModelAndView("admin/customer/account/loanAccount/createLoanAccount");
 
-        CreateCustomerDTO createCustomerDTO = CreateCustomerDTO.builder().build();
-        modelAndView.addObject(createCustomerDTO);
+        CreateLoanAccountDTO createLoanAccountDTO = CreateLoanAccountDTO.builder().build();
+        modelAndView.addObject(createLoanAccountDTO);
         return modelAndView;
     }
 
-    @PostMapping("/loanAccounts")
-    public ModelAndView create(@Valid @ModelAttribute CreateLoanAccountDTO createLoanAccountDTO) {
-        ModelAndView modelAndView = new ModelAndView("");
+    @PostMapping("/loanAccounts/create")
+    public String create(@Valid @ModelAttribute CreateLoanAccountDTO createLoanAccountDTO) {
         loanAccountService.create(createLoanAccountDTO);
-        return modelAndView;
+        return "redirect:/admin/loanAccounts";
     }
 
     @GetMapping("/loanAccounts/{loanAccountID}/edit")
     public ModelAndView showUpdateView(@PathVariable Long loanAccountID) {
-        ModelAndView modelAndView = new ModelAndView("");
+        ModelAndView modelAndView = new ModelAndView("admin/customer/account/loanAccount/editLoanAccount");
 
-        LoanAccount customer = loanAccountService.getById(loanAccountID);
-        modelAndView.addObject("customer", customer);
+        LoanAccount loanAccount = loanAccountService.getById(loanAccountID);
+        modelAndView.addObject("loanAccount", loanAccount);
 
-        UpdateCustomerDTO updateCustomerDTO = UpdateCustomerDTO.builder().build();
-        modelAndView.addObject(updateCustomerDTO);
+        UpdateLoanAccountDTO updateLoanAccountDTO = modelMapper.map(loanAccount, UpdateLoanAccountDTO.class);
+        modelAndView.addObject(updateLoanAccountDTO);
         return modelAndView;
     }
 
     @PostMapping("/loanAccounts/{loanAccountID}/edit")
     public String update(@PathVariable Long loanAccountID, @Valid @ModelAttribute UpdateLoanAccountDTO updateLoanAccountDTO) {
         loanAccountService.updateById(loanAccountID, updateLoanAccountDTO);
-        return "";
+        return "redirect:/admin/loanAccounts";
     }
 
     @PostMapping("/loanAccounts/{loanAccountID}/delete")
     public String delete(@PathVariable Long loanAccountID) {
         loanAccountService.deleteById(loanAccountID);
-        return "";
+        return "redirect:/admin/loanAccounts";
     }
 }

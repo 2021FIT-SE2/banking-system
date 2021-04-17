@@ -1,4 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--<jsp:include page="/WEB-INF/commons/admin/css.jsp"/>--%>
+
 <jsp:include page="/WEB-INF/commons/admin/prefix.jsp"/>
 
 <div class="row">

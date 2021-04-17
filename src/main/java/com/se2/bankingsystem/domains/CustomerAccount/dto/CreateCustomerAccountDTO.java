@@ -3,6 +3,7 @@ package com.se2.bankingsystem.domains.CustomerAccount.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.se2.bankingsystem.domains.Authority.entity.AuthorityName;
 
+import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

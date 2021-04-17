@@ -4,9 +4,9 @@
 <!-- START HERE -->
 <div class="card">
     <div class="card-header">
-        <h5>savingAccounts</h5>
+        <h5>Transfer Transaction</h5>
         <div class="card-header-right" style="margin-right: 10px">
-            <a href="<c:url value="/admin/savingAccounts/create"/>">
+            <a href="<c:url value="/admin/transferTransactions/create"/>">
                 <button type="submit" class="btn btn-primary">Create New</button>
             </a>
         </div>
@@ -16,35 +16,34 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Customer ID</th>
-                    <th>Balance</th>
-                    <th>Principal</th>
-                    <th>Interest</th>
-                    <th>Rate</th>
-                    <th>Duration</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
+                    <th>Transfer Transaction ID</th>
+                    <th>Customer Account ID</th>
+                    <th>Beneficial Account</th>
+                    <th>Redeem Amount</th>
+                    <th>Create At</th>
+                    <th>Update At</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="savingAccount" items="${savingAccountList}">
+                <c:forEach var="transferTransaction" items="${transferTransactionList}">
                     <tr>
-                        <td>${savingAccount.id}</td>
                         <td>
-                            <a href="/admin/savingAccounts/${savingAccount.customerID}">${savingAccount.customerID}</a>
+                            <a href="/admin/transferTransactions/${transferTransaction.id}">${transferTransaction.id}</a>
                         </td>
-                        <td>${savingAccount.balance}</td>
-                        <td>${savingAccount.principal}</td>
-                        <td>${savingAccount.interest}</td>
-                        <td>${savingAccount.rate}</td>
-                        <td>${savingAccount.duration}</td>
-                        <td>${savingAccount.startDate}</td>
-                        <td>${savingAccount.endDate}</td>
-
                         <td>
-                            <a href="/admin/savingAccounts/${savingAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
+                            <a href="/admin/customers/${transferTransaction.customerAccountId}">${transferTransaction.customerAccountId}</a>
+                        </td>
+                        <td>${transferTransaction.beneficialAccount}</td>
+                        <td>${transferTransaction.transferAmount}</td>
+                        <td>${transferTransaction.createdAt}</td>
+                        >
+                        <td>${transferTransaction.updateAt}</td>
+                        <td>${transferTransaction.status}</td>
+                        <td>
+                            <a href="/admin/transferTransactions/${transferTransaction.id}/edit"><i
+                                    class="ti-pencil-alt fa-2x text-primary"></i></a>
                             <i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                         </td>
                     </tr>
@@ -58,7 +57,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-footer d-flex justify-content-md-center">
-                                    <a href="/admin/savingAccounts/${savingAccount.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
+                                    <a href="/admin/transferTransactions/${transferTransaction.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 
                                 </div>

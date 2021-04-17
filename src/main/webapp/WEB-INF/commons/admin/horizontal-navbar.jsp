@@ -13,7 +13,7 @@
 <nav class="navbar header-navbar pcoded-header">
     <div class="navbar-wrapper">
         <div class="navbar-logo">
-            <a class="mobile-menu waves-effect waves-light" id="mobile-collapse" href="#">
+            <a class="mobile-menu waves-effect waves-light" id="mobile-collapse">
                 <i class="ti-menu"></i>
             </a>
             <div class="mobile-search waves-effect waves-light">
@@ -45,14 +45,14 @@
                     <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
                 </li>
                 <li>
-                    <a href="#" onclick="toggleFullScreen()" class="waves-effect waves-light">
+                    <a onclick="toggleFullScreen()" class="waves-effect waves-light">
                         <i class="ti-fullscreen"></i>
                     </a>
                 </li>
             </ul>
             <ul class="nav-right">
                 <li class="header-notification">
-                    <a href="#" class="waves-effect waves-light">
+                    <a class="waves-effect waves-light">
                         <i class="ti-bell"></i>
                         <span class="badge bg-c-red"></span>
                     </a>
@@ -103,7 +103,7 @@
                     </ul>
                 </li>
                 <li class="user-profile header-notification">
-                    <a href="#" class="waves-effect waves-light">
+                    <a class="waves-effect waves-light">
                         <img src="<c:url value="resources/img/avatar-4.jpg" />" class="img-radius"
                              alt="User-Profile-Image">
                         <span>Admin</span>
@@ -111,7 +111,7 @@
                     </a>
                     <ul class="show-notification profile-notification">
                         <li class="waves-effect waves-light">
-                            <a href="#">
+                            <a href=" /admin/dashboard">
                                 <i class="ti-settings"></i> Settings
                             </a>
                         </li>

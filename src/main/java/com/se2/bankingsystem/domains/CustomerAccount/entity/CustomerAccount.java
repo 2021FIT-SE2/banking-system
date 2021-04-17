@@ -30,4 +30,6 @@ public class CustomerAccount {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Customer customer;
+
+    private Long balance;
 }

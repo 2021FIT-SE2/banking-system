@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -19,5 +20,6 @@ import javax.persistence.Table;
 @SuperBuilder
 public class ChargeTransaction extends Transaction {
 
+    @NotNull
     private Long redeemAmount;
 }

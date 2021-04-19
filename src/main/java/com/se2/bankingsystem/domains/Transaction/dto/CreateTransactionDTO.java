@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 @SuperBuilder
 public class CreateTransactionDTO implements TimeStamps {
 
+    @NotNull
     private Long customerAccountID;
 
     private TransactionType transactionType;

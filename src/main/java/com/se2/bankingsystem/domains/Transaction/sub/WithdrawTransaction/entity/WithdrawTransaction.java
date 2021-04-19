@@ -9,6 +9,8 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -18,5 +20,8 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @SuperBuilder
 public class WithdrawTransaction extends Transaction {
+
+    @NotNull
+    @Positive
     private Long withdrawAmount;
 }

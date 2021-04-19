@@ -46,4 +46,7 @@ public class Transaction implements TimeStamps {
 
     @NotNull
     private LocalDateTime updatedAt;
+
+    @NotNull
+    private TransactionType transactionType;
 }

@@ -9,17 +9,19 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "customers")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
+@Table(name = "normal_accounts")
 public class NormalAccount extends CustomerAccount {
 
-    private Long minBalance;
-
+    @NotNull
+    @PositiveOrZero
     private Long balance;
 }

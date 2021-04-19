@@ -1,5 +1,6 @@
 package com.se2.bankingsystem.domains.CustomerAccount.entity;
 
+import com.se2.bankingsystem.base.TimeStamps;
 import com.se2.bankingsystem.domains.Customer.entity.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,9 +8,18 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -18,11 +28,13 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class CustomerAccount {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class CustomerAccount implements TimeStamps {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
 
     @NotNull
     @ManyToOne
@@ -31,5 +43,9 @@ public class CustomerAccount {
     @ToString.Exclude
     private Customer customer;
 
-    private Long balance;
+    @NotNull
+    private LocalDateTime createdAt;
+
+    @NotNull
+    private LocalDateTime updatedAt;
 }

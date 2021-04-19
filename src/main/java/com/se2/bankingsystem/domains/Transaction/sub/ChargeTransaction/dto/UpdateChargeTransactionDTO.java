@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.NotNull;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
@@ -14,5 +16,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class UpdateChargeTransactionDTO extends UpdateTransactionDTO {
 
+    @NotNull
     private Long redeemAmount;
 }

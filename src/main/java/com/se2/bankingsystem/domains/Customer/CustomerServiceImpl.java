@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -49,10 +50,12 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = convertToCustomer(createCustomerDTO);
         customer = customerRepository.save(customer);
 
+        LocalDateTime now = LocalDateTime.now();
         // Automatically create a new Normal Account for this Customer
         NormalAccount normalAccount = NormalAccount.builder()
             .balance(0L)
-            .minBalance(0L)
+            .createdAt(now)
+            .updatedAt(now)
             .build();
         normalAccount.setCustomer(customer);
         normalAccountRepository.save(normalAccount);

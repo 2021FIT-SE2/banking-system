@@ -61,6 +61,7 @@ public class InitData {
                 .password("1801040147")
                 .username("tangbamiinh")
                 .email("tangbamiinh@gmail.com")
+                .address("Thanh Xuan, Hanoi")
                 .gender(Gender.MALE)
                 .role(AuthorityName.CUSTOMER)
                 .phoneNumber("0904842084")

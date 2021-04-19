@@ -14,8 +14,6 @@ import javax.validation.constraints.PositiveOrZero;
 @SuperBuilder
 public class UpdateNormalAccountDTO {
 
-    private Long customerID;
-
     @NotNull
     @PositiveOrZero
     private Long balance;

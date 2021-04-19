@@ -1,11 +1,12 @@
 package com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.dto;
 
-import ch.qos.logback.classic.spi.LoggingEventVO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -25,7 +26,6 @@ public class UpdateLoanAccountDTO {
     private Long rate;
 
     private int duration;
-
 
     @JsonIgnore
     @Builder.Default

@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
@@ -32,10 +33,10 @@ public class SavingAccount extends CustomerAccount {
     private Integer duration;
 
     @FutureOrPresent
-    private LocalDateTime startAt;
+    private LocalDate startAt;
 
     @FutureOrPresent
-    private LocalDateTime endAt;
+    private LocalDate endAt;
 
     @PositiveOrZero
     @NotNull

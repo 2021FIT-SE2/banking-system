@@ -18,9 +18,6 @@ import javax.validation.constraints.PositiveOrZero;
 public class CreateNormalAccountDTO extends CreateCustomerAccountDTO {
 
     @NotNull
-    private Long customerID;
-
-    @NotNull
     @PositiveOrZero
     private Long balance;
 }

@@ -64,4 +64,11 @@ public class CustomerController {
         customerService.deleteById(customerID);
         return "admin/customerList";
     }
+
+
+    @GetMapping(path="/profile")
+    public ModelAndView createCustomer(){
+        ModelAndView modelAndView = new ModelAndView("customer/profile");
+        return modelAndView;
+    }
 }

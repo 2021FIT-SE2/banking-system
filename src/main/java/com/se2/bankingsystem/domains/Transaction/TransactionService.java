@@ -6,14 +6,15 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+
 public interface TransactionService {
     void setCustomerAccount(Transaction transaction, Long customerID);
 
     void deleteById(Long id);
 
-    List<? extends Transaction> findAll();
+    List<Transaction> findAll();
 
     Transaction getById(Long id);
 
-    Page<? extends Transaction> findAll(Pageable pageable);
+    Page<Transaction> findAll(Pageable pageable);
 }

@@ -14,7 +14,7 @@
 </jsp:include>
 
 <div class="row">
-    <!-- Material statustic card start -->
+    <!-- Material statistics card start -->
     <div class="col-xl-4 col-md-12">
         <div class="card mat-stat-card">
             <div class="card-block">
@@ -151,7 +151,7 @@
             </div>
         </div>
     </div>
-    <!-- Material statustic card end -->
+    <!-- Material statistics card end -->
     <!-- order-visitor start -->
 
 
@@ -335,7 +335,7 @@
 
     <!--  sale analytics end -->
 
-    <!-- Project statustic start -->
+    <!-- Project statistics start -->
     <div class="col-xl-12">
         <div class="card proj-progress-card">
             <div class="card-block">
@@ -359,7 +359,7 @@
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
-                        <h6>Successfull Task</h6>
+                        <h6>Successful Task</h6>
                         <h5 class="m-b-30 f-w-700">89%<span
                                 class="text-c-green m-l-10">+0.99%</span></h5>
                         <div class="progress">
@@ -380,7 +380,7 @@
             </div>
         </div>
     </div>
-    <!-- Project statustic end -->
+    <!-- Project statistics end -->
 </div>
 <!-- END HERE -->
 <jsp:include page="/WEB-INF/commons/admin/suffix.jsp"/>

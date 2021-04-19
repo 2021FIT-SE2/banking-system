@@ -43,7 +43,7 @@
                                      src="<c:url value="resources/img/avatar-2.jpg" />"
                                      alt="Generic placeholder image">
                                 <div class="media-body">
-                                    <h5 class="notification-user">Admin</h5>
+                                    <h5 class="notification-user">Customer</h5>
                                     <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
                                         elit.</p>
                                     <span class="notification-time">30 minutes ago</span>
@@ -82,7 +82,7 @@
                     <a class="waves-effect waves-light">
                         <img src="<c:url value="resources/img/avatar-4.jpg" />" class="img-radius"
                              alt="User-Profile-Image">
-                        <span>Admin</span>
+                        <span>${param.username != null ? param.username : "Customer"}</span>
                         <i class="ti-angle-down"></i>
                     </a>
                     <ul class="show-notification profile-notification">
@@ -92,7 +92,7 @@
                             </a>
                         </li>
                         <li class="waves-effect waves-light">
-                            <a href="<c:url value="/admin/profile" />">
+                            <a href="<c:url value="/me/profile" />">
                                 <i class="ti-user"></i> Profile
                             </a>
                         </li>

@@ -120,15 +120,4 @@ public class AuthenticationController {
         userService.changePassword(oldPassword, newPassword);
         return ResponseEntity.accepted().body(true);
     }
-
-    @PostMapping(value = "/logout")
-    public ModelAndView logout(HttpServletResponse response) {
-
-        ModelAndView modelAndView = new ModelAndView("redirect:");
-
-        // Remove token cookie
-        response.addCookie(new Cookie("token", null));
-
-        return modelAndView;
-    }
 }

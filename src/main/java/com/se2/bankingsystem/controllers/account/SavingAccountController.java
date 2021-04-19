@@ -35,32 +35,32 @@ public class SavingAccountController {
 
     @GetMapping("/savingAccounts")
     public ModelAndView showTableView() {
-        ModelAndView modelAndView = new ModelAndView("admin/customer/account/savingAccount/savingAccountList");
+        ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/savingAccount/savingAccountList");
         List<SavingAccount> savingAccounts = savingAccountService.findAll();
         modelAndView.addObject(savingAccounts);
         return modelAndView;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #savingAccountID)")
     @GetMapping("/savingAccounts/{id}")
     public ModelAndView showProfile(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView("admin/customer/account/savingAccount/savingAccountDetails");
+        ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/savingAccount/savingAccountDetails");
         SavingAccount savingAccount = savingAccountService.getById(id);
         modelAndView.addObject(savingAccount);
         return modelAndView;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #savingAccountID)")
     @GetMapping("/savingAccounts/create")
     public ModelAndView showCreateView() {
-        ModelAndView modelAndView = new ModelAndView("admin/customer/account/savingAccount/createSavingAccount");
+        ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/savingAccount/createSavingAccount");
 
         CreateSavingAccountDTO createSavingAccountDTO = CreateSavingAccountDTO.builder().build();
         modelAndView.addObject(createSavingAccountDTO);
         return modelAndView;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #savingAccountID)")
     @PostMapping("/savingAccounts/create")
     public String create(@Valid @ModelAttribute CreateSavingAccountDTO createsavingAccountDTO) {
         savingAccountService.create(createsavingAccountDTO);
@@ -69,7 +69,7 @@ public class SavingAccountController {
 
     @GetMapping("/savingAccounts/{savingAccountID}/edit")
     public ModelAndView showUpdateView(@PathVariable Long savingAccountID) {
-        ModelAndView modelAndView = new ModelAndView("admin/customer/account/savingAccount/editSavingAccount");
+        ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/savingAccount/editSavingAccount");
 
         SavingAccount savingAccount = savingAccountService.getById(savingAccountID);
         modelAndView.addObject("savingAccount", savingAccount);
@@ -79,14 +79,14 @@ public class SavingAccountController {
         return modelAndView;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #savingAccountID)")
     @PostMapping("/savingAccounts/{savingAccountID}/edit")
     public String update(@PathVariable Long savingAccountID, @Valid @ModelAttribute UpdateSavingAccountDTO updateSavingAccountDTO) {
         savingAccountService.updateById(savingAccountID, updateSavingAccountDTO);
         return "redirect:/admin/savingAccounts";
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #loanAccountID)")
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #savingAccountID)")
     @PostMapping("/savingAccounts/{savingAccountID}/delete")
     public String delete(@PathVariable Long savingAccountID) {
         savingAccountService.deleteById(savingAccountID);

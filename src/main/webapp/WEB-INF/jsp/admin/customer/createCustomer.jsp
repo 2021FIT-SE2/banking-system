@@ -49,7 +49,6 @@
                             <span class="form-bar"></span>
                             <form:errors path="email" cssClass="text-warning"/>
                         </div>
-
                     </fieldset>
 
                     <fieldset class="form-group row">
@@ -86,15 +85,15 @@
                     <fieldset class="form-group row">
                         <form:label cssClass="col-sm-3 col-form-label" path="gender">Gender</form:label>
 
-                        <div class="col-sm-9"><form:select path="gender" type="text" class="form-control form-select"
+                        <div class="col-sm-9">
+                            <form:select path="gender" type="text" class="form-control form-select"
                                                             required="required">
-                            <form:option value="MALE" label="Male"/>
-                            <form:option value="FEMALE" label="Female"/>
-                        </form:select>
+                                <form:option value="MALE" label="Male"/>
+                                <form:option value="FEMALE" label="Female"/>
+                            </form:select>
                             <span class="form-bar"></span>
                             <form:errors path="gender" cssClass="text-warning"/>
                         </div>
-
                     </fieldset>
 
                     <fieldset class="form-group row">

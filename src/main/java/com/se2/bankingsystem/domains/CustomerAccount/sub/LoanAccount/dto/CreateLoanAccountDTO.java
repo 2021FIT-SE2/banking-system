@@ -6,10 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.PastOrPresent;
-import java.time.LocalDate;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 
 @Data
@@ -18,18 +18,27 @@ import java.time.LocalDateTime;
 @SuperBuilder
 public class CreateLoanAccountDTO {
 
-    private Long customerID;
+    @PositiveOrZero
+    @NotNull
+    private Double rate;
 
-    private Long balance;
+    @PositiveOrZero
+    @NotNull
+    private Integer duration;
 
+    @FutureOrPresent
+    private LocalDateTime startAt;
+
+    @FutureOrPresent
+    private LocalDateTime endAt;
+
+    @PositiveOrZero
+    @NotNull
     private Long principal;
 
+    @PositiveOrZero
+    @NotNull
     private Long interest;
-
-    private Long rate;
-
-    private int duration;
-
 
     @JsonIgnore
     @Builder.Default
@@ -38,6 +47,4 @@ public class CreateLoanAccountDTO {
     @JsonIgnore
     @Builder.Default
     private LocalDateTime endDate = LocalDateTime.now();
-
-
 }

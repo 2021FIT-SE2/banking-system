@@ -1,5 +1,6 @@
 package com.se2.bankingsystem.domains.Transaction.entity;
 
+import com.se2.bankingsystem.base.TimeStamps;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,8 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +29,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Transaction {
+public class Transaction implements TimeStamps {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,5 +45,8 @@ public class Transaction {
     private LocalDateTime createdAt;
 
     @NotNull
-    private LocalDateTime editedAt;
+    private LocalDateTime updatedAt;
+
+    @NotNull
+    private TransactionType transactionType;
 }

@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class CustomerAccountServiceImpl implements CustomerAccountService {
 
-    private final com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountRepository customerAccountRepository;
+    private final CustomerAccountRepository customerAccountRepository;
 
 //    private final DepartmentRepository departmentRepository;
 
@@ -89,26 +89,6 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
         return customerAccountRepository.findById(id).orElse(null);
     }
 
-//    @Override
-//    public Page<CustomerAccount> findByDepartmentId(Long departmentId, Pageable pageable) {
-//        return customerAccountRepository.findByDepartmentId(departmentId, pageable);
-//    }
-//
-//    @Override
-//    public Page<CustomerAccount> findByCourseReleaseId(Long courseReleaseId, Pageable pageable) {
-//        return customerAccountRepository.findByCourseReleaseId(courseReleaseId, pageable);
-//    }
-//
-//    @Override
-//    public Page<CustomerAccount> findByCourseId(Long courseId, Pageable pageable) {
-//        return customerAccountRepository.findByCourseId(courseId, pageable);
-//    }
-//
-//    @Override
-//    public Page<CustomerAccount> findByKeyWord(String keyword, Pageable pageable) {
-//        return customerAccountRepository.findByKeyword(keyword, pageable);
-//    }
-
     public List<CustomerAccount> createManyCustomerAccounts(List<CreateCustomerAccountDTO> createCustomerAccountDTOList) {
         List<CustomerAccount> customerAccounts = new ArrayList<>();
 
@@ -117,5 +97,10 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
             customerAccounts.add(customerAccount);
         }
         return customerAccountRepository.saveAll(customerAccounts);
+    }
+
+    @Override
+    public List<CustomerAccount> findAllByCustomerId(Long customerID) {
+        return customerAccountRepository.findByCustomerId(customerID);
     }
 }

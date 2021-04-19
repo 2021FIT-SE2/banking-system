@@ -7,6 +7,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -15,9 +18,13 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class UpdateTransferTransactionDTO extends UpdateTransactionDTO {
 
+    @NotNull
+    @Positive
     private Long transferAmount;
 
-    private String BeneficialAccount;
+    @NotNull
+    private String receiver;
 
+    @NotNull
     private String status;
 }

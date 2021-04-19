@@ -1,72 +1,257 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
 
-    <jsp:param name="title" value="Customer Details" />
+    <jsp:param name="title" value="Customer Details"/>
 
-    <jsp:param name="parentLinkText" value="Manage Customer" />
-    <jsp:param name="parentLinkUrl" value="/admin/customers" />
+    <jsp:param name="parentLinkText" value="Manage Customer"/>
+    <jsp:param name="parentLinkUrl" value="/admin/customers"/>
 
-    <jsp:param name="childLinkText" value="Customer Details" />
-    <jsp:param name="childLinkUrl" value="/admin/customers/1/details" />
+    <jsp:param name="childLinkText" value="Customer Details"/>
+    <jsp:param name="childLinkUrl" value="/admin/customers/1/details"/>
 
-    <jsp:param name="activeSidebarElementID" value="add-customer" />
+    <jsp:param name="activeSidebarElementID" value="add-customer"/>
 </jsp:include>
+
+<style>
+
+    .account-settings .user-profile {
+        margin: 0 0 1rem 0;
+        padding-bottom: 1rem;
+        text-align: center;
+    }
+
+    .account-settings .user-profile .user-avatar {
+        margin: 0 0 1rem 0;
+    }
+
+    .account-settings .user-profile .user-avatar img {
+        width: 90px;
+        height: 90px;
+        -webkit-border-radius: 100px;
+        -moz-border-radius: 100px;
+        border-radius: 100px;
+    }
+
+    .account-settings .user-profile h5.user-name {
+        margin: 0 0 0.5rem 0;
+    }
+
+    .account-settings .user-profile h6.user-phone-number {
+        margin: 0 0 10px;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #9fa8b9;
+    }
+</style>
 <!-- START HERE -->
-<div class="card">
-    <div class="card-header">
-        <h5>Hover Table</h5>
-        <span>use class <code>table-hover</code> inside table element</span>
-        <div class="card-header-right">
-            <ul class="list-unstyled card-option">
-                <li><i class="fa fa fa-wrench open-card-option"></i></li>
-                <li><i class="fa fa-window-maximize full-card"></i></li>
-                <li><i class="fa fa-minus minimize-card"></i></li>
-                <li><i class="fa fa-refresh reload-card"></i></li>
-                <li><i class="fa fa-trash close-card"></i></li>
-            </ul>
+<div class="container">
+    <div class="row gutters">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="account-settings">
+                        <div class="user-profile">
+                            <div class="user-avatar">
+                                <img src="<c:url value="resources/img/profile.png"/>" alt="Maxwell Admin">
+                            </div>
+                            <h5 class="user-name">${customer.firstName} ${customer.lastName}</h5>
+                            <h6 class="user-phone-number">${customer.phoneNumber}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <form:form action="" method="post" modelAttribute="customer">
+                    <div class="card-body">
+                        <div class="row gutters" style="margin-bottom: 10px">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <h6 class="mb-2 text-primary">Personal Details</h6>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <fieldset class="form-group">
+                                    <form:label path="username">Username</form:label>
+                                    <form:input type="text" class="form-control" path="username"
+                                                placeholder="Enter Username" value="${customer.username}"/>
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <fieldset class="form-group">
+                                    <form:label path="password">Password</form:label>
+                                    <form:input type="password" class="form-control" path="password"
+                                                placeholder="Enter Password" value="${customer.password}"/>
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <fieldset class="form-group">
+                                    <form:label path="id">ID</form:label>
+                                    <form:input disabled="true" type="text" class="form-control" path="id"
+                                                placeholder="ID" value="${customer.id}"/>
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <fieldset class="form-group">
+                                    <form:label path="createdAt">Created At</form:label>
+                                    <form:input disabled="true" type="text" class="form-control" path="createdAt"
+                                                placeholder="Enter Password" value="${customer.createdAt.toString()}"/>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <div class="row gutters">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <h6 class="mb-2 text-primary">Personal Details</h6>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <fieldset class="form-group">
+                                    <form:label path="firstName">First Name</form:label>
+                                    <form:input type="text" class="form-control" path="firstName"
+                                                placeholder="Enter first name" value="${customer.firstName}"/>
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <fieldset class="form-group">
+                                    <form:label path="lastName">Last Name</form:label>
+                                    <form:input type="text" class="form-control" path="lastName"
+                                                placeholder="Enter last name" value="${customer.lastName}"/>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <fieldset class="form-group">
+                                    <form:label path="gender">Gender</form:label>
+                                    <form:select path="gender" type="text" class="form-control form-select"
+                                                 required="required" value="${customer.gender}">
+                                        <form:option value="MALE" label="Male"/>
+                                        <form:option value="FEMALE" label="Female"/>
+                                    </form:select>
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <fieldset class="form-group">
+                                    <form:label path="dob">Date Of Birth</form:label>
+                                    <fmt:formatDate value="${customer.dob}"
+                                                    type="date"
+                                                    pattern="MM-dd-yyyy"
+                                                    var="formattedDOB"/>
+                                    <form:input type="date" class="form-control" path="dob"
+                                                placeholder="Select Date Of Birth" value="${formattedDOB}"/>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <div class="row gutters">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <h6 class="mt-3 mb-2 text-primary">Contact</h6>
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <fieldset class="form-group">
+                                    <form:label path="phoneNumber">Phone Number</form:label>
+                                    <form:input type="text" class="form-control" path="phoneNumber"
+                                                placeholder="Enter phone number" value="${customer.phoneNumber}"/>
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <fieldset class="form-group">
+                                    <form:label path="email">Email</form:label>
+                                    <form:input type="email" class="form-control" path="email" placeholder="Enter Email"
+                                                value="${customer.email}"/>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <fieldset class="form-group">
+                                    <form:label path="address">Address</form:label>
+                                    <form:input type="address" class="form-control" path="address" placeholder="Enter Address"
+                                                value="${customer.address}"/>
+                                </fieldset>
+                            </div>
+
+                        </div>
+                        <div class="row gutters">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="text-right">
+                                    <button type="button" name="submit" class="btn btn-secondary">Cancel</button>
+                                    <button type="button" id="submit" name="submit" class="btn btn-primary">Update
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form:form>
+            </div>
         </div>
     </div>
-    <div class="card-block table-border-style">
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Customer ID</th>
-                    <th>Full Name</th>
-                    <th>Date of birth</th>
-                    <th>Gender</th>
-                    <th>Password</th>
-                    <th>Address</th>
-                    <th>Phone Number</th>
-                    <th>Account Number</th>
-                    <th>Type of Account</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="customer" items="${}">
-                    <tr>
-                        <td>${customer.customerId}</td>
-                        <td>${customer.fullName}</td>
-                        <td>${customer.dob}</td>
-                        <td>${customer.gender}</td>
-                        <td>${customer.password}</td>
-                        <td>${customer.address}</td>
-                        <td>${customer.phoneNumber}</td>
-                        <td>${customer.accountNumber}</td>
-                        <td>${customer.accountType}</td>
-                        <td><a href="customer-edit?customerId=${customer.customerId}"><i
-                                class="fas fa-edit"></i>Edit</a></td>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<a
-                            href="customer-delete?customerId=${customer.customerId}"><i
-                            class="fas fa-trash-alt"></i>Delete</a>
 
+    <div class="card" style="margin-top: 20px">
+        <div class="card-header">
+            <h5>Customer Account</h5>
+            <div class="card-header-right" style="margin-right: 10px">
+                <a href="<c:url value="/admin/customerAccounts/create"/>">
+                    <button type="submit" class="btn btn-primary">Create New</button>
+                </a>
+            </div>
+        </div>
+        <div class="card-block table-border-style">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>Actions</th>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="customerAccount" items="${customerAccountList}">
+                        <tr>
+                            <td>${customerAccount.id}</td>
+                            <td>
+                                <a href="/admin/customers/${customerAccount.id}">${customerAccount.getClass()}</a>
+                            </td>
+                            <td>${customerAccount.email}</td>
+                            <td>${customerAccount.phoneNumber}</td>
+                            <td>${customerAccount.firstName}</td>
+                            <td>${customerAccount.lastName}</td>
+                            <td>${customerAccount.gender}</td>
+                            <td>${customerAccount.address}</td>
+                            <td>
+                                <a href="/admin/customers/${customerAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
+                                <i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
+                            </td>
+                        </tr>
+                        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Are you sure to delete?</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-md-center">
+                                        <a href="/admin/customers/${customerAccount.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

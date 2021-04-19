@@ -2,12 +2,12 @@
 
 <jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
 
-    <jsp:param name="title" value="Create Customer" />
+    <jsp:param name="title" value="Manage Customers" />
 
-    <jsp:param name="parentLinkText" value="Manage Customer" />
+    <jsp:param name="parentLinkText" value="Manage Customers" />
     <jsp:param name="parentLinkUrl" value="/admin/customers" />
 
-    <jsp:param name="childLinkText" value="Create New" />
+    <jsp:param name="childLinkText" value="List" />
     <jsp:param name="childLinkUrl" value="/admin/customers" />
 
     <jsp:param name="activeSidebarElementID" value="customer-list" />
@@ -16,7 +16,7 @@
 <!-- START HERE -->
 <div class="card">
     <div class="card-header">
-        <h5>Customers</h5>
+        <h5>All Customers</h5>
         <div class="card-header-right" style="margin-right: 10px">
             <a href="<c:url value="/admin/customers/create"/>">
                 <button type="submit" class="btn btn-primary">Create New</button>

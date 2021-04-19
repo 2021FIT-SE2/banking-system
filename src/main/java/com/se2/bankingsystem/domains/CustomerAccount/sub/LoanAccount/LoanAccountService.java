@@ -10,5 +10,4 @@ import org.springframework.data.domain.Pageable;
 
 public interface LoanAccountService extends CRUDService<LoanAccount, Long, CreateLoanAccountDTO, UpdateLoanAccountDTO> {
     Page<LoanAccount> findAll(Pageable pageRequest);
-
 }

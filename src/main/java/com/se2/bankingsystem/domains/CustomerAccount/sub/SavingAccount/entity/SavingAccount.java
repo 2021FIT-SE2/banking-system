@@ -9,26 +9,40 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "customers")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
+@Table(name = "saving_accounts")
 public class SavingAccount extends CustomerAccount {
 
+    @PositiveOrZero
+    @NotNull
     private Double rate;
 
+    @PositiveOrZero
+    @NotNull
     private Integer duration;
 
-    private LocalDateTime startAt;
+    @FutureOrPresent
+    private LocalDate startAt;
 
-    private LocalDateTime endAt;
+    @FutureOrPresent
+    private LocalDate endAt;
 
-    private Long principalAmount;
+    @PositiveOrZero
+    @NotNull
+    private Long principal;
 
+    @PositiveOrZero
+    @NotNull
     private Long interest;
 }

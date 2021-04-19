@@ -2,7 +2,6 @@ package com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.entity
 
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
-import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.TransferTransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -23,6 +24,9 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @SuperBuilder
 public class TransferTransaction extends Transaction {
+
+    @Positive
+    @NotNull
     private Long transferAmount;
 
     @ManyToOne
@@ -30,6 +34,4 @@ public class TransferTransaction extends Transaction {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private CustomerAccount receiver;
-
-    private TransferTransactionStatus status;
 }

@@ -32,7 +32,7 @@ public class TransferTransactionController {
 
     @GetMapping("/transferTransactions")
     public ModelAndView showTableView() {
-        ModelAndView modelAndView = new ModelAndView("admin/transaction/sub/transfer/transferTransactionList");
+        ModelAndView modelAndView = new ModelAndView("shared/transaction/sub/transferTransaction/transferTransactionList");
         List<TransferTransaction> transferTransactions = transferTransactionService.findAll();
         modelAndView.addObject(transferTransactions);
         return modelAndView;
@@ -40,7 +40,7 @@ public class TransferTransactionController {
 
     @GetMapping("/transferTransactions/{id}")
     public ModelAndView showTransferDetails(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView("admin/transaction/sub/transfer/transferTransactionDetails");
+        ModelAndView modelAndView = new ModelAndView("shared/transaction/sub/transferTransaction/transferTransactionDetails");
         TransferTransaction transferTransaction = transferTransactionService.getById(id);
         modelAndView.addObject(transferTransaction);
         return modelAndView;
@@ -48,7 +48,7 @@ public class TransferTransactionController {
 
     @GetMapping("/transferTransactions/create")
     public ModelAndView showCreateView() {
-        ModelAndView modelAndView = new ModelAndView("admin/transaction/sub/transfer/createTransferTransaction");
+        ModelAndView modelAndView = new ModelAndView("shared/transaction/sub/transferTransaction/createTransferTransaction");
 
         CreateTransferTransactionDTO createTransferTransactionDTO = CreateTransferTransactionDTO.builder().build();
         modelAndView.addObject(createTransferTransactionDTO);
@@ -64,7 +64,7 @@ public class TransferTransactionController {
 
     @GetMapping("/transferTransactions/{transferTransactionID}/edit")
     public ModelAndView showUpdateView(@PathVariable Long transferTransactionID) {
-        ModelAndView modelAndView = new ModelAndView("admin/transaction/sub/transfer/editTransferTransaction");
+        ModelAndView modelAndView = new ModelAndView("shared/transaction/sub/transferTransaction/editTransferTransaction");
 
         TransferTransaction transferTransaction = transferTransactionService.getById(transferTransactionID);
         modelAndView.addObject("transferTransaction", transferTransaction);

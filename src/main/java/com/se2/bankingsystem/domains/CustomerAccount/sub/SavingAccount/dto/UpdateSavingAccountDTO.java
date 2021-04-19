@@ -1,13 +1,14 @@
 package com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -15,24 +16,25 @@ import java.time.LocalDateTime;
 @SuperBuilder
 public class UpdateSavingAccountDTO {
 
-    private Long customerID;
+    @PositiveOrZero
+    @NotNull
+    private Double rate;
 
-    private Long balance;
+    @PositiveOrZero
+    @NotNull
+    private Integer duration;
 
+    @FutureOrPresent
+    private LocalDate startAt;
+
+    @FutureOrPresent
+    private LocalDate endAt;
+
+    @PositiveOrZero
+    @NotNull
     private Long principal;
 
+    @PositiveOrZero
+    @NotNull
     private Long interest;
-
-    private Long rate;
-
-    private int duration;
-
-
-    @JsonIgnore
-    @Builder.Default
-    private LocalDateTime startDate = LocalDateTime.now();
-
-    @JsonIgnore
-    @Builder.Default
-    private LocalDateTime endDate = LocalDateTime.now();
 }

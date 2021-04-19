@@ -30,7 +30,7 @@ public class NormalAccountController {
 
     @GetMapping("/normalAccounts")
     public ModelAndView showTableView() {
-        ModelAndView modelAndView = new ModelAndView("admin/customer/account/normalAccount/normalAccountList");
+        ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/normalAccount/normalAccountList");
         List<NormalAccount> normalAccounts = normalAccountService.findAll();
         modelAndView.addObject(normalAccounts);
         return modelAndView;
@@ -38,7 +38,7 @@ public class NormalAccountController {
 
     @GetMapping("/normalAccounts/{id}")
     public ModelAndView showProfile(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView("admin/customer/account/normalAccount/normalAccountDetails");
+        ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/normalAccount/normalAccountDetails");
         NormalAccount normalAccount = normalAccountService.getById(id);
         modelAndView.addObject(normalAccount);
         return modelAndView;
@@ -46,7 +46,7 @@ public class NormalAccountController {
 
     @GetMapping("/normalAccounts/create")
     public ModelAndView showCreateView() {
-        ModelAndView modelAndView = new ModelAndView("admin/customer/account/normalAccount/createNormalAccount");
+        ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/normalAccount/createNormalAccount");
 
         CreateNormalAccountDTO createNormalAccountDTO = CreateNormalAccountDTO.builder().build();
         modelAndView.addObject(createNormalAccountDTO);
@@ -61,7 +61,7 @@ public class NormalAccountController {
 
     @GetMapping("/normalAccounts/{normalAccountID}/edit")
     public ModelAndView showUpdateView(@PathVariable Long normalAccountID) {
-        ModelAndView modelAndView = new ModelAndView("admin/customer/account/normalAccount/editNormalAccount");
+        ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/normalAccount/editNormalAccount");
 
         NormalAccount normalAccount = normalAccountService.getById(normalAccountID);
         modelAndView.addObject("normalAccount", normalAccount);

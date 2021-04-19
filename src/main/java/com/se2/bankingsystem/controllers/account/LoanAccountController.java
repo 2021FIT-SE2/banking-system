@@ -33,7 +33,7 @@ public class LoanAccountController {
 
     @GetMapping("/loanAccounts")
     public ModelAndView showTableView() {
-        ModelAndView modelAndView = new ModelAndView("admin/customer/account/loanAccount/loanAccountList");
+        ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/loanAccount/loanAccountList");
         List<LoanAccount> loanAccounts = loanAccountService.findAll();
         modelAndView.addObject(loanAccounts);
         return modelAndView;
@@ -41,7 +41,7 @@ public class LoanAccountController {
 
     @GetMapping("/loanAccounts/{id}")
     public ModelAndView showProfile(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView("admin/customer/account/loanAccount/loanAccountDetails");
+        ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/loanAccount/loanAccountDetails");
         LoanAccount loanAccount = loanAccountService.getById(id);
         modelAndView.addObject(loanAccount);
         return modelAndView;
@@ -49,7 +49,7 @@ public class LoanAccountController {
 
     @GetMapping("/loanAccounts/create")
     public ModelAndView showCreateView() {
-        ModelAndView modelAndView = new ModelAndView("admin/customer/account/loanAccount/createLoanAccount");
+        ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/loanAccount/createLoanAccount");
 
         CreateLoanAccountDTO createLoanAccountDTO = CreateLoanAccountDTO.builder().build();
         modelAndView.addObject(createLoanAccountDTO);
@@ -64,7 +64,7 @@ public class LoanAccountController {
 
     @GetMapping("/loanAccounts/{loanAccountID}/edit")
     public ModelAndView showUpdateView(@PathVariable Long loanAccountID) {
-        ModelAndView modelAndView = new ModelAndView("admin/customer/account/loanAccount/editLoanAccount");
+        ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/loanAccount/editLoanAccount");
 
         LoanAccount loanAccount = loanAccountService.getById(loanAccountID);
         modelAndView.addObject("loanAccount", loanAccount);

@@ -29,7 +29,7 @@ public class WithdrawTransactionController {
 
     @GetMapping("/withdrawTransactions")
     public ModelAndView showTableView() {
-        ModelAndView modelAndView = new ModelAndView("admin/transaction/sub/withdraw/withdrawTransactionList");
+        ModelAndView modelAndView = new ModelAndView("shared/transaction/sub/withdrawTransaction/withdrawTransactionList");
         List<WithdrawTransaction> withdrawTransactions = withdrawTransactionService.findAll();
         modelAndView.addObject(withdrawTransactions);
         return modelAndView;
@@ -37,7 +37,7 @@ public class WithdrawTransactionController {
 
     @GetMapping("/withdrawTransactions/{id}")
     public ModelAndView showWithdrawDetails(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView("admin/transaction/sub/withdraw/withdrawTransactionDetails");
+        ModelAndView modelAndView = new ModelAndView("shared/transaction/sub/withdrawTransaction/withdrawTransactionDetails");
         WithdrawTransaction withdrawTransaction = withdrawTransactionService.getById(id);
         modelAndView.addObject(withdrawTransaction);
         return modelAndView;
@@ -45,7 +45,7 @@ public class WithdrawTransactionController {
 
     @GetMapping("/withdrawTransactions/create")
     public ModelAndView showCreateView() {
-        ModelAndView modelAndView = new ModelAndView("admin/transaction/sub/withdraw/createWithdrawTransaction");
+        ModelAndView modelAndView = new ModelAndView("shared/transaction/sub/withdrawTransaction/createWithdrawTransaction");
 
         CreateWithdrawTransactionDTO createWithdrawTransactionDTO = CreateWithdrawTransactionDTO.builder().build();
         modelAndView.addObject(createWithdrawTransactionDTO);
@@ -61,7 +61,7 @@ public class WithdrawTransactionController {
 
     @GetMapping("/withdrawTransactions/{withdrawTransactionID}/edit")
     public ModelAndView showUpdateView(@PathVariable Long withdrawTransactionID) {
-        ModelAndView modelAndView = new ModelAndView("admin/transaction/sub/withdraw/editWithdrawTransaction");
+        ModelAndView modelAndView = new ModelAndView("shared/transaction/sub/withdrawTransaction/editWithdrawTransaction");
 
         WithdrawTransaction withdrawTransaction = withdrawTransactionService.getById(withdrawTransactionID);
         modelAndView.addObject("withdrawTransaction", withdrawTransaction);
@@ -73,7 +73,6 @@ public class WithdrawTransactionController {
 
     @PostMapping("/withdrawTransactions/{withdrawTransactionID}/edit")
     public String update(@PathVariable Long withdrawTransactionID, @Valid @ModelAttribute UpdateWithdrawTransactionDTO updateWithdrawTransactionDTO) {
-
         withdrawTransactionService.updateById(withdrawTransactionID, updateWithdrawTransactionDTO);
         return "redirect:/admin/withdrawTransactions";
     }

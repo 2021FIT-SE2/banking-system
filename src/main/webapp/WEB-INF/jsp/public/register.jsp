@@ -16,17 +16,7 @@
     <script src="<c:url value="/webjars/bootstrap/4.6.0/js/bootstrap.min.js"/>"></script>
     <link rel="stylesheet" type="text/css" href="<c:url value="/webjars/bootstrap/4.6.0/css/bootstrap.min.css"/>"/>
 
-    <!-- Extended CSS resources -->
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/lib/elegant-icons.css"/>">
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/lib/flaticon.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/lib/font-awesome.min.css"/>">
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/lib/owl.carousel.min.css"/>">
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/lib/slicknav.min.css"/>">
-
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/style.css"/>">
-
-    <!-- Custom styles for this page -->
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/login.css"/>">
 </head>
 
 <body>
@@ -38,9 +28,6 @@
                  class="img-fluid mb-3 d-none d-md-block">
             <h1>Create an Account</h1>
             <p class="font-italic text-muted mb-0">Create an account to become our customer. We are there for you!</p>
-            <p class="font-italic text-muted">Snippet By <a href="https://bootstrapious.com" class="text-muted">
-                <u>CodersBank</u></a>
-            </p>
         </div>
 
         <!-- Registeration Form -->
@@ -55,7 +42,7 @@
                                 <i class="fa fa-user text-muted"></i>
                             </span>
                         </div>
-                        <form:input path="firstName" id="firstName" type="text" name="firstname" placeholder="First Name"
+                        <form:input path="firstName" id="firstName" type="text" name="firstName" placeholder="First Name"
                                class="form-control bg-white border-left-0 border-md" />
                         <form:errors path="firstName" cssClass="text-warning" />
                     </div>
@@ -67,7 +54,7 @@
                                 <i class="fa fa-user text-muted"></i>
                             </span>
                         </div>
-                        <form:input path="lastName" id="lastName" type="text" name="lastname" placeholder="Last Name"
+                        <form:input path="lastName" id="lastName" type="text" name="lastName" placeholder="Last Name"
                                class="form-control bg-white border-left-0 border-md"/>
                         <form:errors path="lastName" cssClass="text-warning" />
                     </div>
@@ -203,9 +190,7 @@
     </div>
 </div>
 
-<script src="<c:url value="/webjars/jquery/3.6.0/jquery.min.js"/>"></script>
-<script src="<c:url value="/webjars/bootstrap/4.6.0/js/bootstrap.min.js"/>"></script>
-<script src="<c:url value="/resources/js/lib/jquery.slicknav.js"/>"></script>
-<script src="<c:url value="/resources/js/lib/owl.carousel.min.js"/>"></script>
+<%--<script src="<c:url value="/webjars/jquery/3.6.0/jquery.min.js"/>"></script>--%>
+<%--<script src="<c:url value="/webjars/bootstrap/4.6.0/js/bootstrap.min.js"/>"></script>--%>
 </body>
 </html>

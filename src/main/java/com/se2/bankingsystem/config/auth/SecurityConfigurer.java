@@ -1,5 +1,6 @@
 package com.se2.bankingsystem.config.auth;
 
+import com.se2.bankingsystem.config.auth.handlers.CustomAuthenticationSuccessHandler;
 import com.se2.bankingsystem.domains.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -32,6 +34,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_WHITELIST = {
         "/",
+        "/home",
         "/favicon.ico",
         "/webjars/**",
         "/resources/**",
@@ -59,6 +62,11 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 
+    @Bean
+    public AuthenticationSuccessHandler customAuthenticationSuccessHandler(){
+        return new CustomAuthenticationSuccessHandler();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         if (securityEnabled) {
@@ -76,10 +84,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 // Submit URL of login page.
                 .loginProcessingUrl("/login")
                 .loginPage("/login")
-                .defaultSuccessUrl("/admin/dashboard")
                 .failureUrl("/login?error=true")
-//                .usernameParameter("username")
-//                .passwordParameter("password")
+                .successHandler(customAuthenticationSuccessHandler())
                 // Config for Logout Page
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/");
         }

@@ -33,23 +33,47 @@
 <%--        <div class="pcoded-navigation-label">Customer</div>--%>
         <ul class="pcoded-item pcoded-left-item">
             <li class="pcoded-hasmenu${param.activeSidebarElementID.startsWith("customer-") ? " active" : ""}">
-                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                <a href="<c:url value="/admin/customers"/>" class="waves-effect waves-dark">
                         <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
-                    <span class="pcoded-mtext">Manage Customer</span>
+                    <span class="pcoded-mtext">Manage Customers</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li>
+        </ul>
+
+        <ul class="pcoded-item pcoded-left-item">
+            <li class="pcoded-hasmenu${param.activeSidebarElementID.toLowerCase().contains("account") ? " active" : ""}">
+                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                    <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
+                    <span class="pcoded-mtext">Manage Accounts</span>
                     <span class="pcoded-mcaret"></span>
                 </a>
                 <ul class="pcoded-submenu expand">
-                    <li class="${param.activeSidebarElementID.equals("customer-create") ? "active" : ""}">
-                        <a href="<c:url value="/admin/customers/create"/>" class="waves-effect waves-dark">
+                    <li class="${param.activeSidebarElementID.equals("customerAccount-list") ? "active" : ""}">
+                        <a href="<c:url value="/admin/customerAccounts"/>" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                            <span class="pcoded-mtext">Add Customer</span>
+                            <span class="pcoded-mtext">All Customer Accounts</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
-                    <li class="${param.activeSidebarElementID.equals("customer-list") ? "active" : ""}">
-                        <a href="<c:url value="/admin/customers"/>" class="waves-effect waves-dark">
+                    <li class="${param.activeSidebarElementID.equals("loanAccount-list") ? "active" : ""}">
+                        <a href="<c:url value="/admin/loanAccounts"/>" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                            <span class="pcoded-mtext">Customer List</span>
+                            <span class="pcoded-mtext">Loan Accounts</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                    <li class="${param.activeSidebarElementID.equals("normalAccount-list") ? "active" : ""}">
+                        <a href="<c:url value="/admin/normalAccounts"/>" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                            <span class="pcoded-mtext">Normal Accounts</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                    <li class="${param.activeSidebarElementID.equals("savingAccount-list") ? "active" : ""}">
+                        <a href="<c:url value="/admin/savingAccounts"/>" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                            <span class="pcoded-mtext">Saving Accounts</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
@@ -57,77 +81,40 @@
             </li>
         </ul>
 <%--        <div class="pcoded-navigation-label">Transaction</div>--%>
-        <ul class="pcoded-item pcoded-left-item">
-            <li class="pcoded-hasmenu ${param.activeSidebarElementID.startsWith("transfer-transaction") ? "active" : ""}">
-                <a href="javascript:void(0)" class="waves-effect waves-dark">
-                    <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
-                    <span class="pcoded-mtext">Transfer Transaction</span>
-                    <span class="pcoded-mcaret"></span>
-                </a>
-                <ul class="pcoded-submenu">
-                    <li class=" ">
-                        <a href="breadcrumb.html" class="waves-effect waves-dark">
-                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                            <span class="pcoded-mtext">Add Transfer Transaction</span>
-                            <span class="pcoded-mcaret"></span>
-                        </a>
-                    </li>
-                    <li class=" ">
-                        <a href="button.html" class="waves-effect waves-dark">
-                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                            <span class="pcoded-mtext">Transfer Transaction List</span>
-                            <span class="pcoded-mcaret"></span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
 
-        </ul>
         <ul class="pcoded-item pcoded-left-item">
-            <li class="pcoded-hasmenu">
+            <li class="pcoded-hasmenu${param.activeSidebarElementID.toLowerCase().contains("transaction") ? " active" : ""}">
                 <a href="javascript:void(0)" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
-                    <span class="pcoded-mtext">Withdraw Transaction</span>
+                    <span class="pcoded-mtext">Manage Transactions</span>
                     <span class="pcoded-mcaret"></span>
                 </a>
-                <ul class="pcoded-submenu">
-                    <li class=" ">
-                        <a href="breadcrumb.html" class="waves-effect waves-dark">
+                <ul class="pcoded-submenu expand">
+                    <li class="${param.activeSidebarElementID.equals("transaction-list") ? "active" : ""}">
+                        <a href="<c:url value="/admin/transactions"/>" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                            <span class="pcoded-mtext">Add Withdraw Transaction</span>
+                            <span class="pcoded-mtext">All Transactions</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
-                    <li class=" ">
-                        <a href="button.html" class="waves-effect waves-dark">
+                    <li class="${param.activeSidebarElementID.equals("chargeTransaction-list") ? "active" : ""}">
+                        <a href="<c:url value="/admin/chargeTransactions"/>" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                            <span class="pcoded-mtext">Withdraw Transaction List</span>
+                            <span class="pcoded-mtext">Charge Transactions</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
-                </ul>
-            </li>
-
-        </ul>
-        <ul class="pcoded-item pcoded-left-item">
-            <li class="pcoded-hasmenu">
-                <a href="javascript:void(0)" class="waves-effect waves-dark">
-                    <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
-                    <span class="pcoded-mtext">Charge Transaction</span>
-                    <span class="pcoded-mcaret"></span>
-                </a>
-                <ul class="pcoded-submenu">
-                    <li class=" ">
-                        <a href="breadcrumb.html" class="waves-effect waves-dark">
+                    <li class="${param.activeSidebarElementID.equals("transferTransaction-list") ? "active" : ""}">
+                        <a href="<c:url value="/admin/transferTransactions"/>" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                            <span class="pcoded-mtext">Add Charge Transaction</span>
+                            <span class="pcoded-mtext">Transfer Transactions</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
-                    <li class=" ">
-                        <a href="button.html" class="waves-effect waves-dark">
+                    <li class="${param.activeSidebarElementID.equals("withdrawTransaction-list") ? "active" : ""}">
+                        <a href="<c:url value="/admin/withdrawTransactions"/>" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                            <span class="pcoded-mtext">Charge Transaction List</span>
+                            <span class="pcoded-mtext">Withdraw Transactions</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>

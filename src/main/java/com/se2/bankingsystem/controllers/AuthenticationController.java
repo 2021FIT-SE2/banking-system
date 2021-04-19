@@ -8,9 +8,11 @@ import com.se2.bankingsystem.domains.User.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,8 +24,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
@@ -45,6 +45,11 @@ public class AuthenticationController {
 
     @GetMapping(path = "/login")
     public ModelAndView showLoginView() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // If already logged in, then redirect to dashboard
+        if (!(authentication == null || authentication instanceof AnonymousAuthenticationToken)) {
+            return new ModelAndView("redirect:/");
+        }
         ModelAndView modelAndView = new ModelAndView("public/login");
 
         LoginDTO loginDTO = new LoginDTO();
@@ -93,6 +98,9 @@ public class AuthenticationController {
     @PostMapping(path = "/register")
     public ModelAndView register(@Valid @ModelAttribute CreateCustomerDTO createCustomerDTO, BindingResult bindingResult) {
 
+        ModelAndView modelAndView;
+
+        log.info("HELLO");
         // Check uniqueness
         if (!userService.isPhoneNumberUnique(createCustomerDTO.getPhoneNumber()))
             bindingResult.addError(new ObjectError("phoneNumber", "Phone Number is already taken, please choose another one"));
@@ -103,12 +111,15 @@ public class AuthenticationController {
         if (!customerService.isEmailUnique(createCustomerDTO.getEmail()))
             bindingResult.addError(new ObjectError("email", "Email is already taken, please choose another one"));
 
-        ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("public/register");
+            for (ObjectError objectError: bindingResult.getAllErrors()) {
+                log.info(objectError.getObjectName());
+                log.info(objectError.getDefaultMessage());
+            }
+            modelAndView = new ModelAndView("public/register", bindingResult.getModel());
         } else {
             customerService.create(createCustomerDTO);
-            modelAndView.setViewName("redirect:/");
+            modelAndView = new ModelAndView("redirect:/");
         }
         return modelAndView;
     }

@@ -4,6 +4,8 @@ import com.se2.bankingsystem.domains.Customer.CustomerService;
 import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.dto.UpdateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.entity.Customer;
+import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountService;
+import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -20,20 +21,21 @@ import java.util.List;
 
 @Controller
 @Slf4j
-@RequestMapping("/admin")
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final CustomerAccountService customerAccountService;
 
     private final ModelMapper modelMapper;
 
     @Autowired
-    public CustomerController(CustomerService customerService, ModelMapper modelMapper) {
+    public CustomerController(CustomerService customerService, CustomerAccountService customerAccountService, ModelMapper modelMapper) {
         this.customerService = customerService;
+        this.customerAccountService = customerAccountService;
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/customers")
+    @GetMapping("/admin/customers")
     public ModelAndView showTableView() {
         ModelAndView modelAndView = new ModelAndView("admin/customer/customersList");
         List<Customer> customers = customerService.findAll();
@@ -41,15 +43,21 @@ public class CustomerController {
         return modelAndView;
     }
 
-    @GetMapping("/customers/{id}")
+    @GetMapping("/admin/customers/{id}")
     public ModelAndView showProfile(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("admin/customer/customerDetails");
+
         Customer customer = customerService.getById(id);
+
+        List<CustomerAccount> customerAccounts = customerAccountService.findAllByCustomerId(id);
+
+        modelAndView.addObject(customerAccounts);
         modelAndView.addObject(customer);
+
         return modelAndView;
     }
 
-    @GetMapping("/customers/create")
+    @GetMapping("/admin/customers/create")
     public ModelAndView showCreateView() {
         ModelAndView modelAndView = new ModelAndView("admin/customer/createCustomer");
 
@@ -58,14 +66,14 @@ public class CustomerController {
         return modelAndView;
     }
 
-    @PostMapping("/customers/create")
+    @PostMapping("/admin/customers/create")
     public String create(@Valid @ModelAttribute CreateCustomerDTO createCustomerDTO) {
         log.info(createCustomerDTO.toString());
         customerService.create(createCustomerDTO);
         return "redirect:/admin/customers";
     }
 
-    @GetMapping("/customers/{customerID}/edit")
+    @GetMapping("/admin/customers/{customerID}/edit")
     public ModelAndView showUpdateView(@PathVariable Long customerID) {
         ModelAndView modelAndView = new ModelAndView("admin/customer/editCustomer");
 
@@ -80,13 +88,13 @@ public class CustomerController {
         return modelAndView;
     }
 
-    @PostMapping("/customers/{customerID}/edit")
+    @PostMapping("/admin/customers/{customerID}/edit")
     public String update(@PathVariable Long customerID, @Valid @ModelAttribute UpdateCustomerDTO updateCustomerDTO) {
         customerService.updateById(customerID, updateCustomerDTO);
         return "redirect:/admin/customers";
     }
 
-    @GetMapping("/customers/{customerID}/delete")
+    @GetMapping("/admin/customers/{customerID}/delete")
     public String delete(@PathVariable Long customerID) {
         customerService.deleteById(customerID);
         return "redirect:/admin/customers";

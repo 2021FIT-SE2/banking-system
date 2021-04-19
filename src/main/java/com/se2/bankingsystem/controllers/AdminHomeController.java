@@ -9,9 +9,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/admin")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminHomeController {
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(path = "/dashboard")
     public ModelAndView showDashboard() {
         ModelAndView modelAndView = new ModelAndView("admin/dashboard");

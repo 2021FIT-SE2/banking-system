@@ -58,7 +58,7 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
     }
 
     @Override
-    public CustomerAccount updateById(Long id, UpdateCustomerAccountDTO updateCustomerAccountDTO) {
+    public CustomerAccount updateById(String id, UpdateCustomerAccountDTO updateCustomerAccountDTO) {
         CustomerAccount customerAccount = customerAccountRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         modelMapper.map(updateCustomerAccountDTO, modelMapper);
@@ -70,7 +70,7 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         customerAccountRepository.deleteById(id);
     }
 
@@ -85,7 +85,7 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
     }
 
     @Override
-    public CustomerAccount getById(Long id) {
+    public CustomerAccount getById(String id) {
         return customerAccountRepository.findById(id).orElse(null);
     }
 

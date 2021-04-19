@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public interface TransactionService {
-    void setCustomerAccount(Transaction transaction, Long customerID);
+    void setCustomerAccount(Transaction transaction, String customerID);
 
     void deleteById(Long id);
 

@@ -26,7 +26,7 @@ public class CustomerAccountController {
         this.customerAccountService = customerAccountService;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or principal.id == #id")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping({"/customerAccounts"})
     public ModelAndView showTableView() {
         ModelAndView modelAndView = new ModelAndView("shared/customerAccount/customerAccountsList");
@@ -35,18 +35,10 @@ public class CustomerAccountController {
         return modelAndView;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or principal.id == #id")
-    @GetMapping({"/customerAccounts/{id}"})
-    public ModelAndView showProfile(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView();
-        CustomerAccount customer = customerAccountService.getById(id);
-        modelAndView.addObject(customer);
-        return modelAndView;
-    }
-
+    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #customerAccountID)")
     @PostMapping("/customerAccounts/{customerAccountID}/delete")
-    public String delete(@PathVariable Long customerAccountID) {
+    public String delete(@PathVariable String customerAccountID) {
         customerAccountService.deleteById(customerAccountID);
-        return "customersList";
+        return "shared/customerAccount/customerAccountsList";
     }
 }

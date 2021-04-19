@@ -8,6 +8,6 @@ import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import java.util.List;
 
 
-public interface CustomerAccountService extends CRUDService<CustomerAccount, Long, CreateCustomerAccountDTO, UpdateCustomerAccountDTO> {
+public interface CustomerAccountService extends CRUDService<CustomerAccount, String, CreateCustomerAccountDTO, UpdateCustomerAccountDTO> {
     List<CustomerAccount> findAllByCustomerId(Long customerID);
 }

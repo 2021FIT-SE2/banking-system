@@ -28,7 +28,7 @@ public class TransactionServiceImpl implements TransactionService {
         this.customerAccountRepository = customerAccountRepository;
     }
 
-    public void setCustomerAccount(Transaction transaction, Long customerAccountID) {
+    public void setCustomerAccount(Transaction transaction, String customerAccountID) {
         CustomerAccount customerAccount = customerAccountRepository.findById(customerAccountID).orElseThrow(EntityNotFoundException::new);
         transaction.setCustomerAccount(customerAccount);
     }

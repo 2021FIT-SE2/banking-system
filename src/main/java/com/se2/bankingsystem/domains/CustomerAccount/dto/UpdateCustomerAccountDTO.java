@@ -10,6 +10,9 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Builder
 public class UpdateCustomerAccountDTO {
+
     @NotNull
     private Long customerID;
+
+    private String id;
 }

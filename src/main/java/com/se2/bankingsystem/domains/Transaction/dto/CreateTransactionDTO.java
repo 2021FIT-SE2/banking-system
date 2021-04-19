@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class CreateTransactionDTO implements TimeStamps {
 
     @NotNull
-    private Long customerAccountID;
+    private String customerAccountID;
 
     private TransactionType transactionType;
 

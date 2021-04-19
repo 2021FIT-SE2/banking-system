@@ -20,10 +20,8 @@ public class UpdateTransactionDTO {
     @NotNull
     private Long transactionID;
 
-    private TransactionType transactionType;
-
     @NotNull
-    private Long customerAccountID;
+    private String customerAccountID;
 
     @JsonIgnore
     @Builder.Default

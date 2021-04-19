@@ -64,13 +64,7 @@ public class AuthorityServiceImpl implements AuthorityService {
     }
 
     @Override
-    public boolean hasCustomerAccess(Long currentUserID, Long studentID) {
-        Customer customer = customerRepository.findById(studentID).orElseThrow(EntityNotFoundException::new);
-        return customer.getId().equals(currentUserID);
-    }
-
-    @Override
-    public boolean hasCustomerAccountAccess(Long currentUserID, Long customerAccountID) {
+    public boolean hasCustomerAccountAccess(Long currentUserID, String customerAccountID) {
         CustomerAccount customerAccount = customerAccountRepository.findById(customerAccountID).orElseThrow(EntityNotFoundException::new);
         return customerAccount.getCustomer().getId().equals(currentUserID);
     }

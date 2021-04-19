@@ -5,6 +5,9 @@ import com.se2.bankingsystem.domains.CustomerAccount.dto.CreateCustomerAccountDT
 import com.se2.bankingsystem.domains.CustomerAccount.dto.UpdateCustomerAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 
+import java.util.List;
+
 
 public interface CustomerAccountService extends CRUDService<CustomerAccount, Long, CreateCustomerAccountDTO, UpdateCustomerAccountDTO> {
+    List<CustomerAccount> findAllByCustomerId(Long customerID);
 }

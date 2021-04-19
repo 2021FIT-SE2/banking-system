@@ -75,6 +75,7 @@ public class User implements UserDetails, Serializable, TimeStamps {
     private String password;
 
     @NotNull
+    @Column(unique = true)
     @Size(min = MIN_LENGTH_PHONE_NUMBER, max = MAX_LENGTH_PHONE_NUMBER)
     private String phoneNumber;
 

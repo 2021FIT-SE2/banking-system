@@ -31,9 +31,6 @@ public class UpdateUserDTO {
     @Email
     private String email;
 
-    @NotNull
-    private Gender gender;
-
     @PastOrPresent
     private LocalDate dob;
 

@@ -5,12 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterDTO {
 
-    private String token;
+//    private String token;
 
+    @Valid
     private CreateCustomerDTO createCustomerDTO;
 }

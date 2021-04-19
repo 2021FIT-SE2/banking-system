@@ -36,7 +36,7 @@ public class InitData {
         if (authorityService.findAll().isEmpty()) {
 
             String username = "admin";
-            String password = "sqa@2021";
+            String password = "se2@2021";
 
             CreateAuthorityDTO adminAuthorityDTO = new CreateAuthorityDTO(AuthorityName.ADMIN);
             CreateAuthorityDTO customerAuthorityDTO = new CreateAuthorityDTO(AuthorityName.CUSTOMER);
@@ -67,7 +67,7 @@ public class InitData {
                 .build();
 
             userService.create(createUserDTO);
-//            customerService.create(createCustomerDTO);
+            customerService.create(createCustomerDTO);
 
             testData();
         } else {

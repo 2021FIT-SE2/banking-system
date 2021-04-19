@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html lang="en">
 <head>
@@ -44,41 +44,26 @@
                             <p class="mb-4 mt-1">Welcome back!</p>
                         </div>
 
-                        <div class="form-group last mb-4">
-                            <label for="phone-number-input">Phone Number</label>
-                            <input type="text" class="form-control" id="phone-number-input">
-                        </div>
+                        <c:if test="${param.containsKey('error')}">
+                            <p class="text-danger">Incorrect Username or Password</p>
+                        </c:if>
 
-                        <div class="form-group last mb-4" id="verification-code-container"
-                             style="display: none !important;">
-                            <label for="verification-code-input">Verification Code</label>
-                            <input type="text" class="form-control" id="verification-code-input">
-                        </div>
+                        <form:form method="post" modelAttribute="loginDTO">
+                            <div class="form-group last mb-4">
+                                <form:label path="username">Username</form:label>
+                                <form:input path="username" type="text" class="form-control" id="username"/>
+                            </div>
 
-                        <div class="d-flex mb-5 align-items-center">
-                            <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
-                                <input id="remember-me" type="checkbox" checked="checked"/>
-                                <div class="control__indicator"></div>
-                            </label>
-                            <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
-                        </div>
+                            <div class="form-group last mb-4">
+                                <form:label path="password">Password</form:label>
+                                <form:input path="password" type="password" class="form-control" id="password"/>
+                            </div>
 
-                        <button id="send-sms-code-button" type="submit" class="btn btn-block btn-primary">Send SMS
-                            Code
-                        </button>
-
-                        <form:form id="sign-in-form" method="post" modelAttribute="loginRequestDTO">
-                            
-                            <form:input id="token" type="hidden" path="token" name="token" value="" />
-                            
-                            <button id="verify-sms-code-button" type="submit" class="btn btn-block btn-primary"
-                                    style="display: none !important;">Sign In
-                            </button>
+                            <button type="submit" class="btn btn-block btn-primary">Sign In</button>
                         </form:form>
+
                         <p class="mb-4 mt-1">Don't have an account? <a href="<c:url value="/register"/>">Sign Up</a></p>
 
-                        <div style="margin-top: 20px" id="recaptcha-container"></div>
-                        <%--                        </form>--%>
                     </div>
                 </div>
 
@@ -93,33 +78,5 @@
 <script src="<c:url value="/webjars/bootstrap/4.6.0/js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="/resources/js/lib/jquery.slicknav.js"/>"></script>
 <script src="<c:url value="/resources/js/lib/owl.carousel.min.js"/>"></script>
-
-<!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
-
-<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
-
-<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
-
-<!-- Add Firebase products that you want to use -->
-<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
-<script>
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    let firebaseConfig = {
-        apiKey: "AIzaSyAOzsdYRws3Eys46tdxupmiStMs3Tv_ckI",
-        authDomain: "cute-banking-system.firebaseapp.com",
-        projectId: "cute-banking-system",
-        storageBucket: "cute-banking-system.appspot.com",
-        messagingSenderId: "909023602643",
-        appId: "1:909023602643:web:6b78fb3aedfea87df9f126",
-        measurementId: "G-3GBL12T1CB"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-</script>
-
-<script src="<c:url value="/resources/js/login.js"/>"></script>
 </body>
 </html>

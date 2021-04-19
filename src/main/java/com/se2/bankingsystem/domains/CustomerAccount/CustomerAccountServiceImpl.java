@@ -109,7 +109,7 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
 //        return customerAccountRepository.findByKeyword(keyword, pageable);
 //    }
 
-    public List<CustomerAccount> createManyStudents(List<CreateCustomerAccountDTO> createCustomerAccountDTOList) {
+    public List<CustomerAccount> createManyCustomerAccounts(List<CreateCustomerAccountDTO> createCustomerAccountDTOList) {
         List<CustomerAccount> customerAccounts = new ArrayList<>();
 
         for (CreateCustomerAccountDTO createCustomerAccountDTO : createCustomerAccountDTOList) {

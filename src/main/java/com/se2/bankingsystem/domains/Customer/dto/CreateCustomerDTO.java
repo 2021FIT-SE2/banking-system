@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.se2.bankingsystem.domains.Authority.entity.AuthorityName;
 import com.se2.bankingsystem.domains.User.dto.CreateUserDTO;
 import com.se2.bankingsystem.domains.User.entity.Gender;
-import com.se2.bankingsystem.domains.User.entity.User;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -28,13 +28,8 @@ import static com.se2.bankingsystem.domains.Customer.entity.Customer.MIN_LENGTH_
 @SuperBuilder
 public class CreateCustomerDTO extends CreateUserDTO {
 
-    @Column(unique = true)
     @Email
     private String email;
-
-    @Column(unique = true)
-    @Size(min = User.MIN_LENGTH_PHONE_NUMBER, max = User.MAX_LENGTH_PHONE_NUMBER)
-    private String phoneNumber;
 
     @NotNull
     @Size(min = MIN_LENGTH_FULL_ADDRESS, max = MAX_LENGTH_FULL_ADDRESS)
@@ -44,8 +39,10 @@ public class CreateCustomerDTO extends CreateUserDTO {
     private Gender gender;
 
     @PastOrPresent
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
 
     @JsonIgnore
-    private final AuthorityName role = AuthorityName.CUSTOMER;
+    @Builder.Default
+    private AuthorityName role = AuthorityName.CUSTOMER;
 }

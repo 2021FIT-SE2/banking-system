@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface TransactionService {
+    void setCustomerAccount(Transaction transaction, Long customerID);
+
     void deleteById(Long id);
 
     List<? extends Transaction> findAll();

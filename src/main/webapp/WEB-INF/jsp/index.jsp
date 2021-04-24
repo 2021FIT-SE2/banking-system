@@ -89,7 +89,8 @@
                     <div class="header__info-right">
                         <ul>
                             <li><a href="#"><span class="icon_chat_alt"></span> Live chat</a></li>
-                            <li><a href="/login"><span class="fa fa-user"></span> Login / Register</a></li>
+                            <li><a href="/login"><span class="fa fa-user"></span>Login</a></li>
+                            <li><a href="/register">/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Register </a></li>
                         </ul>
                     </div>
                 </div>
@@ -99,11 +100,11 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-3">
-                <div class="header__logo">
-                    <a href="./index.html"><img src="<c:url value="resources/img/codersBank-dark.png"/>" alt=""/></a>
+                <div class="logo">
+                    <a href="./index.html"><img src="<c:url value="resources/img/logo.png"/>" alt=""/></a>
                 </div>
             </div>
-            <div class="col-lg-9 col-md-9">
+            <div class="col-lg-9 col-md-9">logo
                 <nav class="header__menu">
                     <ul>
                         <li class="active"><a href="./index.html">Home</a></li>
@@ -473,12 +474,12 @@
         </div>
     </div>
     <div class="footer__text set-bg" data-setbg="resources/img/footer-bg.png">
-        <div class="container">
+        <div class="container">14
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="footer__text-about">
+                <div class="col-lg-4 col-md-6 col-sm-12">logo
+                    <div class="footer__text-about">logo
                         <div class="footer__logo">
-                            <a href="/"><img src="<c:url value="resources/img/codersBank-dark.png"/>" alt=""/></a>
+                            <a href="/"><img src="<c:url value="resources/img/logo.png"/>" alt=""/></a>
                         </div>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                             ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida viverra maecen

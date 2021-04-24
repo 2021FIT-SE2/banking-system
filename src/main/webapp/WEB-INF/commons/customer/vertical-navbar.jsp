@@ -14,7 +14,6 @@
                 <ul>
                     <li class="more-details">
                         <a href="<c:url value="/me/profile" />"><i class="ti-user"></i>View Profile</a>
-                        <a href="<c:url value="/me/settings" />"><i class="ti-settings"></i>Settings</a>
                         <a href="<c:url value="/logout" />"><i class="ti-layout-sidebar-left"></i>Logout</a>
                     </li>
                 </ul>
@@ -80,13 +79,6 @@
                     <span class="pcoded-mcaret"></span>
                 </a>
                 <ul class="pcoded-submenu expand">
-                    <li class="${param.activeSidebarElementID.equals("customerAccount-list") ? "active" : ""}">
-                        <a href="<c:url value="/me/customerAccounts"/>" class="waves-effect waves-dark">
-                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                            <span class="pcoded-mtext">All Customer Accounts</span>
-                            <span class="pcoded-mcaret"></span>
-                        </a>
-                    </li>
                     <li class="${param.activeSidebarElementID.equals("loanAccount-list") ? "active" : ""}">
                         <a href="<c:url value="/me/loanAccounts"/>" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>

@@ -67,7 +67,7 @@ h2 {
 .content .contents .form-group.field--not-empty label, .content .bg .form-group.field--not-empty label {
     margin-top: -20px; }
 .content .contents .form-control, .content .bg .form-control {
-    border: none;
+    border: 1px solid #00ACED;
     padding: 0;
     font-size: 20px;
     border-radius: 0; }
@@ -199,3 +199,5 @@ h2 {
 .control--checkbox input:disabled:checked ~ .control__indicator {
     background-color: #7e0cf5;
     opacity: .2; }
+
+

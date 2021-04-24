@@ -342,11 +342,12 @@ ol {
 	margin-right: 5px;
 }
 
-.header__logo {
+.logo {
+	width:500px;
 	padding-top: 30px;
 }
 
-.header__logo a {
+.logo a {
 	display: inline-block;
 }
 

@@ -5,8 +5,8 @@ import com.se2.bankingsystem.domains.Authentication.dto.LoginDTO;
 import com.se2.bankingsystem.domains.Customer.CustomerService;
 import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
 import com.se2.bankingsystem.domains.User.UserService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,20 +28,12 @@ import javax.validation.Valid;
 
 @Controller
 @Slf4j
+@AllArgsConstructor
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
-
     private final UserService userService;
-
     private final CustomerService customerService;
-
-    @Autowired
-    public AuthenticationController(AuthenticationManager authenticationManager, UserService userService, CustomerService customerService) {
-        this.authenticationManager = authenticationManager;
-        this.userService = userService;
-        this.customerService = customerService;
-    }
 
     @GetMapping(path = "/login")
     public ModelAndView showLoginView() {

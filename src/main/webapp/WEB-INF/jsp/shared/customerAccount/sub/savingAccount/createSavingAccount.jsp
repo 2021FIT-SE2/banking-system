@@ -1,4 +1,8 @@
+<%@ page import="com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.entity.SavingDuration" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<% pageContext.setAttribute("savingDurations", SavingDuration.values()); %>
+
 <jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
 
     <jsp:param name="title" value="Create saving account"/>
@@ -30,15 +34,6 @@
                             <form:errors path="customerID" cssClass="text-warning"/>
                         </div>
                     </fieldset>
-                    <fieldset class="form-group row row">
-                        <form:label cssClass="col-sm-3 col-form-label" path="balance">Balance</form:label>
-                        <div class="col-sm-9">
-                            <form:input path="balance" type="number" class="form-control"
-                                        required="required"/>
-                            <span class="form-bar"></span>
-                            <form:errors path="balance" cssClass="text-warning"/>
-                        </div>
-                    </fieldset>
 
                     <fieldset class="form-group row row">
                         <form:label cssClass="col-sm-3 col-form-label" path="principal">Principal</form:label>
@@ -49,34 +44,19 @@
                             <form:errors path="principal" cssClass="text-warning"/>
                         </div>
                     </fieldset>
-                    <fieldset class="form-group row">
-                        <form:label cssClass="col-sm-3 col-form-label" path="interest">Interest</form:label>
-                        <div class="col-sm-9">
-                            <form:input path="interest" type="text" class="form-control"
-                                        required="required"/>
-                            <span class="form-bar"></span>
-                            <form:errors path="interest" cssClass="text-warning"/>
-                        </div>
-                    </fieldset>
-                    <fieldset class="form-group row row">
-                        <form:label cssClass="col-sm-3 col-form-label" path="rate">Rate</form:label>
-                        <div class="col-sm-9">
-                            <form:input path="rate" type="number" class="form-control"
-                                        required="required"/>
-                            <span class="form-bar"></span>
-                            <form:errors path="rate" cssClass="text-warning"/>
-                        </div>
-                    </fieldset>
 
                     <fieldset class="form-group row">
-                        <form:label cssClass="col-sm-3 col-form-label" path="duration">Duration</form:label>
+                        <form:label cssClass="col-sm-3 col-form-label" path="savingDuration">Duration</form:label>
                         <div class="col-sm-9">
-                            <form:input path="duration" type="number" class="form-control"
-                                        required="required"/>
+                            <form:select path="savingDuration" type="text" class="form-control form-select"
+                                         required="required">
+                                <c:forEach var="savingDuration" items="${savingDurations}">
+                                    <form:option value="${savingDuration}" label="${savingDuration.translation()}"/>
+                                </c:forEach>
+                            </form:select>
                             <span class="form-bar"></span>
-                            <form:errors path="duration" cssClass="text-warning"/>
+                            <form:errors path="savingDuration" cssClass="text-warning"/>
                         </div>
-
                     </fieldset>
 
                     <fieldset class="form-group row">
@@ -88,16 +68,6 @@
                         </div>
                     </fieldset>
 
-                    <fieldset class="form-group row">
-                        <form:label cssClass="col-sm-3 col-form-label" path="endDate">End Date</form:label>
-                        <div class="col-sm-9">
-                            <form:input path="endDate" type="date" class="form-control"
-                                        required="required"/>
-                            <span class="form-bar"></span>
-                            <form:errors path="endDate" cssClass="text-warning"/>
-                        </div>
-
-                    </fieldset>
                     <br><br>
                     <div class="d-flex justify-content-md-center">
                         <button id="btn-save" type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAdd">Add</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

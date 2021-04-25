@@ -8,6 +8,6 @@ import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.entity.Loan
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface LoanAccountService extends CRUDService<LoanAccount, Long, CreateLoanAccountDTO, UpdateLoanAccountDTO> {
+public interface LoanAccountService extends CRUDService<LoanAccount, String, CreateLoanAccountDTO, UpdateLoanAccountDTO> {
     Page<LoanAccount> findAll(Pageable pageRequest);
 }

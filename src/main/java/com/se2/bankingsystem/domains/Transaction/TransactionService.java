@@ -14,6 +14,8 @@ public interface TransactionService {
 
     List<Transaction> findAll();
 
+    List<Transaction> findAllByCustomerAccountId(String customerAccountId);
+
     Transaction getById(Long id);
 
     Page<Transaction> findAll(Pageable pageable);

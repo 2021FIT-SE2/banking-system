@@ -24,7 +24,4 @@ public class UpdateTransferTransactionDTO extends UpdateTransactionDTO {
 
     @NotNull
     private String receiver;
-
-    @NotNull
-    private String status;
 }

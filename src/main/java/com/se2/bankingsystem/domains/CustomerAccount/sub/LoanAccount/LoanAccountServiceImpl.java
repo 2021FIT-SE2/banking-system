@@ -1,10 +1,12 @@
 package com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount;
 
+import com.se2.bankingsystem.domains.Customer.CustomerRepository;
+import com.se2.bankingsystem.domains.Customer.entity.Customer;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.dto.CreateLoanAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.dto.UpdateLoanAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.entity.LoanAccount;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,32 +16,33 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class LoanAccountServiceImpl implements LoanAccountService {
 
     private final LoanAccountRepository loanAccountRepository;
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public LoanAccountServiceImpl(LoanAccountRepository loanAccountRepository, ModelMapper modelMapper) {
-        this.loanAccountRepository = loanAccountRepository;
-        this.modelMapper = modelMapper;
-    }
+    private final CustomerRepository customerRepository;
 
     @Override
     public LoanAccount create(CreateLoanAccountDTO createLoanAccountDTO) {
         LoanAccount loanAccount = modelMapper.map(createLoanAccountDTO, LoanAccount.class);
+        loanAccount.setCurrentLoan(loanAccount.getPrincipal());
+
+        Customer customer = customerRepository.findById(createLoanAccountDTO.getCustomerID()).orElseThrow(EntityNotFoundException::new);
+        loanAccount.setCustomer(customer);
+
         return loanAccountRepository.save(loanAccount);
     }
 
     @Override
-    public LoanAccount updateById(Long id, UpdateLoanAccountDTO updateLoanAccountDTO) {
+    public LoanAccount updateById(String id, UpdateLoanAccountDTO updateLoanAccountDTO) {
         LoanAccount existing = loanAccountRepository.findById(id).orElseThrow(EntityExistsException::new);
         modelMapper.map(updateLoanAccountDTO, existing);
         return loanAccountRepository.save(existing);
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         loanAccountRepository.deleteById(id);
     }
 
@@ -49,7 +52,7 @@ public class LoanAccountServiceImpl implements LoanAccountService {
     }
 
     @Override
-    public LoanAccount getById(Long id) {
+    public LoanAccount getById(String id) {
         return loanAccountRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 

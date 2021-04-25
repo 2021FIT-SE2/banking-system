@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
 
@@ -37,21 +38,32 @@
                     <th>ID</th>
                     <th>Customer ID</th>
                     <th>Balance</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="normalAccount" items="${normalAccountList}">
                     <tr>
-                        <td>${normalAccount.id}</td>
                         <td>
-                            <a href="/admin/normalAccounts/${normalAccount.customer.id}">${normalAccount.customer.id}</a>
+                            <a class="d-inline-block text-truncate" style="max-width: 100px" href="/admin/normalAccounts/${normalAccount.id}">${normalAccount.id}</a>
                         </td>
-                        <td>${normalAccount.balance}</td>
+                        <td>
+                            <a href="/admin/customers/${normalAccount.customer.id}">${normalAccount.customer.id}</a>
+                        </td>
+                        <td><fmt:setLocale value="vi_VN" scope="session"/>
+                            <fmt:formatNumber value="${normalAccount.balance}" type = "currency"/></td>
+
+                        <fmt:parseDate value="${normalAccount.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt" type="both"/>
+                        <td><fmt:formatDate value="${createdAt}" pattern="HH:mm dd/MM/yyyy" /></td>
+
+                        <fmt:parseDate value="${normalAccount.updatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="updatedAt" type="both"/>
+                        <td><fmt:formatDate value="${updatedAt}" pattern="HH:mm dd/MM/yyyy" /></td>
 
                         <td>
                             <a href="/admin/normalAccounts/${normalAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
-                            <i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
+                            <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                         </td>
                     </tr>
                     <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

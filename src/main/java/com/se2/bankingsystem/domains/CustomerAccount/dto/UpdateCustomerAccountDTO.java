@@ -1,18 +1,19 @@
 package com.se2.bankingsystem.domains.CustomerAccount.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import javax.validation.constraints.NotNull;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
+@SuperBuilder
 public class UpdateCustomerAccountDTO {
-
-    @NotNull
-    private Long customerID;
-
-    private String id;
+    @JsonIgnore
+    @Builder.Default
+    private LocalDateTime updatedAt = LocalDateTime.now();
 }

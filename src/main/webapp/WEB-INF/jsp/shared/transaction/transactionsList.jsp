@@ -1,16 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
 
-    <jsp:param name="title" value="Customer Account" />
+    <jsp:param name="title" value="Transactions" />
 
-    <jsp:param name="parentLinkText" value="Manage Customer Account" />
-    <jsp:param name="parentLinkUrl" value="/admin/customerAccounts" />
+    <jsp:param name="parentLinkText" value="Manage Transactions" />
+    <jsp:param name="parentLinkUrl" value="/admin/transactions" />
 
     <jsp:param name="childLinkText" value="List" />
-    <jsp:param name="childLinkUrl" value="/admin/customerAccounts" />
+    <jsp:param name="childLinkUrl" value="/admin/transactions" />
 
-    <jsp:param name="activeSidebarElementID" value="customerAccount-list" />
+    <jsp:param name="activeSidebarElementID" value="transaction-list" />
 </jsp:include>
 
 <!-- START HERE -->
@@ -21,9 +22,9 @@
 
 <div class="card" style="margin-top: 20px">
     <div class="card-header">
-        <h5>Customer Account</h5>
+        <h5>Transaction</h5>
         <div class="card-header-right" style="margin-right: 10px">
-            <a href="<c:url value="/admin/customerAccounts/create"/>">
+            <a href="<c:url value="/admin/transactions/create"/>">
                 <button type="submit" class="btn btn-primary">Create New</button>
             </a>
         </div>
@@ -33,32 +34,28 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>Customer ID</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Gender</th>
-                    <th>Address</th>
+                    <th>ID</th>
+                    <th>From Account</th>
+                    <th>Type</th>
+                    <th>Created At</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="customerAccount" items="${customerAccountList}">
+                <c:forEach var="transaction" items="${transactionList}">
                     <tr>
-                        <td>${customerAccount.id}</td>
                         <td>
-                            <a href="/admin/customers/${customerAccount.id}">${customerAccount.username}</a>
+                            <a href="/admin/transactions/${transaction.id}">${transaction.id}</a>
                         </td>
-                        <td>${customerAccount.email}</td>
-                        <td>${customerAccount.phoneNumber}</td>
-                        <td>${customerAccount.firstName}</td>
-                        <td>${customerAccount.lastName}</td>
-                        <td>${customerAccount.gender}</td>
-                        <td>${customerAccount.address}</td>
                         <td>
-                            <a href="/admin/customers/${customerAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
+                            <a href="/admin/customerAccounts/${transaction.customerAccount.id}">${transaction.customerAccount.id}</a>
+                        </td>
+                        <td>${transaction.transactionType}</td>
+
+                        <fmt:parseDate value="${transaction.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt" type="both"/>
+                        <td><fmt:formatDate value="${createdAt}" pattern="HH:mm dd/MM/yyyy" /></td>
+                        <td>
+                            <a href="/admin/customers/${transaction.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
                             <i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                         </td>
                     </tr>
@@ -72,7 +69,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-footer d-flex justify-content-md-center">
-                                    <a href="/admin/customers/${customerAccount.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
+                                    <a href="/admin/customers/${transaction.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 
                                 </div>

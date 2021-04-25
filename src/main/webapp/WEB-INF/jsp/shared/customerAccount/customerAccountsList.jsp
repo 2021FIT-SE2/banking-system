@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
 
@@ -33,33 +34,34 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>Customer ID</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Gender</th>
-                    <th>Address</th>
+                    <th>ID</th>
+                    <th>Owner ID</th>
+                    <th>Type</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="customerAccount" items="${customerAccountList}">
                     <tr>
-                        <td>${customerAccount.id}</td>
                         <td>
-                            <a href="/admin/customers/${customerAccount.id}">${customerAccount.username}</a>
+                            <a href="/admin/customerAccounts/${customerAccount.id}">${customerAccount.id}</a>
                         </td>
-                        <td>${customerAccount.email}</td>
-                        <td>${customerAccount.phoneNumber}</td>
-                        <td>${customerAccount.firstName}</td>
-                        <td>${customerAccount.lastName}</td>
-                        <td>${customerAccount.gender}</td>
-                        <td>${customerAccount.address}</td>
                         <td>
-                            <a href="/admin/customers/${customerAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
-                            <i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
+                            <a href="/admin/customers/${customerAccount.customer.id}">${customerAccount.customer.id}</a>
+                        </td>
+                        <td>${customerAccount.accountType.name()}</td>
+
+                        <fmt:parseDate value="${customerAccount.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt" type="both"/>
+                        <td><fmt:formatDate value="${createdAt}" pattern="HH:mm dd/MM/yyyy" /></td>
+
+                        <fmt:parseDate value="${customerAccount.updatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="updatedAt" type="both"/>
+                        <td><fmt:formatDate value="${updatedAt}" pattern="HH:mm dd/MM/yyyy" /></td>
+
+                        <td>
+                            <a href="/admin/customerAccounts/${customerAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
+                            <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                         </td>
                     </tr>
                     <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

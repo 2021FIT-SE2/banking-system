@@ -17,14 +17,11 @@ import javax.validation.constraints.Positive;
 public class CreateTransferTransactionDTO extends CreateTransactionDTO {
 
     @NotNull
-    private String receiver;
+    private String receiverID;
 
     @NotNull
     @Positive
     private Long transferAmount;
-
-    @NotNull
-    private String status;
 
     @JsonIgnore
     @Builder.Default

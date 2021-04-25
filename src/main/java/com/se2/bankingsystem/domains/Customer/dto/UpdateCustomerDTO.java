@@ -1,6 +1,5 @@
 package com.se2.bankingsystem.domains.Customer.dto;
 
-import com.se2.bankingsystem.domains.Authority.entity.AuthorityName;
 import com.se2.bankingsystem.domains.User.dto.UpdateUserDTO;
 import com.se2.bankingsystem.domains.User.entity.Gender;
 import lombok.AllArgsConstructor;
@@ -10,9 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;

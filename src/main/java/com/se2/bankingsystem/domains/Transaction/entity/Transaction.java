@@ -9,7 +9,12 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +34,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "transactionType", discriminatorType = DiscriminatorType.STRING)
 public class Transaction implements TimeStamps {
 
     @Id
@@ -48,5 +54,7 @@ public class Transaction implements TimeStamps {
     private LocalDateTime updatedAt;
 
     @NotNull
+    @Column(insertable = false, updatable = false)
+    @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
 }

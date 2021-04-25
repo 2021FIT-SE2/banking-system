@@ -1,15 +1,18 @@
 package com.se2.bankingsystem.controllers.transaction;
 
-import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.entity.ChargeTransaction;
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.TransferTransactionService;
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.dto.CreateTransferTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.dto.UpdateTransferTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.entity.TransferTransaction;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -18,17 +21,11 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequestMapping("/admin")
+@AllArgsConstructor
 public class TransferTransactionController {
 
     private final TransferTransactionService transferTransactionService;
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public TransferTransactionController(TransferTransactionService transferTransactionService, ModelMapper modelMapper) {
-        this.transferTransactionService = transferTransactionService;
-        this.modelMapper = modelMapper;
-
-    }
 
     @GetMapping("/transferTransactions")
     public ModelAndView showTableView() {

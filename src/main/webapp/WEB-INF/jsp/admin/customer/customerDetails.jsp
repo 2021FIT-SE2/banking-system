@@ -15,37 +15,8 @@
     <jsp:param name="activeSidebarElementID" value="add-customer"/>
 </jsp:include>
 
-<style>
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/admin/customerDetails.css"/>">
 
-    .account-settings .user-profile {
-        margin: 0 0 1rem 0;
-        padding-bottom: 1rem;
-        text-align: center;
-    }
-
-    .account-settings .user-profile .user-avatar {
-        margin: 0 0 1rem 0;
-    }
-
-    .account-settings .user-profile .user-avatar img {
-        width: 90px;
-        height: 90px;
-        -webkit-border-radius: 100px;
-        -moz-border-radius: 100px;
-        border-radius: 100px;
-    }
-
-    .account-settings .user-profile h5.user-name {
-        margin: 0 0 0.5rem 0;
-    }
-
-    .account-settings .user-profile h6.user-phone-number {
-        margin: 0 0 10px;
-        font-size: 0.8rem;
-        font-weight: 400;
-        color: #9fa8b9;
-    }
-</style>
 <!-- START HERE -->
 <div class="container">
     <div class="row gutters">
@@ -134,12 +105,8 @@
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <fieldset class="form-group">
                                     <form:label path="dob">Date Of Birth</form:label>
-                                    <fmt:formatDate value="${customer.dob}"
-                                                    type="date"
-                                                    pattern="MM-dd-yyyy"
-                                                    var="formattedDOB"/>
                                     <form:input type="date" class="form-control" path="dob"
-                                                placeholder="Select Date Of Birth" value="${formattedDOB}"/>
+                                                placeholder="Select Date Of Birth" value="${customer.dob}"/>
                                 </fieldset>
                             </div>
                         </div>
@@ -202,33 +169,29 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th>Customer ID</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Gender</th>
-                        <th>Address</th>
-                        <th>Actions</th>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach var="customerAccount" items="${customerAccountList}">
                         <tr>
-                            <td>${customerAccount.id}</td>
                             <td>
-                                <a href="/admin/customers/${customerAccount.id}">${customerAccount.getClass()}</a>
+                                <a href="/admin/customerAccounts/${customerAccount.id}">${customerAccount.id}</a>
                             </td>
-                            <td>${customerAccount.email}</td>
-                            <td>${customerAccount.phoneNumber}</td>
-                            <td>${customerAccount.firstName}</td>
-                            <td>${customerAccount.lastName}</td>
-                            <td>${customerAccount.gender}</td>
-                            <td>${customerAccount.address}</td>
+                            <td>${customerAccount.accountType}</td>
+
+                            <fmt:parseDate value="${customerAccount.createdAt}" pattern="yyyy-MM-dd" var="createdAt" type="date"/>
+                            <td><fmt:formatDate value="${createdAt}" pattern="HH:mm dd/MM/yyyy" /></td>
+
+                            <fmt:parseDate value="${customerAccount.updatedAt}" pattern="yyyy-MM-dd" var="updatedAt" type="date"/>
+                            <td><fmt:formatDate value="${updatedAt}" pattern="HH:mm dd/MM/yyyy" /></td>
+
                             <td>
-                                <a href="/admin/customers/${customerAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
-                                <i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
+                                <a href="/admin/customerAccounts/${customerAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
+                                <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                             </td>
                         </tr>
                         <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -243,7 +206,6 @@
                                     <div class="modal-footer d-flex justify-content-md-center">
                                         <a href="/admin/customers/${customerAccount.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-
                                     </div>
                                 </div>
                             </div>

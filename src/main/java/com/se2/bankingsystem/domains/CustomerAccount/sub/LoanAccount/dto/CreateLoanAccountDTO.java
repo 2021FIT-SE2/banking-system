@@ -1,50 +1,33 @@
 package com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.se2.bankingsystem.domains.CustomerAccount.dto.CreateCustomerAccountDTO;
+import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.entity.LoanDuration;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class CreateLoanAccountDTO {
+public class CreateLoanAccountDTO extends CreateCustomerAccountDTO {
 
-    @PositiveOrZero
     @NotNull
-    private Double rate;
+    private LoanDuration loanDuration;
 
-    @PositiveOrZero
     @NotNull
-    private Integer duration;
-
-    @FutureOrPresent
-    private LocalDateTime startAt;
-
-    @FutureOrPresent
-    private LocalDateTime endAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
 
     @PositiveOrZero
     @NotNull
     private Long principal;
-
-    @PositiveOrZero
-    @NotNull
-    private Long interest;
-
-    @JsonIgnore
-    @Builder.Default
-    private LocalDateTime startDate = LocalDateTime.now();
-
-    @JsonIgnore
-    @Builder.Default
-    private LocalDateTime endDate = LocalDateTime.now();
 }

@@ -5,8 +5,8 @@ import com.se2.bankingsystem.domains.Authority.AuthorityRepository;
 import com.se2.bankingsystem.domains.FakeEWallet.dto.CreateFakeEWalletDTO;
 import com.se2.bankingsystem.domains.FakeEWallet.dto.UpdateFakeEWalletDTO;
 import com.se2.bankingsystem.domains.FakeEWallet.entity.FakeEWallet;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,28 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class FakeEWalletServiceImpl implements FakeEWalletService {
 
     private final FakeEWalletRepository fakeEWalletRepository;
 
-//    private final DepartmentRepository departmentRepository;
-
     private final AuthorityRepository authorityRepository;
 
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public FakeEWalletServiceImpl(
-        FakeEWalletRepository fakeEWalletRepository,
-//        DepartmentRepository departmentRepository,
-        AuthorityRepository authorityRepository,
-        ModelMapper modelMapper
-    ) {
-        this.fakeEWalletRepository = fakeEWalletRepository;
-//        this.departmentRepository = departmentRepository;
-        this.authorityRepository = authorityRepository;
-        this.modelMapper = modelMapper;
-    }
 
     @Override
     public FakeEWallet create(CreateFakeEWalletDTO createFakeEWalletDTO) {

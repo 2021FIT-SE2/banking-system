@@ -6,6 +6,7 @@ import com.se2.bankingsystem.domains.Customer.dto.UpdateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.entity.Customer;
 import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountService;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +22,12 @@ import java.util.List;
 
 @Controller
 @Slf4j
+@AllArgsConstructor
 public class CustomerController {
 
     private final CustomerService customerService;
     private final CustomerAccountService customerAccountService;
-
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public CustomerController(CustomerService customerService, CustomerAccountService customerAccountService, ModelMapper modelMapper) {
-        this.customerService = customerService;
-        this.customerAccountService = customerAccountService;
-        this.modelMapper = modelMapper;
-    }
 
     @GetMapping("/admin/customers")
     public ModelAndView showTableView() {
@@ -51,7 +45,7 @@ public class CustomerController {
 
         List<CustomerAccount> customerAccounts = customerAccountService.findAllByCustomerId(id);
 
-        modelAndView.addObject(customerAccounts);
+        modelAndView.addObject("customerAccountList", customerAccounts);
         modelAndView.addObject(customer);
 
         return modelAndView;

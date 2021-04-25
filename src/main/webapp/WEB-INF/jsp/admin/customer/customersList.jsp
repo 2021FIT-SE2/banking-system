@@ -54,7 +54,7 @@
                         <td>${customer.address}</td>
                         <td>
                             <a href="/admin/customers/${customer.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
-                            <i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
+                            <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                         </td>
                     </tr>
                     <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

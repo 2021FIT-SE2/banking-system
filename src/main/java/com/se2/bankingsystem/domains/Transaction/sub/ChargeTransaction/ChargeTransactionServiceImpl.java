@@ -6,8 +6,8 @@ import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.dto.CreateChargeTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.dto.UpdateChargeTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.entity.ChargeTransaction;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,20 +16,12 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ChargeTransactionServiceImpl implements ChargeTransactionService {
 
     private final CustomerAccountRepository customerAccountRepository;
-
     private final ModelMapper modelMapper;
-
     private final ChargeTransactionRepository transferTransactionRepository;
-
-    @Autowired
-    public ChargeTransactionServiceImpl(ChargeTransactionRepository transferTransactionRepository, ModelMapper modelMapper, CustomerAccountRepository customerAccountRepository) {
-        this.modelMapper = modelMapper;
-        this.transferTransactionRepository = transferTransactionRepository;
-        this.customerAccountRepository = customerAccountRepository;
-    }
 
     public void setCustomerAccount(Transaction transaction, String customerAccountID) {
         CustomerAccount customerAccount = customerAccountRepository.findById(customerAccountID).orElseThrow(EntityNotFoundException::new);
@@ -38,9 +30,7 @@ public class ChargeTransactionServiceImpl implements ChargeTransactionService {
 
     @Override
     public ChargeTransaction create(CreateChargeTransactionDTO createChargeTransactionDTO) {
-
         ChargeTransaction transferTransaction = modelMapper.map(createChargeTransactionDTO, ChargeTransaction.class);
-
         setCustomerAccount(transferTransaction, createChargeTransactionDTO.getCustomerAccountID());
 
         return transferTransactionRepository.save(transferTransaction);

@@ -4,9 +4,11 @@ import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.SavingAcc
 import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.dto.CreateSavingAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.dto.UpdateSavingAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.entity.SavingAccount;
+import com.se2.bankingsystem.domains.Transaction.TransactionService;
+import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,16 +24,12 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequestMapping("/admin")
+@AllArgsConstructor
 public class SavingAccountController {
 
     private final SavingAccountService savingAccountService;
+    private final TransactionService transactionService;
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public SavingAccountController(SavingAccountService savingAccountService, ModelMapper modelMapper) {
-        this.savingAccountService = savingAccountService;
-        this.modelMapper = modelMapper;
-    }
 
     @GetMapping("/savingAccounts")
     public ModelAndView showTableView() {
@@ -41,26 +39,26 @@ public class SavingAccountController {
         return modelAndView;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #savingAccountID)")
     @GetMapping("/savingAccounts/{id}")
-    public ModelAndView showProfile(@PathVariable Long id) {
+    public ModelAndView showProfile(@PathVariable String id) {
         ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/savingAccount/savingAccountDetails");
+
         SavingAccount savingAccount = savingAccountService.getById(id);
         modelAndView.addObject(savingAccount);
+
+        List<Transaction> transactions = transactionService.findAllByCustomerAccountId(id);
+        modelAndView.addObject("transactionList", transactions);
         return modelAndView;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #savingAccountID)")
     @GetMapping("/savingAccounts/create")
     public ModelAndView showCreateView() {
         ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/savingAccount/createSavingAccount");
-
         CreateSavingAccountDTO createSavingAccountDTO = CreateSavingAccountDTO.builder().build();
         modelAndView.addObject(createSavingAccountDTO);
         return modelAndView;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #savingAccountID)")
     @PostMapping("/savingAccounts/create")
     public String create(@Valid @ModelAttribute CreateSavingAccountDTO createsavingAccountDTO) {
         savingAccountService.create(createsavingAccountDTO);
@@ -68,7 +66,7 @@ public class SavingAccountController {
     }
 
     @GetMapping("/savingAccounts/{savingAccountID}/edit")
-    public ModelAndView showUpdateView(@PathVariable Long savingAccountID) {
+    public ModelAndView showUpdateView(@PathVariable String savingAccountID) {
         ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/savingAccount/editSavingAccount");
 
         SavingAccount savingAccount = savingAccountService.getById(savingAccountID);
@@ -81,14 +79,14 @@ public class SavingAccountController {
 
     @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #savingAccountID)")
     @PostMapping("/savingAccounts/{savingAccountID}/edit")
-    public String update(@PathVariable Long savingAccountID, @Valid @ModelAttribute UpdateSavingAccountDTO updateSavingAccountDTO) {
+    public String update(@PathVariable String savingAccountID, @Valid @ModelAttribute UpdateSavingAccountDTO updateSavingAccountDTO) {
         savingAccountService.updateById(savingAccountID, updateSavingAccountDTO);
         return "redirect:/admin/savingAccounts";
     }
 
     @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #savingAccountID)")
-    @PostMapping("/savingAccounts/{savingAccountID}/delete")
-    public String delete(@PathVariable Long savingAccountID) {
+    @GetMapping("/savingAccounts/{savingAccountID}/delete")
+    public String delete(@PathVariable String savingAccountID) {
         savingAccountService.deleteById(savingAccountID);
         return "redirect:/admin/savingAccounts";
     }

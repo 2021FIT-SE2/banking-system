@@ -23,7 +23,7 @@
                         <fieldset class="form-group row row">
                             <form:label cssClass="col-sm-3 col-form-label" path="customerAccountID">Customer Account Id</form:label>
                             <div class="col-sm-9">
-                                <form:input path="customerAccountID" type="number" class="form-control"
+                                <form:input path="customerAccountID" type="text" class="form-control"
                                             required="required"/>
                                 <span class="form-bar"></span>
                                 <form:errors path="customerAccountID" cssClass="text-warning"/>
@@ -34,24 +34,6 @@
                             <form:label cssClass="col-sm-3 col-form-label" path="redeemAmount">Redeem Amount</form:label>
                             <div class="col-sm-9">
                                 <form:input path="redeemAmount" type="number" class="form-control"
-                                            required="required"/>
-                                <span class="form-bar"></span>
-                                <form:errors cssClass="text-warning"/>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group row">
-                            <form:label cssClass="col-sm-3 col-form-label" path="createdAt">Created At</form:label>
-                            <div class="col-sm-9">
-                                <form:input path="createdAt" type="date" class="form-control"
-                                            required="required"/>
-                                <span class="form-bar"></span>
-                                <form:errors cssClass="text-warning"/>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group row">
-                            <form:label cssClass="col-sm-3 col-form-label" path="updatedAt">Updated At</form:label>
-                            <div class="col-sm-9">
-                                <form:input path="updatedAt" type="date" class="form-control"
                                             required="required"/>
                                 <span class="form-bar"></span>
                                 <form:errors cssClass="text-warning"/>

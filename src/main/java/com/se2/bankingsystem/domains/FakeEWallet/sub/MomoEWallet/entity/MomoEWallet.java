@@ -23,9 +23,9 @@ public class MomoEWallet extends FakeEWallet {
 
     private Integer duration;
 
-    private LocalDateTime startAt;
+    private LocalDateTime startDate;
 
-    private LocalDateTime endAt;
+    private LocalDateTime endDate;
 
     private Long principalAmount;
 

@@ -28,19 +28,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="chargeTransaction" items="${chargeTransactionList}">
+                <c:forEach var="transaction" items="${chargeTransactionList}">
                     <tr>
-                        <td>${chargeTransaction.id}</td>
-                        <td>${chargeTransaction.customerAccountId}</td>
-                        <td>${chargeTransaction.redeemAmount}</td>
-                        <td>${chargeTransaction.createAt}</td>
-                        <td>${chargeTransaction.UpdateAt}</td>
+                        <td>${transaction.id}</td>
+                        <td>${transaction.customerAccountId}</td>
+                        <td>${transaction.redeemAmount}</td>
+                        <td>${transaction.createAt}</td>
+                        <td>${transaction.UpdateAt}</td>
 
                         <td>
-                            <a href="customer-edit?customerId=${chargeTransaction.id}"><i
+                            <a href="customer-edit?customerId=${transaction.id}"><i
                                     class="fas fa-edit"></i>Edit</a></td>
                         &nbsp;&nbsp;&nbsp;&nbsp;<a
-                            href="customer-delete?customerId=${chargeTransaction.id}"><i
+                            href="customer-delete?customerId=${transaction.id}"><i
                             class="fas fa-trash-alt"></i>Delete</a>
 
                     </tr>

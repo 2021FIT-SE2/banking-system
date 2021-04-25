@@ -4,6 +4,9 @@ import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.LoanAccount
 import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.dto.CreateLoanAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.dto.UpdateLoanAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.entity.LoanAccount;
+import com.se2.bankingsystem.domains.Transaction.TransactionService;
+import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +24,13 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequestMapping("/admin")
+@AllArgsConstructor
 public class LoanAccountController {
 
     private final LoanAccountService loanAccountService;
-    private final ModelMapper modelMapper;
+    private final TransactionService transactionService;
 
-    @Autowired
-    public LoanAccountController(LoanAccountService loanAccountService, ModelMapper modelMapper) {
-        this.loanAccountService = loanAccountService;
-        this.modelMapper = modelMapper;
-    }
+    private final ModelMapper modelMapper;
 
     @GetMapping("/loanAccounts")
     public ModelAndView showTableView() {
@@ -41,10 +41,15 @@ public class LoanAccountController {
     }
 
     @GetMapping("/loanAccounts/{id}")
-    public ModelAndView showProfile(@PathVariable Long id) {
+    public ModelAndView showProfile(@PathVariable String id) {
         ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/loanAccount/loanAccountDetails");
+
         LoanAccount loanAccount = loanAccountService.getById(id);
         modelAndView.addObject(loanAccount);
+
+        List<Transaction> transactions = transactionService.findAllByCustomerAccountId(id);
+        modelAndView.addObject("transactionList", transactions);
+
         return modelAndView;
     }
 
@@ -64,7 +69,7 @@ public class LoanAccountController {
     }
 
     @GetMapping("/loanAccounts/{loanAccountID}/edit")
-    public ModelAndView showUpdateView(@PathVariable Long loanAccountID) {
+    public ModelAndView showUpdateView(@PathVariable String loanAccountID) {
         ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/loanAccount/editLoanAccount");
 
         LoanAccount loanAccount = loanAccountService.getById(loanAccountID);
@@ -76,13 +81,13 @@ public class LoanAccountController {
     }
 
     @PostMapping("/loanAccounts/{loanAccountID}/edit")
-    public String update(@PathVariable Long loanAccountID, @Valid @ModelAttribute UpdateLoanAccountDTO updateLoanAccountDTO) {
+    public String update(@PathVariable String loanAccountID, @Valid @ModelAttribute UpdateLoanAccountDTO updateLoanAccountDTO) {
         loanAccountService.updateById(loanAccountID, updateLoanAccountDTO);
         return "redirect:/admin/loanAccounts";
     }
 
-    @PostMapping("/loanAccounts/{loanAccountID}/delete")
-    public String delete(@PathVariable Long loanAccountID) {
+    @GetMapping("/loanAccounts/{loanAccountID}/delete")
+    public String delete(@PathVariable String loanAccountID) {
         loanAccountService.deleteById(loanAccountID);
         return "redirect:/admin/loanAccounts";
     }

@@ -4,6 +4,7 @@ import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.ChargeTra
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.dto.CreateChargeTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.dto.UpdateChargeTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.entity.ChargeTransaction;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +18,11 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequestMapping("/admin")
+@AllArgsConstructor
 public class ChargeTransactionController {
 
     private final ChargeTransactionService chargeTransactionService;
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public ChargeTransactionController(ChargeTransactionService chargeTransactionService, ModelMapper modelMapper) {
-        this.chargeTransactionService = chargeTransactionService;
-        this.modelMapper = modelMapper;
-    }
 
     @GetMapping("/chargeTransactions")
     public ModelAndView showTableView() {

@@ -72,7 +72,7 @@
                         <form:label cssClass="col-sm-3 col-form-label" path="duration">Duration</form:label>
                         <div class="col-sm-9">
                             <form:input path="duration" type="number" class="form-control"
-                                        required="required" value="${savingAccount.duration}"/>
+                                        required="required" value="${savingAccount.savingDuration}"/>
                             <span class="form-bar"></span>
                             <form:errors path="duration" cssClass="text-warning"/>
                         </div>

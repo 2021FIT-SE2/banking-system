@@ -2,11 +2,9 @@ package com.se2.bankingsystem.domains.Authority;
 
 import com.se2.bankingsystem.domains.Authority.dto.CreateAuthorityDTO;
 import com.se2.bankingsystem.domains.Authority.entity.Authority;
-import com.se2.bankingsystem.domains.Customer.CustomerRepository;
-import com.se2.bankingsystem.domains.Customer.entity.Customer;
 import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountRepository;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,20 +13,11 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class AuthorityServiceImpl implements AuthorityService {
 
     private final AuthorityRepository authorityRepository;
-
-    private final CustomerRepository customerRepository;
-
     private final CustomerAccountRepository customerAccountRepository;
-
-    @Autowired
-    public AuthorityServiceImpl(AuthorityRepository authorityRepository, CustomerRepository customerRepository, CustomerAccountRepository customerAccountRepository) {
-        this.authorityRepository = authorityRepository;
-        this.customerRepository = customerRepository;
-        this.customerAccountRepository = customerAccountRepository;
-    }
 
     @Override
     public Authority create(CreateAuthorityDTO createAuthorityDTO) {

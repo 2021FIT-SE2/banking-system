@@ -1,12 +1,15 @@
 package com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.entity;
 
+import com.se2.bankingsystem.domains.CustomerAccount.entity.AccountType;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
@@ -22,27 +25,21 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "saving_accounts")
+@DiscriminatorValue(value = AccountType.Constants.SAVING_VALUE)
 public class SavingAccount extends CustomerAccount {
 
-    @PositiveOrZero
     @NotNull
-    private Double rate;
+    private SavingDuration savingDuration;
 
-    @PositiveOrZero
     @NotNull
-    private Integer duration;
-
-    @FutureOrPresent
-    private LocalDate startAt;
-
-    @FutureOrPresent
-    private LocalDate endAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
 
     @PositiveOrZero
     @NotNull
     private Long principal;
 
-    @PositiveOrZero
     @NotNull
-    private Long interest;
+    @PositiveOrZero
+    private Long currentSaving;
 }

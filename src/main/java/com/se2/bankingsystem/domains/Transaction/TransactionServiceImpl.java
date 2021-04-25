@@ -3,6 +3,7 @@ package com.se2.bankingsystem.domains.Transaction;
 import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountRepository;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,21 +13,12 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
 
-    private CustomerAccountRepository customerAccountRepository;
+    private final CustomerAccountRepository customerAccountRepository;
 
-    private TransactionRepository transactionRepository;
-
-    @Autowired
-    public void setTransactionRepository(TransactionRepository transactionRepository) {
-        this.transactionRepository = transactionRepository;
-    }
-
-    @Autowired
-    public void setCustomerAccountRepository(CustomerAccountRepository customerAccountRepository) {
-        this.customerAccountRepository = customerAccountRepository;
-    }
+    private final TransactionRepository transactionRepository;
 
     public void setCustomerAccount(Transaction transaction, String customerAccountID) {
         CustomerAccount customerAccount = customerAccountRepository.findById(customerAccountID).orElseThrow(EntityNotFoundException::new);
@@ -41,6 +33,11 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> findAll() {
         return this.transactionRepository.findAll();
+    }
+
+    @Override
+    public List<Transaction> findAllByCustomerAccountId(String customerAccountId) {
+        return transactionRepository.findAllByCustomerAccountId(customerAccountId);
     }
 
     @Override

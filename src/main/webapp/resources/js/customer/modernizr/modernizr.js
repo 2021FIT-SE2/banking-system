@@ -483,10 +483,10 @@ window.Modernizr = (function( window, document, undefined ) {
     };
 
 
-    // Chrome incognito mode used to throw an exception when using openDatabase
+    // Chrome incognito mode used to throw an exception when using opendDateabase
     // It doesn't anymore.
     tests['websqldatabase'] = function() {
-      return !!window.openDatabase;
+      return !!window.opendDateabase;
     };
 
     // Vendors had inconsistent prefixing with the experimental Indexed DB:

@@ -6,6 +6,7 @@ import com.se2.bankingsystem.domains.FakeEWallet.FakeEWalletService;
 import com.se2.bankingsystem.domains.FakeEWallet.dto.CreateFakeEWalletDTO;
 import com.se2.bankingsystem.domains.FakeEWallet.dto.UpdateFakeEWalletDTO;
 import com.se2.bankingsystem.domains.FakeEWallet.entity.FakeEWallet;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +19,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 public class FakeEWalletController {
 
     private final FakeEWalletService walletService;
-
-    @Autowired
-    public FakeEWalletController(FakeEWalletService walletService) {
-        this.walletService = walletService;
-    }
 
     @GetMapping("/wallets")
     public ModelAndView showTableView() {

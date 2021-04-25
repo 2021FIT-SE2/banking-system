@@ -1,13 +1,18 @@
 package com.se2.bankingsystem.controllers.transaction;
+
 import com.se2.bankingsystem.domains.Transaction.sub.WithdrawTransaction.WithdrawTransactionService;
 import com.se2.bankingsystem.domains.Transaction.sub.WithdrawTransaction.dto.CreateWithdrawTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.WithdrawTransaction.dto.UpdateWithdrawTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.WithdrawTransaction.entity.WithdrawTransaction;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -16,16 +21,11 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequestMapping("/admin")
+@AllArgsConstructor
 public class WithdrawTransactionController {
 
     private final WithdrawTransactionService withdrawTransactionService;
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public WithdrawTransactionController(WithdrawTransactionService withdrawTransactionService, ModelMapper modelMapper) {
-        this.withdrawTransactionService = withdrawTransactionService;
-        this.modelMapper = modelMapper;
-    }
 
     @GetMapping("/withdrawTransactions")
     public ModelAndView showTableView() {

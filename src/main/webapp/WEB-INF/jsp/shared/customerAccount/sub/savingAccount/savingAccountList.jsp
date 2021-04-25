@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
 
@@ -22,7 +23,7 @@
 <!-- START HERE -->
 <div class="card" style="margin-top: 20px">
     <div class="card-header">
-        <h5>savingAccounts</h5>
+        <h5>Saving Accounts</h5>
         <div class="card-header-right" style="margin-right: 10px">
             <a href="<c:url value="/admin/savingAccounts/create"/>">
                 <button type="submit" class="btn btn-primary">Create New</button>
@@ -36,22 +37,35 @@
                 <tr>
                     <th>ID</th>
                     <th>Customer ID</th>
-                    <th>Balance</th>
+                    <th>Current Saving</th>
+                    <th>Duration</th>
+                    <th>Start Date</th>
+                    <th>Last Update At</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="savingAccount" items="${savingAccountList}">
                     <tr>
-                        <td>${savingAccount.id}</td>
                         <td>
-                            <a href="/admin/savingAccounts/${savingAccount.customerID}">${savingAccount.customerID}</a>
+                            <a class="d-inline-block text-truncate" style="max-width: 100px" href="/admin/savingAccounts/${savingAccount.id}">${savingAccount.id}</a>
                         </td>
-                        <td>${savingAccount.balance}</td>
+                        <td>
+                            <a href="/admin/customers/${savingAccount.customer.id}">${savingAccount.customer.id}</a>
+                        </td>
+                        <td><fmt:setLocale value="vi_VN" scope="session"/>
+                            <fmt:formatNumber value="${savingAccount.currentSaving}" type = "currency"/></td>
+                        <td>${savingAccount.savingDuration.translation()}</td>
+
+                        <fmt:parseDate value="${savingAccount.startDate}" pattern="yyyy-MM-dd" var="startDate" type="date"/>
+                        <td><fmt:formatDate value="${startDate}" pattern="dd/MM/yyyy" /></td>
+
+                        <fmt:parseDate value="${savingAccount.updatedAt}" pattern="yyyy-MM-dd'T'HH:mm" var="updatedAt" type="both"/>
+                        <td><fmt:formatDate value="${updatedAt}" pattern="HH:mm dd/MM/yyyy" /></td>
 
                         <td>
                             <a href="/admin/savingAccounts/${savingAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
-                            <i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
+                            <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                         </td>
                     </tr>
                     <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

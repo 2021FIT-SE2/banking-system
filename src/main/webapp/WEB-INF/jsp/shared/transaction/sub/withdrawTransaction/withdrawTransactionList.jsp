@@ -1,8 +1,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<jsp:include page="/WEB-INF/commons/admin/prefix.jsp"/>
+<jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
+
+    <jsp:param name="title" value="Withdraw Transactions" />
+
+    <jsp:param name="parentLinkText" value="Manage Withdraw Transactions" />
+    <jsp:param name="parentLinkUrl" value="/admin/withdrawTransactions" />
+
+    <jsp:param name="childLinkText" value="List" />
+    <jsp:param name="childLinkUrl" value="/admin/withdrawTransactions" />
+
+    <jsp:param name="activeSidebarElementID" value="withdrawTransaction-list" />
+</jsp:include>
+
+<jsp:include page="../../nav-tab.jsp">
+    <jsp:param name="activeTab" value="withdraw" />
+</jsp:include>
+
 <!-- START HERE -->
-<div class="card">
+<div class="card" style="margin-top: 20px">
     <div class="card-header">
         <h5>Withdraw Transaction</h5>
         <div class="card-header-right" style="margin-right: 10px">
@@ -16,11 +33,10 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>Withdraw Transaction ID</th>
-                    <th>Customer Account ID</th>
+                    <th>ID</th>
+                    <th>Account</th>
                     <th>Withdraw Amount</th>
                     <th>Create At</th>
-                    <th>Update At</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -31,11 +47,12 @@
                             <a href="/admin/withdrawTransactions/${withdrawTransaction.id}">${withdrawTransaction.id}</a>
                         </td>
                         <td>
-                            <a href="/admin/customers/${withdrawTransaction.customerAccountId}">${withdrawTransaction.customerAccountId}</a>
+                            <a href="/admin/customers/${withdrawTransaction.customerAccount.id}">${withdrawTransaction.customerAccount.id}</a>
                         </td>
                         <td>${withdrawTransaction.withdrawAmount}</td>
-                        <td>${withdrawTransaction.createdAt}</td>
-                        <td>${withdrawTransaction.updateAt}</td>
+
+                        <fmt:parseDate value="${withdrawTransaction.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt" type="both"/>
+                        <td><fmt:formatDate value="${createdAt}" pattern="HH:mm dd/MM/yyyy" /></td>
 
                         <td>
                             <a href="/admin/withdrawTransactions/${withdrawTransaction.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
@@ -52,9 +69,8 @@
                                     </button>
                                 </div>
                                 <div class="modal-footer d-flex justify-content-md-center">
-                                    <a href="/admin/withdrawTrasactions/${withdrawTransaction.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
+                                    <a href="/admin/withdrawTransactions/${withdrawTransaction.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-
                                 </div>
                             </div>
                         </div>

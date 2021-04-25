@@ -10,7 +10,12 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -29,6 +34,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "accountType", discriminatorType = DiscriminatorType.STRING)
 public class CustomerAccount implements TimeStamps {
 
     @Id
@@ -42,6 +48,10 @@ public class CustomerAccount implements TimeStamps {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Customer customer;
+
+    @Column(insertable = false, updatable = false)
+    @Enumerated(EnumType.STRING)
+    private AccountType accountType;
 
     @NotNull
     private LocalDateTime createdAt;

@@ -6,8 +6,8 @@ import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.dto.CreateTransferTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.dto.UpdateTransferTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.entity.TransferTransaction;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class TransferTransactionServiceImpl implements TransferTransactionService {
 
     private final ModelMapper modelMapper;
@@ -24,13 +25,6 @@ public class TransferTransactionServiceImpl implements TransferTransactionServic
 
     private final TransferTransactionRepository transferTransactionRepository;
 
-    @Autowired
-    public TransferTransactionServiceImpl(TransferTransactionRepository transferTransactionRepository, ModelMapper modelMapper, CustomerAccountRepository customerAccountRepository) {
-        this.modelMapper = modelMapper;
-        this.transferTransactionRepository = transferTransactionRepository;
-        this.customerAccountRepository = customerAccountRepository;
-    }
-
     public void setCustomerAccount(Transaction transaction, String customerAccountID) {
         CustomerAccount customerAccount = customerAccountRepository.findById(customerAccountID).orElseThrow(EntityNotFoundException::new);
         transaction.setCustomerAccount(customerAccount);
@@ -38,7 +32,6 @@ public class TransferTransactionServiceImpl implements TransferTransactionServic
 
     @Override
     public TransferTransaction create(CreateTransferTransactionDTO createTransferTransactionDTO) {
-
         TransferTransaction transferTransaction = modelMapper.map(createTransferTransactionDTO, TransferTransaction.class);
 
         setCustomerAccount(transferTransaction, createTransferTransactionDTO.getCustomerAccountID());
@@ -48,13 +41,9 @@ public class TransferTransactionServiceImpl implements TransferTransactionServic
 
     @Override
     public TransferTransaction updateById(Long id, UpdateTransferTransactionDTO updateTransactionDTO) {
-
         TransferTransaction transferTransaction = transferTransactionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-
         modelMapper.map(updateTransactionDTO, transferTransaction);
-
         setCustomerAccount(transferTransaction, updateTransactionDTO.getCustomerAccountID());
-
         return transferTransaction;
     }
 

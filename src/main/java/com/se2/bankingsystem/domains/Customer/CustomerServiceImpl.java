@@ -6,10 +6,11 @@ import com.se2.bankingsystem.domains.Authority.entity.AuthorityName;
 import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.dto.UpdateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.entity.Customer;
+import com.se2.bankingsystem.domains.CustomerAccount.entity.AccountType;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.NormalAccountRepository;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.entity.NormalAccount;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,28 +21,13 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
-
     private final NormalAccountRepository normalAccountRepository;
-
     private final AuthorityRepository authorityRepository;
-
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public CustomerServiceImpl(
-        CustomerRepository customerRepository,
-        NormalAccountRepository normalAccountRepository,
-        AuthorityRepository authorityRepository,
-        ModelMapper modelMapper
-    ) {
-        this.customerRepository = customerRepository;
-        this.normalAccountRepository = normalAccountRepository;
-        this.authorityRepository = authorityRepository;
-        this.modelMapper = modelMapper;
-    }
 
     @Override
     public Customer create(CreateCustomerDTO createCustomerDTO) {

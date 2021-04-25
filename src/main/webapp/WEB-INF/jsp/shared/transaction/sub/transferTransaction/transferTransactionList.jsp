@@ -1,8 +1,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<jsp:include page="/WEB-INF/commons/admin/prefix.jsp"/>
-<!-- START HERE -->
-<div class="card">
+<jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
+
+    <jsp:param name="title" value="Transfer Transactions" />
+
+    <jsp:param name="parentLinkText" value="Manage Transfer Transactions" />
+    <jsp:param name="parentLinkUrl" value="/admin/transferTransactions" />
+
+    <jsp:param name="childLinkText" value="List" />
+    <jsp:param name="childLinkUrl" value="/admin/transferTransactions" />
+
+    <jsp:param name="activeSidebarElementID" value="transferTransaction-list" />
+</jsp:include>
+
+<jsp:include page="../../nav-tab.jsp">
+    <jsp:param name="activeTab" value="transfer" />
+</jsp:include>
+
+<div class="card" style="margin-top: 20px">
     <div class="card-header">
         <h5>Transfer Transaction</h5>
         <div class="card-header-right" style="margin-right: 10px">
@@ -16,13 +32,11 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>Transfer Transaction ID</th>
-                    <th>Customer Account ID</th>
-                    <th>Beneficial Account</th>
-                    <th>Redeem Amount</th>
+                    <th>ID</th>
+                    <th>From Account</th>
+                    <th>To Account</th>
+                    <th>Amount</th>
                     <th>Create At</th>
-                    <th>Update At</th>
-                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -33,18 +47,18 @@
                             <a href="/admin/transferTransactions/${transferTransaction.id}">${transferTransaction.id}</a>
                         </td>
                         <td>
-                            <a href="/admin/customers/${transferTransaction.customerAccountId}">${transferTransaction.customerAccountId}</a>
+                            <a href="/admin/customers/${transferTransaction.customerAccount.id}">${transferTransaction.customerAccount.id}</a>
                         </td>
-                        <td>${transferTransaction.beneficialAccount}</td>
+                        <td>${transferTransaction.receiver.id}</td>
                         <td>${transferTransaction.transferAmount}</td>
-                        <td>${transferTransaction.createdAt}</td>
-                        >
-                        <td>${transferTransaction.updateAt}</td>
-                        <td>${transferTransaction.status}</td>
+
+                        <fmt:parseDate value="${transferTransaction.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt" type="both"/>
+                        <td><fmt:formatDate value="${createdAt}" pattern="HH:mm dd/MM/yyyy" /></td>
+
                         <td>
                             <a href="/admin/transferTransactions/${transferTransaction.id}/edit"><i
                                     class="ti-pencil-alt fa-2x text-primary"></i></a>
-                            <i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
+                            <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                         </td>
                     </tr>
                     <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

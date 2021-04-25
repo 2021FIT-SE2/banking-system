@@ -1,12 +1,11 @@
 package com.se2.bankingsystem.domains.CustomerAccount;
 
 
-import com.se2.bankingsystem.domains.Authority.AuthorityRepository;
 import com.se2.bankingsystem.domains.CustomerAccount.dto.CreateCustomerAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.dto.UpdateCustomerAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,28 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class CustomerAccountServiceImpl implements CustomerAccountService {
 
     private final CustomerAccountRepository customerAccountRepository;
 
-//    private final DepartmentRepository departmentRepository;
-
-    private final AuthorityRepository authorityRepository;
-
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public CustomerAccountServiceImpl(
-        CustomerAccountRepository customerAccountRepository,
-//        DepartmentRepository departmentRepository,
-        AuthorityRepository authorityRepository,
-        ModelMapper modelMapper
-    ) {
-        this.customerAccountRepository = customerAccountRepository;
-//        this.departmentRepository = departmentRepository;
-        this.authorityRepository = authorityRepository;
-        this.modelMapper = modelMapper;
-    }
 
     @Override
     public CustomerAccount create(CreateCustomerAccountDTO createCustomerAccountDTO) {

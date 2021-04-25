@@ -4,6 +4,9 @@ import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.NormalAcc
 import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.dto.CreateNormalAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.dto.UpdateNormalAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.entity.NormalAccount;
+import com.se2.bankingsystem.domains.Transaction.TransactionService;
+import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +24,12 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequestMapping("/admin")
+@AllArgsConstructor
 public class NormalAccountController {
 
     private final NormalAccountService normalAccountService;
+    private final TransactionService transactionService;
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public NormalAccountController(NormalAccountService normalAccountService, ModelMapper modelMapper) {
-        this.normalAccountService = normalAccountService;
-        this.modelMapper = modelMapper;
-    }
 
     @GetMapping("/normalAccounts")
     public ModelAndView showTableView() {
@@ -41,10 +40,13 @@ public class NormalAccountController {
     }
 
     @GetMapping("/normalAccounts/{id}")
-    public ModelAndView showProfile(@PathVariable Long id) {
+    public ModelAndView showProfile(@PathVariable String id) {
         ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/normalAccount/normalAccountDetails");
         NormalAccount normalAccount = normalAccountService.getById(id);
         modelAndView.addObject(normalAccount);
+
+        List<Transaction> transactions = transactionService.findAllByCustomerAccountId(id);
+        modelAndView.addObject("transactionList", transactions);
         return modelAndView;
     }
 
@@ -64,7 +66,7 @@ public class NormalAccountController {
     }
 
     @GetMapping("/normalAccounts/{normalAccountID}/edit")
-    public ModelAndView showUpdateView(@PathVariable Long normalAccountID) {
+    public ModelAndView showUpdateView(@PathVariable String normalAccountID) {
         ModelAndView modelAndView = new ModelAndView("shared/customerAccount/sub/normalAccount/editNormalAccount");
 
         NormalAccount normalAccount = normalAccountService.getById(normalAccountID);
@@ -76,13 +78,13 @@ public class NormalAccountController {
     }
 
     @PostMapping("/normalAccounts/{normalAccountID}/edit")
-    public String update(@PathVariable Long normalAccountID, @Valid @ModelAttribute UpdateNormalAccountDTO updateNormalAccountDTO) {
+    public String update(@PathVariable String normalAccountID, @Valid @ModelAttribute UpdateNormalAccountDTO updateNormalAccountDTO) {
         normalAccountService.updateById(normalAccountID, updateNormalAccountDTO);
         return "redirect:/admin/normalAccounts";
     }
 
-    @PostMapping("/normalAccounts/{normalAccountID}/delete")
-    public String delete(@PathVariable Long normalAccountID) {
+    @GetMapping("/normalAccounts/{normalAccountID}/delete")
+    public String delete(@PathVariable String normalAccountID) {
         normalAccountService.deleteById(normalAccountID);
         return "redirect:/admin/normalAccounts";
     }

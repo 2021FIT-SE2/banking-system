@@ -2,6 +2,7 @@ package com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.entity
 
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
+import com.se2.bankingsystem.domains.Transaction.entity.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,6 +25,7 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
+@DiscriminatorValue(TransactionType.Constants.TRANSFER_VALUE)
 public class TransferTransaction extends Transaction {
 
     @Positive

@@ -2,8 +2,8 @@ package com.se2.bankingsystem.controllers.transaction;
 
 import com.se2.bankingsystem.domains.Transaction.TransactionService;
 import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,21 +17,17 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 @Slf4j
+@AllArgsConstructor
 public class TransactionController {
 
     private final TransactionService transactionService;
 
-    @Autowired
-    public TransactionController(TransactionService transactionService) {
-        this.transactionService = transactionService;
-    }
-
-    @PreAuthorize("hasAuthority('ADMIN') or principal.id == #id")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping({"/transactions"})
     public ModelAndView showTableView() {
         ModelAndView modelAndView = new ModelAndView("shared/transaction/transactionsList");
         List<Transaction> transactions = transactionService.findAll();
-        modelAndView.addObject(transactions);
+        modelAndView.addObject("transactionList", transactions);
         return modelAndView;
     }
 

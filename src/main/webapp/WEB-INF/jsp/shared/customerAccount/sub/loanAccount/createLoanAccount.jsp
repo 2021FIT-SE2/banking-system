@@ -3,15 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% pageContext.setAttribute("loanDurations", LoanDuration.values()); %>
 
-<jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
+<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}" />
 
-    <jsp:param name="title" value="Create loan account"/>
+<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/prefix.jsp">
 
-    <jsp:param name="parentLink" value="Manage loan account"/>
-    <jsp:param name="parentLinkUrl" value=""/>
+    <jsp:param name="title" value="Create Loan Account"/>
 
-    <jsp:param name="childLink" value="Create New loan account"/>
-    <jsp:param name="childLinkUrl" value=""/>
+    <jsp:param name="parentLinkText" value="Manage Loan Account" />
+    <jsp:param name="parentLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/loanAccounts" />
+
+    <jsp:param name="childLinkText" value="Create" />
+    <jsp:param name="childLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/loanAccounts" />
 
     <jsp:param name="activeSidebarElementID" value="add-loanAccounts"/>
 </jsp:include>
@@ -84,4 +86,4 @@
 <jsp:include page="/WEB-INF/commons/admin/add-confirm.jsp"/>
 
 <!-- END HERE -->
-<jsp:include page="/WEB-INF/commons/admin/suffix.jsp"/>
+<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/suffix.jsp"/>

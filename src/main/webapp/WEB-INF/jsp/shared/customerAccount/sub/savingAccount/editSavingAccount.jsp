@@ -1,5 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
+<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}" />
+
+<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/prefix.jsp">
 
     <jsp:param name="title" value="Create saving account"/>
 
@@ -111,4 +113,4 @@
 <jsp:include page="/WEB-INF/commons/admin/save-confirm.jsp"/>
 
 <!-- END HERE -->
-<jsp:include page="/WEB-INF/commons/admin/suffix.jsp"/>
+<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/suffix.jsp"/>

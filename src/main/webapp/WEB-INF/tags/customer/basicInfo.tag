@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ attribute name="customer" required="true" type="com.se2.bankingsystem.domains.Customer.entity.Customer" %>
+<%@ taglib prefix="customer" tagdir="/WEB-INF/tags/customer"%>
 
 <div class="row gutters">
     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-flex">

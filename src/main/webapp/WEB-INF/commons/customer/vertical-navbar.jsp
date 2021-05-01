@@ -4,10 +4,10 @@
     <div class="pcoded-inner-navbar main-menu">
         <div class="">
             <div class="main-menu-header">
-                <img class="img-80 img-radius" src="<c:url value="resources/img/avatar-4.jpg" />"
+                <img class="img-80 img-radius" src="<c:url value="resources/img/profile.png" />"
                      alt="User-Profile-Image">
                 <div class="user-details">
-                    <span id="more-details">${param.username != null ? param.username : "Customer"}<i class="fa fa-caret-down"></i></span>
+                    <span id="more-details">${pageContext.request.userPrincipal.name}<i class="fa fa-caret-down"></i></span>
                 </div>
             </div>
             <div class="main-menu-content">
@@ -81,7 +81,7 @@
                 </a>
                 <ul class="pcoded-submenu expand">
                     <li class="${param.activeSidebarElementID.equals("customerAccount-list") ? "active" : ""}">
-                        <a href="<c:url value="/me/customerAccounts"/>" class="waves-effect waves-dark">
+                        <a href="<c:url value="/me/accounts"/>" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext">All Customer Accounts</span>
                             <span class="pcoded-mcaret"></span>
@@ -114,7 +114,7 @@
         <%--        <div class="pcoded-navigation-label">Transaction</div>--%>
 
         <ul class="pcoded-item pcoded-left-item">
-            <li class="pcoded-hasmenu${param.activeSidebarElementID.startsWith("customer-") ? " active" : ""}">
+            <li class="pcoded-hasmenu${param.activeSidebarElementID.startsWith("wallet-") ? " active" : ""}">
                 <a href="<c:url value="/me/wallets"/>" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
                     <span class="pcoded-mtext">Manage Wallets</span>

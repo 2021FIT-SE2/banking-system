@@ -80,9 +80,9 @@
                 </li>
                 <li class="user-profile header-notification">
                     <a class="waves-effect waves-light">
-                        <img src="<c:url value="resources/img/avatar-4.jpg" />" class="img-radius"
+                        <img src="<c:url value="resources/img/profile.png" />" class="img-radius"
                              alt="User-Profile-Image">
-                        <span>${param.username != null ? param.username : "Customer"}</span>
+                        <span>${pageContext.request.userPrincipal.name}</span>
                         <i class="ti-angle-down"></i>
                     </a>
                     <ul class="show-notification profile-notification">

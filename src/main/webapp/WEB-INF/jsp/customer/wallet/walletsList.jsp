@@ -1,12 +1,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<jsp:include page="/WEB-INF/commons/admin/prefix.jsp"/>
+<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}" />
+
+<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/prefix.jsp">
+
+    <jsp:param name="title" value="Manage Wallets" />
+
+    <jsp:param name="parentLinkText" value="Manage Wallets" />
+    <jsp:param name="parentLinkUrl" value="/me/wallets" />
+
+    <jsp:param name="childLinkText" value="List" />
+    <jsp:param name="childLinkUrl" value="/me/wallets" />
+
+    <jsp:param name="activeSidebarElementID" value="wallet-list" />
+</jsp:include>
+
 <!-- START HERE -->
 <div class="card">
     <div class="card-header">
-        <h5>normalAccounts</h5>
+        <h5>All Customers</h5>
         <div class="card-header-right" style="margin-right: 10px">
-            <a href="<c:url value="/admin/normalAccounts/create"/>">
+            <a href="<c:url value="/me/wallets/create"/>">
                 <button type="submit" class="btn btn-primary">Create New</button>
             </a>
         </div>
@@ -17,23 +32,26 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Customer ID</th>
                     <th>Balance</th>
+                    <th>Provider</th>
+                    <th>Added At</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="normalAccount" items="${normalAccountList}">
+                <c:forEach var="wallet" items="${fakeEWalletList}">
                     <tr>
-                        <td>${normalAccount.id}</td>
                         <td>
-                            <a href="/admin/normalAccounts/${normalAccount.customerID}">${normalAccount.customerID}</a>
+                            <a href="/me/wallets/${wallet.id}">${wallet.id}</a>
                         </td>
-                        <td>${normalAccount.balance}</td>
+                        <td>${wallet.balance}</td>
+                        <td>${wallet.provider}</td>
+
+                        <fmt:parseDate value="${wallet.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt" type="both"/>
+                        <td><fmt:formatDate value="${createdAt}" pattern="HH:mm dd/MM/yyyy" /></td>
 
                         <td>
-                            <a href="/admin/normalAccounts/${normalAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
-                            <i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
+                            <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                         </td>
                     </tr>
                     <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -46,7 +64,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-footer d-flex justify-content-md-center">
-                                    <a href="/admin/normalAccounts/${normalAccount.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
+                                    <a href="/me/wallets/${wallet.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 
                                 </div>
@@ -60,4 +78,4 @@
     </div>
 </div>
 <!-- END HERE -->
-<jsp:include page="/WEB-INF/commons/admin/suffix.jsp"/>
+<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/suffix.jsp"/>

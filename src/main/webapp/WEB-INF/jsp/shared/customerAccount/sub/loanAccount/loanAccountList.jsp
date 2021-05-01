@@ -1,17 +1,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
+<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}" />
+
+<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/prefix.jsp">
 
     <jsp:param name="title" value="Loan Account" />
 
     <jsp:param name="parentLinkText" value="Manage Loan Account" />
-    <jsp:param name="parentLinkUrl" value="/admin/loanAccounts" />
+    <jsp:param name="parentLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/loanAccounts" />
 
     <jsp:param name="childLinkText" value="List" />
-    <jsp:param name="childLinkUrl" value="/admin/loanAccounts" />
+    <jsp:param name="childLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/loanAccounts" />
 
-    <jsp:param name="activeSidebarElementID" value="normalAccount-list" />
+    <jsp:param name="activeSidebarElementID" value="loanAccount-list" />
 </jsp:include>
 
 <!-- START HERE -->
@@ -24,7 +26,7 @@
     <div class="card-header">
         <h5>Loan Accounts</h5>
         <div class="card-header-right" style="margin-right: 10px">
-            <a href="<c:url value="/admin/loanAccounts/create"/>">
+            <a href="<c:url value="/${authority == 'ADMIN' ? 'admin' : 'me'}/loanAccounts/create"/>">
                 <button type="submit" class="btn btn-primary">Create New</button>
             </a>
         </div>
@@ -35,7 +37,9 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Customer ID</th>
+                    <c:if test="${authority == 'ADMIN'}">
+                        <th>Customer ID</th>
+                    </c:if>
                     <th>Current Loan</th>
                     <th>Duration</th>
                     <th>Start Date</th>
@@ -44,14 +48,19 @@
                 </tr>
                 </thead>
                 <tbody>
+                <jsp:useBean id="loanAccountList" scope="request" type="java.util.List"/>
                 <c:forEach var="loanAccount" items="${loanAccountList}">
+                    <%--@elvariable id="loanAccount" type="com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.entity.LoanAccount"--%>
+
                     <tr>
                         <td>
-                            <a class="d-inline-block text-truncate" style="max-width: 100px" href="/admin/loanAccounts/${loanAccount.id}">${loanAccount.id}</a>
+                            <a class="d-inline-block text-truncate" style="max-width: 100px" href="/${authority == 'ADMIN' ? 'admin' : 'me'}/loanAccounts/${loanAccount.id}">${loanAccount.id}</a>
                         </td>
-                        <td>
-                            <a href="/admin/customers/${loanAccount.customer.id}">${loanAccount.customer.id}</a>
-                        </td>
+                        <c:if test="${authority == 'ADMIN'}">
+                            <td>
+                                <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/customers/${loanAccount.customer.id}">${loanAccount.customer.id}</a>
+                            </td>
+                        </c:if>
                         <td><fmt:setLocale value="vi_VN" scope="session"/>
                             <fmt:formatNumber value="${loanAccount.currentLoan}" type = "currency"/></td>
                         <td>${loanAccount.loanDuration.translation()}</td>
@@ -63,7 +72,7 @@
                         <td><fmt:formatDate value="${updatedAt}" pattern="HH:mm dd/MM/yyyy" /></td>
 
                         <td>
-                            <a href="/admin/loanAccounts/${loanAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
+                            <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/loanAccounts/${loanAccount.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
                             <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                         </td>
                     </tr>
@@ -77,7 +86,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-footer d-flex justify-content-md-center">
-                                    <a href="/admin/loanAccounts/${loanAccount.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
+                                    <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/loanAccounts/${loanAccount.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 
                                 </div>
@@ -91,4 +100,4 @@
     </div>
 </div>
 <!-- END HERE -->
-<jsp:include page="/WEB-INF/commons/admin/suffix.jsp"/>
+<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/suffix.jsp"/>

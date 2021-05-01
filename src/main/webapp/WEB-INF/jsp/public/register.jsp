@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <%@ page contentType="text/html;charset=UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html lang="en">
@@ -30,7 +32,7 @@
             <p class="font-italic text-muted mb-0">Create an account to become our customer. We are there for you!</p>
         </div>
 
-        <!-- Registeration Form -->
+        <!-- RegisterForm -->
         <div class="col-md-7 col-lg-6 ml-auto">
             <form:form method="post" modelAttribute="createCustomerDTO">
 
@@ -42,9 +44,12 @@
                                 <i class="fa fa-user text-muted"></i>
                             </span>
                         </div>
-                        <form:input path="firstName" id="firstName" type="text" name="firstName" placeholder="First Name"
-                               class="form-control bg-white border-left-0 border-md" />
-                        <form:errors path="firstName" cssClass="text-warning" />
+                        <spring:bind path="firstName">
+                            <form:input required="true" path="firstName" id="firstName" type="text" name="firstName"
+                                        placeholder="First Name"
+                                        class="form-control bg-white border-left-1 border-md${status.error ? ' is-invalid' : ''}"/>
+                            <form:errors path="firstName" cssClass="invalid-feedback"/>
+                        </spring:bind>
                     </div>
 
                     <!-- Last Name -->
@@ -54,9 +59,12 @@
                                 <i class="fa fa-user text-muted"></i>
                             </span>
                         </div>
-                        <form:input path="lastName" id="lastName" type="text" name="lastName" placeholder="Last Name"
-                               class="form-control bg-white border-left-0 border-md"/>
-                        <form:errors path="lastName" cssClass="text-warning" />
+                        <spring:bind path="lastName">
+                            <form:input required="true" path="lastName" id="lastName" type="text" name="lastName"
+                                        placeholder="Last Name"
+                                        class="form-control bg-white border-left-1 border-md${status.error ? ' is-invalid' : ''}"/>
+                            <form:errors path="lastName" cssClass="invalid-feedback"/>
+                        </spring:bind>
                     </div>
 
                     <!-- Email Address -->
@@ -66,49 +74,55 @@
                                 <i class="fa fa-envelope text-muted"></i>
                             </span>
                         </div>
-                        <form:input path="email" id="email" type="email" name="email" placeholder="Email Address"
-                               class="form-control bg-white border-left-0 border-md"/>
-                        <form:errors path="email" cssClass="text-warning" />
+                        <spring:bind path="email">
+                            <form:input required="true" path="email" id="email" type="email" name="email"
+                                        placeholder="Email Address"
+                                        class="form-control bg-white border-left-1 border-md${status.error ? ' is-invalid' : ''}"/>
+                            <form:errors path="email" cssClass="invalid-feedback"/>
+                        </spring:bind>
                     </div>
 
                     <div class="input-group col-lg-12 mb-4">
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-white px-4 border-md border-right-0">
-                                <i class="fa fa-envelope text-muted"></i>
+                                <i class="fa fa-user text-muted"></i>
                             </span>
                         </div>
-                        <form:input path="username" id="username" type="text" name="username" placeholder="Username"
-                                    class="form-control bg-white border-left-0 border-md"/>
-                        <form:errors path="username" cssClass="text-warning" />
+                        <spring:bind path="username">
+                            <form:input required="true" path="username" id="username" type="text" name="username"
+                                        placeholder="Username"
+                                        class="form-control bg-white border-left-1 border-md${status.error ? ' is-invalid' : ''}"/>
+                            <form:errors path="username" cssClass="invalid-feedback"/>
+                        </spring:bind>
                     </div>
 
                     <!-- Phone Number -->
                     <div class="input-group col-lg-12 mb-4">
                         <div class="input-group-prepend">
-                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                            <span class="input-group-text bg-white px-4 border-right-0">
                                 <i class="fa fa-phone-square text-muted"></i>
                             </span>
                         </div>
-                        <select id="countryCode" name="countryCode" style="max-width: 80px"
-                                class="custom-select form-control bg-white border-left-0 border-md h-100 font-weight-bold text-muted">
-                            <option value="">+84</option>
-                        </select>
-                        <form:input path="phoneNumber" id="phoneNumber" type="tel" name="phone" placeholder="Phone Number"
-                               class="form-control bg-white border-md border-left-0 pl-3" />
-
-                        <form:errors path="phoneNumber" cssClass="text-warning" />
+                        <spring:bind path="phoneNumber">
+                            <form:input required="true" path="phoneNumber" id="phoneNumber" type="tel" name="phone"
+                                        placeholder="Phone Number"
+                                        class="form-control bg-white border-md border-left-1${status.error ? ' is-invalid' : ''}"/>
+                            <form:errors path="phoneNumber" cssClass="invalid-feedback"/>
+                        </spring:bind>
                     </div>
 
                     <div class="input-group col-lg-12 mb-4">
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-white px-4 border-md border-right-0">
-                                <i class="fa fa-envelope text-muted"></i>
+                                <i class="fa fa-map-marker text-muted"></i>
                             </span>
                         </div>
-                        <form:input path="address" id="address" type="text" name="text" placeholder="Address"
-                               class="form-control bg-white border-left-0 border-md" />
-
-                        <form:errors path="address" cssClass="text-warning" />
+                        <spring:bind path="address">
+                            <form:input required="true" path="address" id="address" type="text" name="text"
+                                        placeholder="Address"
+                                        class="form-control bg-white border-left-1 border-md${status.error ? ' is-invalid' : ''}"/>
+                            <form:errors path="address" cssClass="invalid-feedback"/>
+                        </spring:bind>
                     </div>
 
                     <!-- Gender -->
@@ -118,11 +132,14 @@
                                 <i class="fa fa-black-tie text-muted"></i>
                             </span>
                         </div>
-                        <form:select path="gender" id="gender" name="gender"
-                                class="form-control custom-select bg-white border-left-0 border-md" placeholder="Choose your Gender">
-                            <form:option value="MALE">Male</form:option>
-                            <form:option value="FEMALE">Female</form:option>
-                        </form:select>
+                        <spring:bind path="gender">
+                            <form:select path="gender" id="gender" name="gender"
+                                         class="form-control custom-select bg-white border-left-1 border-md ${status.error ? ' is-invalid' : ''}"
+                                         placeholder="Choose your Gender" required="true">
+                                <form:option value="MALE">Male</form:option>
+                                <form:option value="FEMALE">Female</form:option>
+                            </form:select>
+                        </spring:bind>
                     </div>
 
                     <!-- Password -->
@@ -132,10 +149,12 @@
                                 <i class="fa fa-lock text-muted"></i>
                             </span>
                         </div>
-                        <form:input path="password" id="password" type="password" name="password" placeholder="Password"
-                               class="form-control bg-white border-left-0 border-md" />
-
-                        <form:errors path="password" cssClass="text-warning" />
+                        <spring:bind path="password">
+                            <form:input required="true" path="password" id="password" type="password" name="password"
+                                        placeholder="Password"
+                                        class="form-control bg-white border-left-1 border-md${status.error ? ' is-invalid' : ''}"/>
+                            <form:errors path="password" cssClass="invalid-feedback"/>
+                        </spring:bind>
                     </div>
 
                     <!-- Password Confirmation -->
@@ -147,7 +166,7 @@
                         </div>
                         <label for="passwordConfirmation"></label>
                         <input id="passwordConfirmation" type="text" name="passwordConfirmation"
-                                                                         placeholder="Confirm Password" class="form-control bg-white border-left-0 border-md">
+                               placeholder="Confirm Password" class="form-control bg-white border-left-1 border-md">
                     </div>
 
                     <!-- Submit Button -->

@@ -1,18 +1,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="customer" value="${normalAccount.customer}" />
 
-<jsp:include page="/WEB-INF/commons/admin/prefix.jsp">
+<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}" />
+
+<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/prefix.jsp">
 
     <jsp:param name="title" value="Normal Account Details"/>
 
     <jsp:param name="parentLinkText" value="Manage Normal Account"/>
-    <jsp:param name="parentLinkUrl" value="/admin/normalAccounts"/>
+    <jsp:param name="parentLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/normalAccounts"/>
 
     <jsp:param name="childLinkText" value="Details"/>
-    <jsp:param name="childLinkUrl" value="/admin/normalAccounts/${normalAccount.id}"/>
+    <jsp:param name="childLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/normalAccounts/${normalAccount.id}"/>
 
-    <jsp:param name="activeSidebarElementID" value="add-customer"/>
+    <jsp:param name="activeSidebarElementID" value="normalAccount-list"/>
 </jsp:include>
 
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/admin/customerDetails.css"/>">
@@ -96,13 +99,16 @@
         </div>
     </div>
 
-    <jsp:include page="../../ownerDetails.jsp"></jsp:include>
+    <c:if test="${authority == 'ADMIN'}">
+        <%@ taglib prefix="customer" tagdir="/WEB-INF/tags/customer"%>
+        <customer:basicInfo customer="${normalAccount.customer}" />
+    </c:if>
 
     <div class="card" style="margin-top: 20px">
         <div class="card-header">
             <h5>Transactions</h5>
             <div class="card-header-right" style="margin-right: 10px">
-                <a href="<c:url value="/admin/customerAccounts/create"/>">
+                <a href="<c:url value="/${authority == 'ADMIN' ? 'admin' : 'me'}/customerAccounts/create"/>">
                     <button type="submit" class="btn btn-primary">Create New</button>
                 </a>
             </div>
@@ -122,7 +128,7 @@
                     <c:forEach var="transaction" items="${transactionList}">
                         <tr>
                             <td>
-                                <a href="/admin/transactions/${transaction.id}">${transaction.id}</a>
+                                <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/transactions/${transaction.id}">${transaction.id}</a>
                             </td>
                             <td>${transaction.transactionType}</td>
 
@@ -135,7 +141,7 @@
                             <td><fmt:formatDate value="${updatedAt}" pattern="HH:mm dd/MM/yyyy"/></td>
 
                             <td>
-                                <a href="/admin/transactions/${transaction.id}/edit"><i
+                                <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/transactions/${transaction.id}/edit"><i
                                         class="ti-pencil-alt fa-2x text-primary"></i></a>
                                 <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal"
                                       data-target="#modalDelete"></i></a>
@@ -152,7 +158,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-footer d-flex justify-content-md-center">
-                                        <a href="/admin/customers/${transaction.id}/delete">
+                                        <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/customers/${transaction.id}/delete">
                                             <button type="submit" id="btn-yes" class="btn btn-primary">Yes</button>
                                         </a>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
@@ -169,4 +175,4 @@
     </div>
 </div>
 <!-- END HERE -->
-<jsp:include page="/WEB-INF/commons/admin/suffix.jsp"/>
+<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/suffix.jsp"/>

@@ -1,5 +1,6 @@
 package com.se2.bankingsystem.controllers;
 
+import com.se2.bankingsystem.config.exception.BankingSystemException;
 import com.se2.bankingsystem.domains.Authentication.dto.ChangePasswordDTO;
 import com.se2.bankingsystem.domains.Authentication.dto.LoginDTO;
 import com.se2.bankingsystem.domains.Customer.CustomerService;
@@ -18,7 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,9 +67,9 @@ public class AuthenticationController {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         }
 
-        for (GrantedAuthority grantedAuthority: userDetails.getAuthorities()) {
+        for (GrantedAuthority grantedAuthority : userDetails.getAuthorities()) {
             if (grantedAuthority.getAuthority().equals("ADMIN")) {
-                modelAndView.setViewName("admin/dashboard");
+                modelAndView.setViewName("redirect:admin/dashboard");
             } else if (grantedAuthority.getAuthority().equals("CUSTOMER")) {
                 modelAndView.setViewName("redirect:customer/dashboard");
             }
@@ -88,30 +89,28 @@ public class AuthenticationController {
     }
 
     @PostMapping(path = "/register")
-    public ModelAndView register(@Valid @ModelAttribute CreateCustomerDTO createCustomerDTO, BindingResult bindingResult) {
+    public ModelAndView register(
+        @Valid @ModelAttribute CreateCustomerDTO createCustomerDTO,
+        BindingResult bindingResult
+    ) throws BankingSystemException {
+        ModelAndView modelAndView = new ModelAndView();
 
-        ModelAndView modelAndView;
-
-        log.info("HELLO");
         // Check uniqueness
-        if (!userService.isPhoneNumberUnique(createCustomerDTO.getPhoneNumber()))
-            bindingResult.addError(new ObjectError("phoneNumber", "Phone Number is already taken, please choose another one"));
+        if (!customerService.isEmailUnique(createCustomerDTO.getEmail()))
+            bindingResult.addError(new FieldError("createCustomerDTO", "email", "Email is already taken, please choose another one"));
 
         if (!userService.isUsernameUnique(createCustomerDTO.getUsername()))
-            bindingResult.addError(new ObjectError("username", "Username is already taken, please choose another one"));
+            bindingResult.addError(new FieldError("createCustomerDTO", "username", "Username is already taken, please choose another one"));
 
-        if (!customerService.isEmailUnique(createCustomerDTO.getEmail()))
-            bindingResult.addError(new ObjectError("email", "Email is already taken, please choose another one"));
+        if (!userService.isPhoneNumberUnique(createCustomerDTO.getPhoneNumber()))
+            bindingResult.addError(new FieldError("createCustomerDTO", "phoneNumber", "Phone Number is already taken, please choose another one"));
 
         if (bindingResult.hasErrors()) {
-            for (ObjectError objectError: bindingResult.getAllErrors()) {
-                log.info(objectError.getObjectName());
-                log.info(objectError.getDefaultMessage());
-            }
-            modelAndView = new ModelAndView("public/register", bindingResult.getModel());
+            log.info(bindingResult.getAllErrors().toString());
+            modelAndView.setViewName("public/register");
         } else {
             customerService.create(createCustomerDTO);
-            modelAndView = new ModelAndView("redirect:/");
+            modelAndView.setViewName("redirect:/login");
         }
         return modelAndView;
     }

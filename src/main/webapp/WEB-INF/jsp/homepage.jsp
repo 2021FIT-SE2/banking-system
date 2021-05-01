@@ -131,6 +131,7 @@
                 <a class="nav-link" data-toggle="tooltip" data-placement="top" title="Sign up" href="#"><i class="fas fa-user-plus"></i><span class="sr-only"></span>&nbsp;&nbsp;Sign up</a>
             </li>
         </ul>
+    </div>
 </nav>
 <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">

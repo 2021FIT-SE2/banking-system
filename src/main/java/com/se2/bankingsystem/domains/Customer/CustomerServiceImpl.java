@@ -6,9 +6,11 @@ import com.se2.bankingsystem.domains.Authority.entity.AuthorityName;
 import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.dto.UpdateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.entity.Customer;
-import com.se2.bankingsystem.domains.CustomerAccount.entity.AccountType;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.NormalAccountRepository;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.entity.NormalAccount;
+import com.se2.bankingsystem.domains.FakeEWallet.FakeEWalletRepository;
+import com.se2.bankingsystem.domains.FakeEWallet.entity.EWalletProvider;
+import com.se2.bankingsystem.domains.FakeEWallet.entity.FakeEWallet;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final NormalAccountRepository normalAccountRepository;
     private final AuthorityRepository authorityRepository;
+    private final FakeEWalletRepository fakeEWalletRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -42,9 +45,38 @@ public class CustomerServiceImpl implements CustomerService {
             .balance(0L)
             .createdAt(now)
             .updatedAt(now)
+            .customer(customer)
             .build();
-        normalAccount.setCustomer(customer);
         normalAccountRepository.save(normalAccount);
+
+        // Automatically create 3 fake wallets for this customer
+        FakeEWallet momo = FakeEWallet.builder()
+            .provider(EWalletProvider.MOMO)
+            .balance(30_000_000L)
+            .customer(customer)
+            .createdAt(LocalDateTime.now())
+            .updatedAt(LocalDateTime.now())
+            .build();
+
+        FakeEWallet zalo = FakeEWallet.builder()
+            .provider(EWalletProvider.ZALO)
+            .balance(20_000_000L)
+            .customer(customer)
+            .createdAt(LocalDateTime.now())
+            .updatedAt(LocalDateTime.now())
+            .build();
+
+        FakeEWallet airpay = FakeEWallet.builder()
+            .provider(EWalletProvider.AIRPAY)
+            .balance(10_000_000L)
+            .customer(customer)
+            .createdAt(LocalDateTime.now())
+            .updatedAt(LocalDateTime.now())
+            .build();
+
+        fakeEWalletRepository.save(momo);
+        fakeEWalletRepository.save(zalo);
+        fakeEWalletRepository.save(airpay);
 
         // Then return the created Customer
         return customer;

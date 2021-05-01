@@ -3,6 +3,8 @@ package com.se2.bankingsystem.controllers.transaction.sub;
 import com.se2.bankingsystem.config.exception.BankingSystemException;
 import com.se2.bankingsystem.controllers.transaction.AbstractTransactionController;
 import com.se2.bankingsystem.domains.Authority.AuthorityService;
+import com.se2.bankingsystem.domains.FakeEWallet.FakeEWalletService;
+import com.se2.bankingsystem.domains.FakeEWallet.entity.FakeEWallet;
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.ChargeTransactionService;
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.dto.CreateChargeTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.dto.UpdateChargeTransactionDTO;
@@ -17,12 +19,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @Slf4j
 public class ChargeTransactionController extends AbstractTransactionController<ChargeTransaction, CreateChargeTransactionDTO, UpdateChargeTransactionDTO> {
 
-    public ChargeTransactionController(ChargeTransactionService transactionService, AuthorityService authorityService, ModelMapper modelMapper) {
+    private final FakeEWalletService fakeEWalletService;
+
+    public ChargeTransactionController(ChargeTransactionService transactionService, AuthorityService authorityService, ModelMapper modelMapper, FakeEWalletService fakeEWalletService) {
         super(
             transactionService,
             authorityService,
@@ -35,6 +40,7 @@ public class ChargeTransactionController extends AbstractTransactionController<C
             CreateChargeTransactionDTO.class,
             UpdateChargeTransactionDTO.class
             );
+        this.fakeEWalletService = fakeEWalletService;
     }
 
     @Override
@@ -61,10 +67,19 @@ public class ChargeTransactionController extends AbstractTransactionController<C
         return super.showDetailsByCustomer(id);
     }
 
-    @Override
-    @GetMapping({"/admin/chargeTransactions/create", "/me/chargeTransactions/create"})
-    public ModelAndView showCreateView() {
+    @GetMapping("/admin/chargeTransactions/create")
+    public ModelAndView showCreateViewByAdmin() {
         return super.showCreateView();
+    }
+
+    @GetMapping("/me/chargeTransactions/create")
+    public ModelAndView showCreateViewByCustomer() {
+        ModelAndView modelAndView = super.showCreateView();
+
+        List<FakeEWallet> fakeEWallets = fakeEWalletService.findAllByCustomerId(authorityService.getPrincipal().getId());
+        modelAndView.addObject("walletList", fakeEWallets);
+
+        return modelAndView;
     }
 
     @Override

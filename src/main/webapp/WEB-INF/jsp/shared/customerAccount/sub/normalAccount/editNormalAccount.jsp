@@ -1,4 +1,6 @@
+<%--@elvariable id="normalAccount" type="com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.entity.NormalAccount"--%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}" />
 
 <jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/prefix.jsp">
@@ -22,6 +24,7 @@
                 <h5>Edit Normal Account ${normalAccount.id}</h5>
             </div>
             <div class="card-block">
+                <%--@elvariable id="updateNormalAccountDTO" type="com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.dto.UpdateNormalAccountDTO"--%>
                 <form:form method="post" modelAttribute="updateNormalAccountDTO" cssClass="form-material">
                     <fieldset class="form-group row row">
                         <label for="customerID" class="col-sm-3 col-form-label">Customer ID</label>

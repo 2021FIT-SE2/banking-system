@@ -1,3 +1,4 @@
+<%--@elvariable id="savingAccount" type="com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.entity.SavingAccount"--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -140,7 +141,9 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <%--@elvariable id="transactionList" type="java.util.List"--%>
                     <c:forEach var="transaction" items="${transactionList}">
+                        <%--@elvariable id="transaction" type="com.se2.bankingsystem.domains.Transaction.entity.Transaction"--%>
                         <tr>
                             <td>
                                 <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/transactions/${transaction.id}">${transaction.id}</a>

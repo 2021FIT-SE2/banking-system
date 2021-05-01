@@ -26,6 +26,7 @@
                 <h5>Add a new saving account</h5>
             </div>
             <div class="card-block">
+                <%--@elvariable id="createSavingAccountDTO" type="com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.dto.CreateSavingAccountDTO"--%>
                 <form:form method="post" modelAttribute="createSavingAccountDTO" cssClass="form-material">
                     <fieldset class="form-group row row">
                         <form:label cssClass="col-sm-3 col-form-label" path="customerID">Customer ID</form:label>

@@ -26,6 +26,7 @@
                 <h5>Add a new loan account</h5>
             </div>
             <div class="card-block">
+                <%--@elvariable id="createLoanAccountDTO" type="com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.dto.CreateLoanAccountDTO"--%>
                 <form:form method="post" modelAttribute="createLoanAccountDTO" cssClass="form-material">
                     <fieldset class="form-group row row">
                         <form:label cssClass="col-sm-3 col-form-label" path="customerID">Customer ID</form:label>

@@ -51,7 +51,6 @@
                 <jsp:useBean id="normalAccountList" scope="request" type="java.util.List"/>
                 <c:forEach var="normalAccount" items="${normalAccountList}">
                     <%--@elvariable id="normalAccount" type="com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.entity.NormalAccount"--%>
-
                     <tr>
                         <td>
                             <a class="d-inline-block text-truncate" style="max-width: 100px" href="/${authority == 'ADMIN' ? 'admin' : 'me'}/normalAccounts/${normalAccount.id}">${normalAccount.id}</a>

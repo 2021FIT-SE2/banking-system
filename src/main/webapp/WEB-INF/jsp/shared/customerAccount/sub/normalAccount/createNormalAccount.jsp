@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}" />
 
 <jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/prefix.jsp">
@@ -22,6 +23,7 @@
                 <h5>Add a new Normal account</h5>
             </div>
             <div class="card-block">
+                <%--@elvariable id="createNormalAccountDTO" type="com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.dto.CreateNormalAccountDTO"--%>
                 <form:form method="post" modelAttribute="createNormalAccountDTO" cssClass="form-material">
                     <fieldset class="form-group row row">
                         <form:label cssClass="col-sm-3 col-form-label" path="customerID">Customer ID</form:label>

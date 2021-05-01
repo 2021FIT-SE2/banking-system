@@ -1,48 +1,70 @@
 package com.se2.bankingsystem.controllers.transaction;
 
+import com.se2.bankingsystem.domains.Authority.AuthorityService;
 import com.se2.bankingsystem.domains.Transaction.TransactionService;
+import com.se2.bankingsystem.domains.Transaction.dto.CreateTransactionDTO;
+import com.se2.bankingsystem.domains.Transaction.dto.UpdateTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-
 @Controller
-@RequestMapping("/admin")
 @Slf4j
-@AllArgsConstructor
-public class TransactionController {
+public class TransactionController extends AbstractTransactionController<Transaction, CreateTransactionDTO, UpdateTransactionDTO> {
 
-    private final TransactionService transactionService;
-
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping({"/transactions"})
-    public ModelAndView showTableView() {
-        ModelAndView modelAndView = new ModelAndView("shared/transaction/transactionsList");
-        List<Transaction> transactions = transactionService.findAll();
-        modelAndView.addObject("transactionList", transactions);
-        return modelAndView;
+    public TransactionController(TransactionService transactionService, AuthorityService authorityService, ModelMapper modelMapper) {
+        super(
+            transactionService,
+            authorityService,
+            modelMapper,
+            "transaction",
+            "shared/transaction/transactionsList",
+            null,
+            null,
+            null,
+            CreateTransactionDTO.class,
+            UpdateTransactionDTO.class
+        );
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or principal.id == #id")
-    @GetMapping({"/transactions/{id}"})
-    public ModelAndView showProfile(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView();
-        Transaction customer = transactionService.getById(id);
-        modelAndView.addObject(customer);
-        return modelAndView;
+    @Override
+    @GetMapping("/admin/transactions")
+    public ModelAndView showTableViewByAdmin() {
+        return super.showTableViewByAdmin();
     }
 
-    @PostMapping("/transactions/{transactionID}/delete")
-    public String delete(@PathVariable Long transactionID) {
-        transactionService.deleteById(transactionID);
-        return "customersList";
+    @Override
+    @GetMapping("/me/transactions")
+    public ModelAndView showTableViewByCustomer() {
+        return super.showTableViewByCustomer();
+    }
+
+    @Override
+    @GetMapping("/admin/transactions/{id}")
+    public ModelAndView showDetailsByAdmin(@PathVariable Long id) {
+        return super.showDetailsByAdmin(id);
+    }
+
+    @Override
+    @GetMapping("/me/transactions/{id}")
+    public ModelAndView showDetailsByCustomer(@PathVariable Long id) {
+        return super.showDetailsByCustomer(id);
+    }
+
+    @Override
+    @PostMapping("/admin/transactions/{id}/delete")
+    public String deleteByAdmin(@PathVariable Long id) {
+        return super.deleteByAdmin(id);
+    }
+
+    @Override
+    @PostMapping("/me/transactions/{id}/delete")
+    public String deleteByCustomer(@PathVariable Long id) {
+        return super.deleteByCustomer(id);
     }
 }

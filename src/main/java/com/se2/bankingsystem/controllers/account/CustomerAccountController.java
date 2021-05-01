@@ -1,41 +1,70 @@
 package com.se2.bankingsystem.controllers.account;
 
-import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountService;
+import com.se2.bankingsystem.domains.Authority.AuthorityService;
+import com.se2.bankingsystem.domains.Authority.entity.AuthorityName;
+import com.se2.bankingsystem.domains.CustomerAccount.base.AbstractCustomerAccountService;
+import com.se2.bankingsystem.domains.CustomerAccount.dto.CreateCustomerAccountDTO;
+import com.se2.bankingsystem.domains.CustomerAccount.dto.UpdateCustomerAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.entity.LoanAccount;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.entity.NormalAccount;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.entity.SavingAccount;
-import lombok.AllArgsConstructor;
+import com.se2.bankingsystem.domains.Transaction.TransactionService;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-
 @Controller
-@RequestMapping("/admin")
-@AllArgsConstructor
 @Slf4j
-public class CustomerAccountController {
+public class CustomerAccountController extends AbstractCustomerAccountController<CustomerAccount, CreateCustomerAccountDTO, UpdateCustomerAccountDTO> {
 
-    private final CustomerAccountService customerAccountService;
-
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping({"/customerAccounts"})
-    public ModelAndView showTableView() {
-        ModelAndView modelAndView = new ModelAndView("shared/customerAccount/customerAccountsList");
-        List<CustomerAccount> customerAccounts = customerAccountService.findAll();
-        modelAndView.addObject("customerAccountList", customerAccounts);
-        return modelAndView;
+    public CustomerAccountController(AbstractCustomerAccountService<CustomerAccount, CreateCustomerAccountDTO, UpdateCustomerAccountDTO> customerAccountService, AuthorityService authorityService, TransactionService transactionService, ModelMapper modelMapper) {
+        super(
+            customerAccountService,
+            authorityService,
+            transactionService,
+            modelMapper,
+            "customerAccount",
+            "shared/customerAccount/customerAccountsList",
+            null,
+            null,
+            null,
+            CreateCustomerAccountDTO.class,
+            UpdateCustomerAccountDTO.class
+        );
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping({"/customerAccounts/{id}"})
+    @GetMapping({"/admin/customerAccounts"})
+    @Override
+    public ModelAndView showTableViewByAdmin() {
+        return super.showTableViewByAdmin();
+    }
+
+    @GetMapping({ "/me/accounts"})
+    @Override
+    public ModelAndView showTableViewByCustomer() {
+        return super.showTableViewByCustomer();
+    }
+
+    @PostMapping("/admin/customerAccounts/{id}/delete")
+    @Override
+    public String deleteByAdmin(@PathVariable String id) {
+        return super.deleteByAdmin(id);
+    }
+
+    @PostMapping("/me/accounts/{id}/delete")
+    @PreAuthorize("authorityServiceImpl.hasCustomerAccountOwnerAccess(#id)")
+    @Override
+    public String deleteByCustomer(@PathVariable String id) {
+        return super.deleteByCustomer(id);
+    }
+
+    @GetMapping({"/admin/customerAccounts/{id}", "/me/accounts/{id}"})
     public ModelAndView showDetailsView(@PathVariable String id) throws ClassNotFoundException {
         CustomerAccount customerAccount = customerAccountService.getById(id);
 
@@ -45,7 +74,7 @@ public class CustomerAccountController {
         return new ModelAndView(viewName);
     }
 
-    @GetMapping({"/customerAccounts/{id}/edit"})
+    @GetMapping({"/admin/customerAccounts/{id}/edit", "/me/accounts/{id}/edit"})
     public ModelAndView showEditView(@PathVariable String id) throws ClassNotFoundException {
         CustomerAccount customerAccount = customerAccountService.getById(id);
 
@@ -57,7 +86,11 @@ public class CustomerAccountController {
 
     private String getRedirectViewName(CustomerAccount customerAccount) throws ClassNotFoundException {
 
-        String viewName = "redirect:/admin/";
+        String viewName;
+        if (authorityService.getCurrentAuthority().equals(AuthorityName.ADMIN.name()))
+            viewName = "redirect:/admin/";
+        else
+            viewName = "redirect:/me/";
 
         if (customerAccount instanceof LoanAccount) {
             viewName += "loanAccounts/";
@@ -69,12 +102,5 @@ public class CustomerAccountController {
             throw new ClassNotFoundException();
         }
         return viewName;
-    }
-
-    @PreAuthorize("hasAuthority('ADMIN') or authorityServiceImpl.hasCustomerAccountAccess(principal.id, #customerAccountID)")
-    @PostMapping("/customerAccounts/{customerAccountID}/delete")
-    public String delete(@PathVariable String customerAccountID) {
-        customerAccountService.deleteById(customerAccountID);
-        return "shared/customerAccount/customerAccountsList";
     }
 }

@@ -1,0 +1,105 @@
+package com.se2.bankingsystem.controllers.account.sub;
+
+import com.se2.bankingsystem.config.exception.BankingSystemException;
+import com.se2.bankingsystem.controllers.account.AbstractCustomerAccountController;
+import com.se2.bankingsystem.domains.Authority.AuthorityService;
+import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.LoanAccountService;
+import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.dto.CreateLoanAccountDTO;
+import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.dto.UpdateLoanAccountDTO;
+import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.entity.LoanAccount;
+import com.se2.bankingsystem.domains.Transaction.TransactionService;
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@Slf4j
+public class LoanAccountController extends AbstractCustomerAccountController<LoanAccount, CreateLoanAccountDTO, UpdateLoanAccountDTO> {
+
+    public LoanAccountController(LoanAccountService customerAccountService, AuthorityService authorityService, TransactionService transactionService, ModelMapper modelMapper) {
+        super(
+            customerAccountService,
+            authorityService,
+            transactionService,
+            modelMapper,
+            "loanAccount",
+            "shared/customerAccount/sub/loanAccount/loanAccountList",
+            "shared/customerAccount/sub/loanAccount/createLoanAccount",
+            "shared/customerAccount/sub/loanAccount/updateLoanAccount",
+            "shared/customerAccount/sub/loanAccount/loanAccountDetails",
+            CreateLoanAccountDTO.class,
+            UpdateLoanAccountDTO.class
+        );
+    }
+
+    @GetMapping("/admin/loanAccounts")
+    @Override
+    public ModelAndView showTableViewByAdmin() {
+        return super.showTableViewByAdmin();
+    }
+
+    @GetMapping("/me/loanAccounts")
+    @Override
+    public ModelAndView showTableViewByCustomer() {
+        return super.showTableViewByCustomer();
+    }
+
+    @GetMapping("/admin/loanAccounts/{id}")
+    @Override
+    public ModelAndView showDetailsByAdmin(@PathVariable String id) {
+        return super.showDetailsByAdmin(id);
+    }
+
+    @GetMapping("/me/loanAccounts/{id}")
+    @Override
+    public ModelAndView showDetailsByCustomer(@PathVariable String id) {
+        return super.showDetailsByCustomer(id);
+    }
+
+    @GetMapping("/admin/loanAccounts/{id}/delete")
+    @Override
+    public String deleteByAdmin(@PathVariable String id) {
+        return super.deleteByAdmin(id);
+    }
+
+    @GetMapping("/me/loanAccounts/{id}/delete")
+    @Override
+    public String deleteByCustomer(@PathVariable String id) {
+        return super.deleteByCustomer(id);
+    }
+
+    @GetMapping({"/admin/loanAccounts/create", "/me/loanAccounts/create"})
+    @Override
+    public ModelAndView showCreateView() {
+        return super.showCreateView();
+    }
+
+    @PostMapping("/admin/loanAccounts/create")
+    @Override
+    public String createByAdmin(@ModelAttribute CreateLoanAccountDTO createCustomerAccountDTO) throws BankingSystemException {
+        return super.createByAdmin(createCustomerAccountDTO);
+    }
+
+    @PostMapping("/me/loanAccounts/create")
+    @Override
+    public String createByCustomer(@ModelAttribute CreateLoanAccountDTO createCustomerAccountDTO) throws BankingSystemException {
+        return super.createByCustomer(createCustomerAccountDTO);
+    }
+
+    @GetMapping("/admin/loanAccounts/{id}/edit")
+    @Override
+    public ModelAndView showUpdateViewByAdmin(@PathVariable String id) {
+        return super.showUpdateViewByAdmin(id);
+    }
+
+    @PostMapping("/admin/loanAccounts/{id}/edit")
+    @Override
+    public String updateByAdmin(@PathVariable String id, UpdateLoanAccountDTO updateCustomerAccountDTO) {
+        return super.updateByAdmin(id, updateCustomerAccountDTO);
+    }
+}

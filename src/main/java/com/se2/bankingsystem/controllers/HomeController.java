@@ -37,7 +37,7 @@ public class HomeController {
 
                 // If logged in as customer, redirect to customer dashboard
                 else if (grantedAuthority.getAuthority().equals("CUSTOMER"))
-                    viewName = "redirect:customer/dashboard";
+                    viewName = "redirect:me/dashboard";
             }
         }
         modelAndView.setViewName(viewName);

@@ -1,6 +1,6 @@
 package com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.entity;
 
-import com.se2.bankingsystem.domains.CustomerAccount.sub.interfaces.InterestRate;
+import com.se2.bankingsystem.domains.CustomerAccount.behaviours.InterestRate;
 import com.se2.bankingsystem.utils.NumberToWordConverter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

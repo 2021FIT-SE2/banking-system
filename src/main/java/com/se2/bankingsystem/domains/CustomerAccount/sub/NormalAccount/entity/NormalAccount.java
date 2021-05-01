@@ -1,10 +1,11 @@
 package com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.entity;
 
+import com.se2.bankingsystem.config.exception.BankingSystemException;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.AccountType;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
-import com.se2.bankingsystem.domains.CustomerAccount.sub.interfaces.Chargeable;
-import com.se2.bankingsystem.domains.CustomerAccount.sub.interfaces.Transferable;
-import com.se2.bankingsystem.domains.CustomerAccount.sub.interfaces.Withdrawable;
+import com.se2.bankingsystem.domains.CustomerAccount.behaviours.Chargeable;
+import com.se2.bankingsystem.domains.CustomerAccount.behaviours.Transferable;
+import com.se2.bankingsystem.domains.CustomerAccount.behaviours.Withdrawable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,17 +33,27 @@ public class NormalAccount extends CustomerAccount implements Chargeable, Transf
     private Long balance;
 
     @Override
-    public void charge(Long amount) {
-        throw new UnsupportedOperationException();
+    public void charge(@PositiveOrZero Long amount) throws BankingSystemException {
+        Long newBalance = this.balance + amount;
+        this.setBalance(newBalance);
     }
 
     @Override
-    public void transfer(Long amount, CustomerAccount receiver) {
-        throw new UnsupportedOperationException();
+    public void transfer(@PositiveOrZero Long amount, @NotNull Chargeable receiver) throws BankingSystemException {
+        if (amount > balance) {
+            throw new BankingSystemException("Transfer amount must be smaller than current balance");
+        } else {
+            this.balance -= amount;
+            receiver.charge(amount);
+        }
     }
 
     @Override
-    public void withdraw(Long amount) {
-        throw new UnsupportedOperationException();
+    public void withdraw(@PositiveOrZero Long amount) throws BankingSystemException {
+        if (amount > balance) {
+            throw new BankingSystemException("Withdraw amount must be smaller than current balance");
+        } else {
+            this.balance -= amount;
+        }
     }
 }

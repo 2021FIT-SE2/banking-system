@@ -1,63 +1,44 @@
 package com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount;
 
 import com.se2.bankingsystem.domains.Customer.CustomerRepository;
-import com.se2.bankingsystem.domains.Customer.entity.Customer;
+import com.se2.bankingsystem.domains.CustomerAccount.base.AbstractCustomerAccountServiceImpl;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.dto.CreateSavingAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.dto.UpdateSavingAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.entity.SavingAccount;
-import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
-public class SavingAccountServiceImpl implements SavingAccountService {
+@Slf4j
+public class SavingAccountServiceImpl extends AbstractCustomerAccountServiceImpl<SavingAccount, CreateSavingAccountDTO, UpdateSavingAccountDTO> implements SavingAccountService {
 
-    private final SavingAccountRepository savingAccountRepository;
-    private final CustomerRepository customerRepository;
-    private final ModelMapper modelMapper;
+    public SavingAccountServiceImpl(CustomerRepository customerRepository, SavingAccountRepository abstractCustomerAccountRepository, ModelMapper modelMapper) {
+        super(customerRepository, abstractCustomerAccountRepository, modelMapper, SavingAccount.class);
+    }
 
     @Override
     public SavingAccount create(CreateSavingAccountDTO createSavingAccountDTO) {
-        SavingAccount savingAccount = modelMapper.map(createSavingAccountDTO, SavingAccount.class);
+        SavingAccount savingAccount = convertToCustomerAccount(createSavingAccountDTO);
         savingAccount.setCurrentSaving(savingAccount.getPrincipal());
-
-        Customer customer = customerRepository.findById(createSavingAccountDTO.getCustomerID()).orElseThrow(EntityNotFoundException::new);
-        savingAccount.setCustomer(customer);
-
-        return savingAccountRepository.save(savingAccount);
+        return abstractCustomerAccountRepository.save(savingAccount);
     }
 
+    @Scheduled(cron = "0 0 0 * * ?")
     @Override
-    public SavingAccount updateById(String id, UpdateSavingAccountDTO updateSavingAccountDTO) {
-        SavingAccount existing = savingAccountRepository.findById(id).orElseThrow(EntityExistsException::new);
-        modelMapper.map(updateSavingAccountDTO, existing);
-        return savingAccountRepository.save(existing);
+    public void increaseSavingOnEveryday() {
+        increaseSavingOnEveryday(LocalDateTime.now());
     }
 
-    @Override
-    public void deleteById(String id) {
-        savingAccountRepository.deleteById(id);
-    }
+    private void increaseSavingOnEveryday(LocalDateTime localDateTime) {
+        List<SavingAccount> savingAccounts = ((SavingAccountRepository) abstractCustomerAccountRepository).findAllThatNeedsSavingIncrease(localDateTime);
 
-    @Override
-    public List<SavingAccount> findAll() {
-        return savingAccountRepository.findAll();
-    }
-
-    @Override
-    public SavingAccount getById(String id) {
-        return savingAccountRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    }
-
-    @Override
-    public Page<SavingAccount> findAll(Pageable pageable) {
-        return savingAccountRepository.findAll(pageable);
+        for (SavingAccount account: savingAccounts) {
+            log.info(account.toString());
+        }
     }
 }

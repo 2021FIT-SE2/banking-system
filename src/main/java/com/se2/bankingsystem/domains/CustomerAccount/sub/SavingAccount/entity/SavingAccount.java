@@ -1,5 +1,7 @@
 package com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.entity;
 
+import com.se2.bankingsystem.config.exception.BankingSystemException;
+import com.se2.bankingsystem.domains.CustomerAccount.behaviours.Withdrawable;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.AccountType;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import lombok.AllArgsConstructor;
@@ -12,11 +14,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -26,7 +27,7 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @Table(name = "saving_accounts")
 @DiscriminatorValue(value = AccountType.Constants.SAVING_VALUE)
-public class SavingAccount extends CustomerAccount {
+public class SavingAccount extends CustomerAccount implements Withdrawable {
 
     @NotNull
     private SavingDuration savingDuration;
@@ -42,4 +43,11 @@ public class SavingAccount extends CustomerAccount {
     @NotNull
     @PositiveOrZero
     private Long currentSaving;
+
+    @Override
+    public void withdraw(@Positive Long amount) throws BankingSystemException {
+        if (amount > currentSaving)
+            throw new BankingSystemException("Cannot withdraw with amount bigger than current saving");
+        setCurrentSaving(this.getCurrentSaving() - amount);
+    }
 }

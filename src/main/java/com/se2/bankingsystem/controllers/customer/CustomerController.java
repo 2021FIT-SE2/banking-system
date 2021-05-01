@@ -1,5 +1,6 @@
 package com.se2.bankingsystem.controllers.customer;
 
+import com.se2.bankingsystem.config.exception.BankingSystemException;
 import com.se2.bankingsystem.domains.Customer.CustomerService;
 import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.dto.UpdateCustomerDTO;
@@ -61,7 +62,7 @@ public class CustomerController {
     }
 
     @PostMapping("/admin/customers/create")
-    public String create(@Valid @ModelAttribute CreateCustomerDTO createCustomerDTO) {
+    public String create(@Valid @ModelAttribute CreateCustomerDTO createCustomerDTO) throws BankingSystemException {
         log.info(createCustomerDTO.toString());
         customerService.create(createCustomerDTO);
         return "redirect:/admin/customers";

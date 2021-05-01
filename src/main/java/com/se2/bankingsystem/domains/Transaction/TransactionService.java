@@ -1,22 +1,9 @@
 package com.se2.bankingsystem.domains.Transaction;
 
+import com.se2.bankingsystem.domains.Transaction.base.AbstractTransactionService;
+import com.se2.bankingsystem.domains.Transaction.dto.CreateTransactionDTO;
+import com.se2.bankingsystem.domains.Transaction.dto.UpdateTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
-
-public interface TransactionService {
-    void setCustomerAccount(Transaction transaction, String customerID);
-
-    void deleteById(Long id);
-
-    List<Transaction> findAll();
-
-    List<Transaction> findAllByCustomerAccountId(String customerAccountId);
-
-    Transaction getById(Long id);
-
-    Page<Transaction> findAll(Pageable pageable);
+public interface TransactionService extends AbstractTransactionService<Transaction, CreateTransactionDTO, UpdateTransactionDTO> {
 }

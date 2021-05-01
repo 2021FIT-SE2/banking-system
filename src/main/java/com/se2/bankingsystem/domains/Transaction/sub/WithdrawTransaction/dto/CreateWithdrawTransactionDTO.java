@@ -27,4 +27,7 @@ public class CreateWithdrawTransactionDTO extends CreateTransactionDTO {
     @JsonIgnore
     @Builder.Default
     private TransactionType transactionType = TransactionType.WITHDRAW;
+
+    @NotNull
+    private Long walletID;
 }

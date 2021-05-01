@@ -1,5 +1,6 @@
 package com.se2.bankingsystem.domains.FakeEWallet.entity;
 
+import com.se2.bankingsystem.base.TimeStamps;
 import com.se2.bankingsystem.domains.Customer.entity.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,11 +10,17 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -22,8 +29,10 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class FakeEWallet {
+public class FakeEWallet implements TimeStamps {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -32,11 +41,17 @@ public class FakeEWallet {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Customer customer;
-//
-//    @JsonIgnore
-//    @Singular
-//    @EqualsAndHashCode.Exclude
-//    @ToString.Exclude
-//    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-//    private List<Enrollment> enrollments;
+
+    @PositiveOrZero
+    private Long balance;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private EWalletProvider provider;
+
+    @NotNull
+    private LocalDateTime createdAt;
+
+    @NotNull
+    private LocalDateTime updatedAt;
 }

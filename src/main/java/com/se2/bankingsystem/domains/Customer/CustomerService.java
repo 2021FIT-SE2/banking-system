@@ -1,6 +1,6 @@
 package com.se2.bankingsystem.domains.Customer;
 
-import com.se2.bankingsystem.base.CRUDService;
+import com.se2.bankingsystem.base.crud.CRUDService;
 import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.dto.UpdateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.entity.Customer;

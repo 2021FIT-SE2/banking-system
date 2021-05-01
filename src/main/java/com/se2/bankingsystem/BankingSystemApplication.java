@@ -1,5 +1,6 @@
 package com.se2.bankingsystem;
 
+import com.se2.bankingsystem.config.exception.BankingSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,7 +28,7 @@ public class BankingSystemApplication extends SpringBootServletInitializer imple
     }
 
     @Override
-    public void run(String... args) {
+    public void run(String... args) throws BankingSystemException {
         initData.init();
     }
 }

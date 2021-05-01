@@ -75,6 +75,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
             http.authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers("/admin/**").access("hasAuthority('ADMIN')")
+                .antMatchers("/me/**").access("hasAuthority('CUSTOMER')")
                 .anyRequest().authenticated();
 
             http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");

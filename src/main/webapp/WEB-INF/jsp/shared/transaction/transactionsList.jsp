@@ -63,7 +63,7 @@
                         <fmt:parseDate value="${transaction.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt" type="both"/>
                         <td><fmt:formatDate value="${createdAt}" pattern="HH:mm dd/MM/yyyy" /></td>
                         <td>
-                            <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/customers/${transaction.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
+<%--                            <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/customers/${transaction.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>--%>
                             <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                         </td>
                     </tr>

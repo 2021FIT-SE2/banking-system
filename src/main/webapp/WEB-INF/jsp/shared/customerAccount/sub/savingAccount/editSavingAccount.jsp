@@ -1,16 +1,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}" />
+<%--@elvariable id="savingAccount" type="com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.entity.SavingAccount"--%>
 
 <jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/prefix.jsp">
 
     <jsp:param name="title" value="Create saving account"/>
 
-    <jsp:param name="parentLink" value="Manage saving account"/>
-    <jsp:param name="parentLinkUrl" value=""/>
+    <jsp:param name="parentLinkText" value="Manage Saving Account"/>
+    <jsp:param name="parentLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/savingAccounts"/>
 
-    <jsp:param name="childLink" value="Create New saving account"/>
-    <jsp:param name="childLinkUrl" value=""/>
+    <jsp:param name="childLinkText" value="Edit"/>
+    <jsp:param name="childLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/savingAccounts/${savingAccount.id}/edit"/>
 
     <jsp:param name="activeSidebarElementID" value="add-savingAccounts"/>
 </jsp:include>
@@ -23,6 +24,7 @@
                 <h5>Add a new saving account</h5>
             </div>
             <div class="card-block">
+                <%--@elvariable id="updateSavingAccountDTO" type="com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.dto.UpdateSavingAccountDTO"--%>
                 <form:form method="post" modelAttribute="updateSavingAccountDTO" cssClass="form-material">
                     <fieldset class="form-group row row">
                         <form:label cssClass="col-sm-3 col-form-label" path="customerID">Customer ID</form:label>

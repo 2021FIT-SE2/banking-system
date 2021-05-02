@@ -2,6 +2,8 @@ package com.se2.bankingsystem.controllers.transaction;
 
 import com.se2.bankingsystem.config.exception.BankingSystemException;
 import com.se2.bankingsystem.domains.Authority.AuthorityService;
+import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountService;
+import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import com.se2.bankingsystem.domains.Transaction.base.AbstractTransactionService;
 import com.se2.bankingsystem.domains.Transaction.dto.CreateTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.dto.UpdateTransactionDTO;
@@ -25,6 +27,7 @@ public abstract class AbstractTransactionController<E extends Transaction, C ext
 
     protected final AbstractTransactionService<E, C, U> transactionService;
     protected final AuthorityService authorityService;
+    protected final CustomerAccountService customerAccountService;
 
     protected final ModelMapper modelMapper;
 
@@ -42,7 +45,7 @@ public abstract class AbstractTransactionController<E extends Transaction, C ext
         ModelAndView modelAndView = new ModelAndView(tableViewName);
         List<E> transactions = transactionService.findAll();
 
-        modelAndView.addObject("transactionList", transactions);
+        modelAndView.addObject(entityName + "List", transactions);
         return modelAndView;
     }
 
@@ -50,7 +53,7 @@ public abstract class AbstractTransactionController<E extends Transaction, C ext
         ModelAndView modelAndView = new ModelAndView(tableViewName);
 
         List<E> transactions = transactionService.findAllByCustomerId(authorityService.getPrincipal().getId());
-        modelAndView.addObject("transactionList", transactions);
+        modelAndView.addObject(entityName + "List", transactions);
         return modelAndView;
     }
 
@@ -58,7 +61,7 @@ public abstract class AbstractTransactionController<E extends Transaction, C ext
         ModelAndView modelAndView = new ModelAndView(detailsViewName);
 
         E transaction = transactionService.getById(id);
-        modelAndView.addObject("transaction", transaction);
+        modelAndView.addObject(entityName, transaction);
 
         return modelAndView;
     }
@@ -70,7 +73,7 @@ public abstract class AbstractTransactionController<E extends Transaction, C ext
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction not found");
 
         E transaction = transactionService.getById(id);
-        modelAndView.addObject("transaction", transaction);
+        modelAndView.addObject(entityName, transaction);
 
         return modelAndView;
     }
@@ -87,11 +90,20 @@ public abstract class AbstractTransactionController<E extends Transaction, C ext
         return "redirect:/me/transactions";
     }
 
-    public ModelAndView showCreateView() {
+    public ModelAndView showCreateViewByAdmin() {
         ModelAndView modelAndView = new ModelAndView(createViewName);
 
         C createTransactionDTO = modelMapper.map(C.builder().build(), createDTOType);
         modelAndView.addObject(createTransactionDTO);
+
+        return modelAndView;
+    }
+
+    public ModelAndView showCreateViewByCustomer() {
+        ModelAndView modelAndView = showCreateViewByAdmin();
+
+        List<CustomerAccount> customerAccounts = customerAccountService.findAllByCustomerId(authorityService.getPrincipal().getId());
+        modelAndView.addObject("customerAccountList", customerAccounts);
 
         return modelAndView;
     }

@@ -51,17 +51,19 @@
                             <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/transferTransactions/${transferTransaction.id}">${transferTransaction.id}</a>
                         </td>
                         <td>
-                            <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/customers/${transferTransaction.customerAccount.id}">${transferTransaction.customerAccount.id}</a>
+                            <a href="/${authority == 'ADMIN' ? 'admin/customerAccounts' : 'me/accounts'}/${transferTransaction.customerAccount.id}">${transferTransaction.customerAccount.id}</a>
                         </td>
                         <td>${transferTransaction.receiver.id}</td>
-                        <td>${transferTransaction.transferAmount}</td>
+
+                        <td><fmt:setLocale value="vi_VN" scope="session"/>
+                            <fmt:formatNumber value="${transferTransaction.transferAmount}" type = "currency"/></td>
 
                         <fmt:parseDate value="${transferTransaction.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt" type="both"/>
                         <td><fmt:formatDate value="${createdAt}" pattern="HH:mm dd/MM/yyyy" /></td>
 
                         <td>
-                            <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/transferTransactions/${transferTransaction.id}/edit"><i
-                                    class="ti-pencil-alt fa-2x text-primary"></i></a>
+<%--                            <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/transferTransactions/${transferTransaction.id}/edit"><i--%>
+<%--                                    class="ti-pencil-alt fa-2x text-primary"></i></a>--%>
                             <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                         </td>
                     </tr>

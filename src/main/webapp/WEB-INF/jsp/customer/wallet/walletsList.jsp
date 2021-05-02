@@ -19,11 +19,11 @@
 <!-- START HERE -->
 <div class="card">
     <div class="card-header">
-        <h5>All Customers</h5>
+        <h5>All Wallets</h5>
         <div class="card-header-right" style="margin-right: 10px">
-            <a href="<c:url value="/me/wallets/create"/>">
-                <button type="submit" class="btn btn-primary">Create New</button>
-            </a>
+<%--            <a href="<c:url value="/me/wallets/create"/>">--%>
+<%--                <button type="submit" class="btn btn-primary">Create New</button>--%>
+<%--            </a>--%>
         </div>
     </div>
     <div class="card-block table-border-style">

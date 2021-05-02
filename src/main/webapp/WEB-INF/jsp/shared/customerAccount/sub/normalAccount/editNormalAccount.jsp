@@ -7,11 +7,11 @@
 
     <jsp:param name="title" value="Edit Normal Account"/>
 
-    <jsp:param name="parentLink" value="Manage normal account"/>
-    <jsp:param name="parentLinkUrl" value=""/>
+    <jsp:param name="parentLinkText" value="Manage Normal Account" />
+    <jsp:param name="parentLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/normalAccounts" />
 
-    <jsp:param name="childLink" value="Edit normal account"/>
-    <jsp:param name="childLinkUrl" value=""/>
+    <jsp:param name="childLinkText" value="Edit" />
+    <jsp:param name="childLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/normalAccounts/${normalAccount.id}" />
 
     <jsp:param name="activeSidebarElementID" value="edit-normalAccounts"/>
 </jsp:include>

@@ -1,6 +1,7 @@
 package com.se2.bankingsystem.controllers.transaction;
 
 import com.se2.bankingsystem.domains.Authority.AuthorityService;
+import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountService;
 import com.se2.bankingsystem.domains.Transaction.TransactionService;
 import com.se2.bankingsystem.domains.Transaction.dto.CreateTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.dto.UpdateTransactionDTO;
@@ -17,10 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 public class TransactionController extends AbstractTransactionController<Transaction, CreateTransactionDTO, UpdateTransactionDTO> {
 
-    public TransactionController(TransactionService transactionService, AuthorityService authorityService, ModelMapper modelMapper) {
+    public TransactionController(TransactionService transactionService, AuthorityService authorityService, CustomerAccountService customerAccountService, ModelMapper modelMapper) {
         super(
             transactionService,
             authorityService,
+            customerAccountService,
             modelMapper,
             "transaction",
             "shared/transaction/transactionsList",

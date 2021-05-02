@@ -52,7 +52,7 @@
                             <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/chargeTransactions/${chargeTransaction.id}">${chargeTransaction.id}</a>
                         </td>
                         <td>
-                            <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/customerAccounts/${chargeTransaction.customerAccount.id}">${chargeTransaction.customerAccount.id}</a>
+                            <a href="/${authority == 'ADMIN' ? 'admin/customerAccounts' : 'me/accounts'}/${chargeTransaction.customerAccount.id}">${chargeTransaction.customerAccount.id}</a>
                         </td>
 
                         <td><fmt:setLocale value="vi_VN" scope="session"/>
@@ -62,7 +62,7 @@
                         <td><fmt:formatDate value="${createdAt}" pattern="HH:mm dd/MM/yyyy" /></td>
 
                         <td>
-                            <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/chargeTransactions/${chargeTransaction.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
+<%--                            <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/chargeTransactions/${chargeTransaction.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>--%>
                             <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                         </td>
                     </tr>

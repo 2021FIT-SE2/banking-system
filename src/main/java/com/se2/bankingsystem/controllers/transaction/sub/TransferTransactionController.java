@@ -3,12 +3,12 @@ package com.se2.bankingsystem.controllers.transaction.sub;
 import com.se2.bankingsystem.config.exception.BankingSystemException;
 import com.se2.bankingsystem.controllers.transaction.AbstractTransactionController;
 import com.se2.bankingsystem.domains.Authority.AuthorityService;
+import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountService;
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.TransferTransactionService;
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.dto.CreateTransferTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.dto.UpdateTransferTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.entity.TransferTransaction;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.sql.Update;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +23,11 @@ import javax.validation.Valid;
 @Slf4j
 public class TransferTransactionController extends AbstractTransactionController<TransferTransaction, CreateTransferTransactionDTO, UpdateTransferTransactionDTO> {
 
-    public TransferTransactionController(TransferTransactionService transactionService, AuthorityService authorityService, ModelMapper modelMapper) {
+    public TransferTransactionController(TransferTransactionService transactionService, AuthorityService authorityService, CustomerAccountService customerAccountService, ModelMapper modelMapper) {
         super(
             transactionService,
             authorityService,
+            customerAccountService,
             modelMapper,
             "transferTransaction",
             "shared/transaction/sub/transferTransaction/transferTransactionList",
@@ -63,15 +64,27 @@ public class TransferTransactionController extends AbstractTransactionController
     }
 
     @Override
-    @GetMapping({"/admin/transferTransactions/create", "/me/transferTransactions/create"})
-    public ModelAndView showCreateView() {
-        return super.showCreateView();
+    @GetMapping("/admin/transferTransactions/create")
+    public ModelAndView showCreateViewByAdmin() {
+        return super.showCreateViewByAdmin();
+    }
+
+    @Override
+    @GetMapping("/me/transferTransactions/create")
+    public ModelAndView showCreateViewByCustomer() {
+        return super.showCreateViewByCustomer();
     }
 
     @Override
     @PostMapping("/admin/transferTransactions/create")
     public String createByAdmin(@Valid @ModelAttribute CreateTransferTransactionDTO createTransactionDTO) throws BankingSystemException {
         return super.createByAdmin(createTransactionDTO);
+    }
+
+    @Override
+    @PostMapping("/me/transferTransactions/create")
+    public String createByCustomer(CreateTransferTransactionDTO createTransactionDTO) throws BankingSystemException {
+        return super.createByCustomer(createTransactionDTO);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.se2.bankingsystem.controllers.transaction.sub;
 import com.se2.bankingsystem.config.exception.BankingSystemException;
 import com.se2.bankingsystem.controllers.transaction.AbstractTransactionController;
 import com.se2.bankingsystem.domains.Authority.AuthorityService;
+import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountService;
 import com.se2.bankingsystem.domains.FakeEWallet.FakeEWalletService;
 import com.se2.bankingsystem.domains.FakeEWallet.entity.FakeEWallet;
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.ChargeTransactionService;
@@ -27,10 +28,11 @@ public class ChargeTransactionController extends AbstractTransactionController<C
 
     private final FakeEWalletService fakeEWalletService;
 
-    public ChargeTransactionController(ChargeTransactionService transactionService, AuthorityService authorityService, ModelMapper modelMapper, FakeEWalletService fakeEWalletService) {
+    public ChargeTransactionController(ChargeTransactionService transactionService, AuthorityService authorityService, CustomerAccountService customerAccountService, ModelMapper modelMapper, FakeEWalletService fakeEWalletService) {
         super(
             transactionService,
             authorityService,
+            customerAccountService,
             modelMapper,
             "chargeTransaction",
             "shared/transaction/sub/chargeTransaction/chargeTransactionList",
@@ -67,14 +69,16 @@ public class ChargeTransactionController extends AbstractTransactionController<C
         return super.showDetailsByCustomer(id);
     }
 
+    @Override
     @GetMapping("/admin/chargeTransactions/create")
     public ModelAndView showCreateViewByAdmin() {
-        return super.showCreateView();
+        return super.showCreateViewByAdmin();
     }
 
+    @Override
     @GetMapping("/me/chargeTransactions/create")
     public ModelAndView showCreateViewByCustomer() {
-        ModelAndView modelAndView = super.showCreateView();
+        ModelAndView modelAndView = super.showCreateViewByCustomer();
 
         List<FakeEWallet> fakeEWallets = fakeEWalletService.findAllByCustomerId(authorityService.getPrincipal().getId());
         modelAndView.addObject("walletList", fakeEWallets);

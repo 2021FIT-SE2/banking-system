@@ -52,16 +52,19 @@
                             <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/withdrawTransactions/${withdrawTransaction.id}">${withdrawTransaction.id}</a>
                         </td>
                         <td>
-                            <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/customers/${withdrawTransaction.customerAccount.id}">${withdrawTransaction.customerAccount.id}</a>
+                            <a href="/${authority == 'ADMIN' ? 'admin/customerAccounts' : 'me/accounts'}/${withdrawTransaction.customerAccount.id}">${withdrawTransaction.customerAccount.id}</a>
                         </td>
-                        <td>${withdrawTransaction.withdrawAmount}</td>
+
+                        <td><fmt:setLocale value="vi_VN" scope="session"/>
+                            <fmt:formatNumber value="${withdrawTransaction.withdrawAmount}" type = "currency"/></td>
+
                         <td>${withdrawTransaction.wallet.provider}</td>
 
                         <fmt:parseDate value="${withdrawTransaction.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt" type="both"/>
                         <td><fmt:formatDate value="${createdAt}" pattern="HH:mm dd/MM/yyyy" /></td>
 
                         <td>
-                            <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/withdrawTransactions/${withdrawTransaction.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
+<%--                            <a href="/${authority == 'ADMIN' ? 'admin' : 'me'}/withdrawTransactions/${withdrawTransaction.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>--%>
                             <i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
                         </td>
                     </tr>

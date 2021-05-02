@@ -27,9 +27,11 @@
     <div class="card-header">
         <h5>Saving Accounts</h5>
         <div class="card-header-right" style="margin-right: 10px">
-            <a href="<c:url value="/${authority == 'ADMIN' ? 'admin' : 'me'}/savingAccounts/create"/>">
-                <button type="submit" class="btn btn-primary">Create New</button>
-            </a>
+            <c:if test="${authority == 'ADMIN'}">
+                <a href="<c:url value="/${authority == 'ADMIN' ? 'admin' : 'me'}/savingAccounts/create"/>">
+                    <button type="submit" class="btn btn-primary">Create New</button>
+                </a>
+            </c:if>
         </div>
     </div>
     <div class="card-block table-border-style">

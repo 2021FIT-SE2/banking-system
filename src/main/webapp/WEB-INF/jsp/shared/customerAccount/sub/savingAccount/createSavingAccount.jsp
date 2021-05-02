@@ -9,11 +9,11 @@
 
     <jsp:param name="title" value="Create saving account"/>
 
-    <jsp:param name="parentLink" value="Manage saving account"/>
-    <jsp:param name="parentLinkUrl" value=""/>
+    <jsp:param name="parentLinkText" value="Manage Saving Account"/>
+    <jsp:param name="parentLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/savingAccounts"/>
 
-    <jsp:param name="childLink" value="Create New saving account"/>
-    <jsp:param name="childLinkUrl" value=""/>
+    <jsp:param name="childLinkText" value="Create"/>
+    <jsp:param name="childLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/savingAccounts/create"/>
 
     <jsp:param name="activeSidebarElementID" value="add-savingAccounts"/>
 </jsp:include>

@@ -3,6 +3,7 @@ package com.se2.bankingsystem.controllers.transaction.sub;
 import com.se2.bankingsystem.config.exception.BankingSystemException;
 import com.se2.bankingsystem.controllers.transaction.AbstractTransactionController;
 import com.se2.bankingsystem.domains.Authority.AuthorityService;
+import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountService;
 import com.se2.bankingsystem.domains.FakeEWallet.FakeEWalletService;
 import com.se2.bankingsystem.domains.FakeEWallet.entity.FakeEWallet;
 import com.se2.bankingsystem.domains.Transaction.sub.WithdrawTransaction.WithdrawTransactionService;
@@ -27,10 +28,11 @@ public class WithdrawTransactionController extends AbstractTransactionController
 
     private final FakeEWalletService fakeEWalletService;
 
-    public WithdrawTransactionController(WithdrawTransactionService transactionService, AuthorityService authorityService, ModelMapper modelMapper, FakeEWalletService fakeEWalletService) {
+    public WithdrawTransactionController(WithdrawTransactionService transactionService, AuthorityService authorityService, CustomerAccountService customerAccountService, ModelMapper modelMapper, FakeEWalletService fakeEWalletService) {
         super(
             transactionService,
             authorityService,
+            customerAccountService,
             modelMapper,
             "withdrawTransaction",
             "shared/transaction/sub/withdrawTransaction/withdrawTransactionList",
@@ -67,14 +69,16 @@ public class WithdrawTransactionController extends AbstractTransactionController
         return super.showDetailsByCustomer(id);
     }
 
+    @Override
     @GetMapping("/admin/withdrawTransactions/create")
-    public ModelAndView showCreateView() {
-        return super.showCreateView();
+    public ModelAndView showCreateViewByAdmin() {
+        return super.showCreateViewByAdmin();
     }
 
+    @Override
     @GetMapping("/me/withdrawTransactions/create")
     public ModelAndView showCreateViewByCustomer() {
-        ModelAndView modelAndView = super.showCreateView();
+        ModelAndView modelAndView = super.showCreateViewByCustomer();
 
         List<FakeEWallet> fakeEWallets = fakeEWalletService.findAllByCustomerId(authorityService.getPrincipal().getId());
         modelAndView.addObject("walletList", fakeEWallets);
@@ -86,6 +90,12 @@ public class WithdrawTransactionController extends AbstractTransactionController
     @PostMapping("/admin/withdrawTransactions/create")
     public String createByAdmin(@Valid @ModelAttribute CreateWithdrawTransactionDTO createTransactionDTO) throws BankingSystemException {
         return super.createByAdmin(createTransactionDTO);
+    }
+
+    @Override
+    @PostMapping("/me/withdrawTransactions/create")
+    public String createByCustomer(CreateWithdrawTransactionDTO createTransactionDTO) throws BankingSystemException {
+        return super.createByCustomer(createTransactionDTO);
     }
 
     @Override

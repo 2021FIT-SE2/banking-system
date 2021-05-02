@@ -82,9 +82,9 @@ public abstract class AbstractCustomerAccountController<E extends CustomerAccoun
 
     public String deleteByCustomer(@PathVariable String id) {
         if (!authorityService.hasCustomerAccountOwnerAccess(id))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CustomerAccount not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer Account not found");
         customerAccountService.deleteById(id);
-        return "redirect:/me/customerAccounts";
+        return "redirect:/me/" + entityName + "s";
     }
 
     public ModelAndView showCreateView() {

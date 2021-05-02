@@ -18,7 +18,7 @@
 <div class="row justify-content-center align-items-center">
     <div class="col-md-8">
         <div class="card">
-            <jsp:useBean id="error" scope="request" type="java.lang.String"/>
+            <%--@elvariable id="error" type="String"--%>
             <c:if test="${error != null}">
                 <div class="alert alert-danger" role="alert" style="margin-bottom: 20px">
                     <h4 class="alert-heading">Error</h4>
@@ -36,8 +36,30 @@
                     <fieldset class="form-group row row">
                         <form:label cssClass="col-sm-3 col-form-label" path="customerAccountID">Account ID</form:label>
                         <div class="col-sm-9">
-                            <form:input path="customerAccountID" type="text" class="form-control"
-                                        required="required"/>
+                            <c:choose>
+                                <c:when test="${authority == 'ADMIN'}">
+                                    <form:input path="customerAccountID" type="text" class="form-control"
+                                                required="required"/>
+                                </c:when>
+
+                                <c:when test="${authority == 'CUSTOMER'}">
+                                    <form:select class="form-control" path="customerAccountID">
+                                        <option value="" disabled selected hidden class="text-secondary">Select an Account to transfer from</option>
+                                        <%--@elvariable id="customerAccountList" type="java.util.List"--%>
+                                        <c:forEach var="customerAccount" items="${customerAccountList}">
+                                            <%--@elvariable id="customerAccount" type="com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount"--%>
+                                            <form:option value="${customerAccount.id}">
+                                                ID: ${customerAccount.id} - ${customerAccount.accountType} ACCOUNT
+                                            </form:option>
+                                        </c:forEach>
+                                    </form:select>
+                                </c:when>
+
+                                <c:otherwise>
+                                    Internal Error
+                                </c:otherwise>
+
+                            </c:choose >
                             <span class="form-bar"></span>
                             <form:errors path="customerAccountID" cssClass="text-warning"/>
                         </div>

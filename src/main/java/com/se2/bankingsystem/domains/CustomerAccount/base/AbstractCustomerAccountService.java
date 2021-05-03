@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface AbstractCustomerAccountService<E extends CustomerAccount, C extends CreateCustomerAccountDTO, U extends UpdateCustomerAccountDTO> extends CRUDService<E, String, C, U> {
     List<E> findAllByCustomerId(Long customerId);
+
+    boolean existsById(String id);
 }

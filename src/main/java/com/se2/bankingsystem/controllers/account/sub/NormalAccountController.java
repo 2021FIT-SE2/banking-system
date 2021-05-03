@@ -11,11 +11,14 @@ import com.se2.bankingsystem.domains.Transaction.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Controller
 @Slf4j
@@ -73,7 +76,7 @@ public class NormalAccountController extends AbstractCustomerAccountController<N
         return super.deleteByCustomer(id);
     }
 
-    @GetMapping({"/admin/normalAccounts/create", "/me/normalAccounts/create"})
+    @GetMapping({ "/admin/normalAccounts/create", "/me/normalAccounts/create" })
     @Override
     public ModelAndView showCreateView() {
         return super.showCreateView();
@@ -81,14 +84,14 @@ public class NormalAccountController extends AbstractCustomerAccountController<N
 
     @PostMapping("/admin/normalAccounts/create")
     @Override
-    public String createByAdmin(@ModelAttribute CreateNormalAccountDTO createCustomerAccountDTO) throws BankingSystemException {
-        return super.createByAdmin(createCustomerAccountDTO);
+    public ModelAndView createByAdmin(@Valid @ModelAttribute CreateNormalAccountDTO createCustomerAccountDTO, BindingResult bindingResult) throws BankingSystemException {
+        return super.createByAdmin(createCustomerAccountDTO, bindingResult);
     }
 
     @PostMapping("/me/normalAccounts/create")
     @Override
-    public String createByCustomer(@ModelAttribute CreateNormalAccountDTO createCustomerAccountDTO) throws BankingSystemException {
-        return super.createByCustomer(createCustomerAccountDTO);
+    public ModelAndView createByCustomer(@Valid @ModelAttribute CreateNormalAccountDTO createCustomerAccountDTO, BindingResult bindingResult) throws BankingSystemException {
+        return super.createByCustomer(createCustomerAccountDTO, bindingResult);
     }
 
     @GetMapping("/admin/normalAccounts/{id}/edit")
@@ -99,7 +102,7 @@ public class NormalAccountController extends AbstractCustomerAccountController<N
 
     @PostMapping("/admin/normalAccounts/{id}/edit")
     @Override
-    public String updateByAdmin(@PathVariable String id, UpdateNormalAccountDTO updateCustomerAccountDTO) {
+    public String updateByAdmin(@PathVariable String id, @Valid @ModelAttribute UpdateNormalAccountDTO updateCustomerAccountDTO) throws BankingSystemException {
         return super.updateByAdmin(id, updateCustomerAccountDTO);
     }
 }

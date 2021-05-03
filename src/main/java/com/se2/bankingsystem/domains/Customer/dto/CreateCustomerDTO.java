@@ -2,6 +2,7 @@ package com.se2.bankingsystem.domains.Customer.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.se2.bankingsystem.domains.Authority.entity.AuthorityName;
+import com.se2.bankingsystem.domains.Customer.validators.UniqueCustomerEmail;
 import com.se2.bankingsystem.domains.User.dto.CreateUserDTO;
 import com.se2.bankingsystem.domains.User.entity.Gender;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,7 @@ import static com.se2.bankingsystem.domains.Customer.entity.Customer.MIN_LENGTH_
 @SuperBuilder
 public class CreateCustomerDTO extends CreateUserDTO {
 
+    @UniqueCustomerEmail
     @Email
     private String email;
 

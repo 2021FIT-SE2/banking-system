@@ -61,4 +61,9 @@ public class FakeEWalletServiceImpl implements FakeEWalletService {
     public List<FakeEWallet> findAllByCustomerId(Long customerId) {
         return fakeEWalletRepository.findAllByCustomerId(customerId);
     }
+
+    @Override
+    public boolean existsById(Long id) {
+        return fakeEWalletRepository.existsById(id);
+    }
 }

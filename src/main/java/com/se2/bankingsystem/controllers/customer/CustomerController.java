@@ -7,11 +7,13 @@ import com.se2.bankingsystem.domains.Customer.dto.UpdateCustomerDTO;
 import com.se2.bankingsystem.domains.Customer.entity.Customer;
 import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountService;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
+import com.se2.bankingsystem.domains.Transaction.TransactionService;
+import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +30,7 @@ public class CustomerController {
 
     private final CustomerService customerService;
     private final CustomerAccountService customerAccountService;
+    private final TransactionService transactionService;
     private final ModelMapper modelMapper;
 
     @GetMapping("/admin/customers")
@@ -45,8 +48,10 @@ public class CustomerController {
         Customer customer = customerService.getById(id);
 
         List<CustomerAccount> customerAccounts = customerAccountService.findAllByCustomerId(id);
+        List<Transaction> transactions = transactionService.findAllByCustomerId(id);
 
         modelAndView.addObject("customerAccountList", customerAccounts);
+        modelAndView.addObject("transactionList", transactions);
         modelAndView.addObject(customer);
 
         return modelAndView;
@@ -58,14 +63,22 @@ public class CustomerController {
 
         CreateCustomerDTO createCustomerDTO = CreateCustomerDTO.builder().build();
         modelAndView.addObject(createCustomerDTO);
+
         return modelAndView;
     }
 
     @PostMapping("/admin/customers/create")
-    public String create(@Valid @ModelAttribute CreateCustomerDTO createCustomerDTO) throws BankingSystemException {
-        log.info(createCustomerDTO.toString());
-        customerService.create(createCustomerDTO);
-        return "redirect:/admin/customers";
+    public ModelAndView create(@Valid @ModelAttribute CreateCustomerDTO createCustomerDTO, BindingResult bindingResult) throws BankingSystemException {
+        ModelAndView modelAndView = new ModelAndView();
+
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("admin/customer/createCustomer");
+        } else {
+            customerService.create(createCustomerDTO);
+            modelAndView.setViewName("redirect:/admin/customers");
+        }
+
+        return modelAndView;
     }
 
     @GetMapping("/admin/customers/{customerID}/edit")
@@ -84,9 +97,15 @@ public class CustomerController {
     }
 
     @PostMapping("/admin/customers/{customerID}/edit")
-    public String update(@PathVariable Long customerID, @Valid @ModelAttribute UpdateCustomerDTO updateCustomerDTO) {
-        customerService.updateById(customerID, updateCustomerDTO);
-        return "redirect:/admin/customers";
+    public ModelAndView update(@PathVariable Long customerID, @Valid @ModelAttribute UpdateCustomerDTO updateCustomerDTO, BindingResult bindingResult) throws BankingSystemException {
+        ModelAndView modelAndView = new ModelAndView();
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("admin/customer/editCustomer");
+        } else {
+            customerService.updateById(customerID, updateCustomerDTO);
+            modelAndView.setViewName("redirect:/admin/customers");
+        }
+        return modelAndView;
     }
 
     @GetMapping("/admin/customers/{customerID}/delete")

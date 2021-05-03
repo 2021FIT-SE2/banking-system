@@ -2,6 +2,7 @@ package com.se2.bankingsystem.domains.Transaction.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.se2.bankingsystem.base.TimeStamps;
+import com.se2.bankingsystem.domains.CustomerAccount.validators.ExistingCustomerAccountIdentifier;
 import com.se2.bankingsystem.domains.Transaction.entity.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @SuperBuilder
 public class CreateTransactionDTO implements TimeStamps {
 
+    @ExistingCustomerAccountIdentifier
     @NotNull
     private String customerAccountID;
 

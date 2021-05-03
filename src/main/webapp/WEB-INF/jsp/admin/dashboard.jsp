@@ -1,18 +1,20 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}" />
+<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}"/>
 
-<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/prefix.jsp">
+<c:set var="commonPrefix" value="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}"/>
 
-    <jsp:param name="title" value="Dashboard" />
+<jsp:include page="${commonPrefix}/prefix.jsp">
 
-    <jsp:param name="parentLinkText" value="Admin" />
-    <jsp:param name="parentLinkUrl" value="/admin/dashboard" />
+    <jsp:param name="title" value="Dashboard"/>
 
-    <jsp:param name="childLinkText" value="Dashboard" />
-    <jsp:param name="childLinkUrl" value="/admin/dashboard" />
+    <jsp:param name="parentLinkText" value="Admin"/>
+    <jsp:param name="parentLinkUrl" value="/admin/dashboard"/>
 
-    <jsp:param name="activeSidebarElementID" value="dashboard" />
+    <jsp:param name="childLinkText" value="Dashboard"/>
+    <jsp:param name="childLinkUrl" value="/admin/dashboard"/>
+
+    <jsp:param name="activeSidebarElementID" value="dashboard"/>
 </jsp:include>
 
 <div class="row">
@@ -385,4 +387,4 @@
     <!-- Project statistics end -->
 </div>
 <!-- END HERE -->
-<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/suffix.jsp"/>
+<jsp:include page="${commonPrefix}/suffix.jsp"/>

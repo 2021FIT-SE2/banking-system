@@ -7,7 +7,6 @@ import com.se2.bankingsystem.domains.CustomerAccount.dto.CreateCustomerAccountDT
 import com.se2.bankingsystem.domains.CustomerAccount.dto.UpdateCustomerAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +18,7 @@ import java.util.List;
 public abstract class AbstractCustomerAccountServiceImpl<E extends CustomerAccount, C extends CreateCustomerAccountDTO, U extends UpdateCustomerAccountDTO> implements AbstractCustomerAccountService<E, C, U> {
 
     protected final CustomerRepository customerRepository;
+
     protected final AbstractCustomerAccountRepository<E> abstractCustomerAccountRepository;
     protected final ModelMapper modelMapper;
     private final Class<E> entityType;
@@ -66,5 +66,10 @@ public abstract class AbstractCustomerAccountServiceImpl<E extends CustomerAccou
     @Override
     public List<E> findAllByCustomerId(Long customerId) {
         return this.abstractCustomerAccountRepository.findAllByCustomerId(customerId);
+    }
+
+    @Override
+    public boolean existsById(String id) {
+        return abstractCustomerAccountRepository.existsById(id);
     }
 }

@@ -10,4 +10,6 @@ import java.util.List;
 
 public interface FakeEWalletService extends CRUDService<FakeEWallet, Long, CreateFakeEWalletDTO, UpdateFakeEWalletDTO> {
     List<FakeEWallet> findAllByCustomerId(Long customerId);
+
+    boolean existsById(Long id);
 }

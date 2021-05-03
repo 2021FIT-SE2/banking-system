@@ -1,17 +1,20 @@
 <%--@elvariable id="normalAccount" type="com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.entity.NormalAccount"--%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}" />
+<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}"/>
 
-<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/prefix.jsp">
+<c:set var="commonPrefix" value="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}"/>
+
+<jsp:include page="${commonPrefix}/prefix.jsp">
 
     <jsp:param name="title" value="Edit Normal Account"/>
 
-    <jsp:param name="parentLinkText" value="Manage Normal Account" />
-    <jsp:param name="parentLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/normalAccounts" />
+    <jsp:param name="parentLinkText" value="Manage Normal Account"/>
+    <jsp:param name="parentLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/normalAccounts"/>
 
-    <jsp:param name="childLinkText" value="Edit" />
-    <jsp:param name="childLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/normalAccounts/${normalAccount.id}" />
+    <jsp:param name="childLinkText" value="Edit"/>
+    <jsp:param name="childLinkUrl"
+               value="/${authority == 'ADMIN' ? 'admin' : 'me'}/normalAccounts/${normalAccount.id}/edit"/>
 
     <jsp:param name="activeSidebarElementID" value="edit-normalAccounts"/>
 </jsp:include>
@@ -29,7 +32,8 @@
                     <fieldset class="form-group row row">
                         <label for="customerID" class="col-sm-3 col-form-label">Customer ID</label>
                         <div class="col-sm-9">
-                            <input disabled id="customerID" type="number" class="form-control" value="${normalAccount.customer.id}"/>
+                            <input disabled id="customerID" type="number" class="form-control"
+                                   value="${normalAccount.customer.id}"/>
                             <span class="form-bar"></span>
                         </div>
                     </fieldset>
@@ -45,15 +49,18 @@
 
                     <br><br>
                     <div class="d-flex justify-content-md-center">
-                        <button id="btn-save" type="button" class="btn btn-success" data-toggle="modal" data-target="#modalSave">Add</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button id="btn-save" type="button" class="btn btn-success" data-toggle="modal"
+                                data-target="#modalConfirm">Add
+                        </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
 
+                    <jsp:include page="${commonPrefix}/confirm-dialog.jsp">
+                        <jsp:param name="message" value="Confirm updating this Normal Account?"/>
+                    </jsp:include>
                 </form:form>
             </div>
         </div>
     </div>
 </div>
-<jsp:include page="/WEB-INF/commons/admin/save-confirm.jsp"/>
-
 <!-- END HERE -->
-<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/suffix.jsp"/>
+<jsp:include page="${commonPrefix}/suffix.jsp"/>

@@ -13,6 +13,7 @@ import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.entity.Ch
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +42,7 @@ public class ChargeTransactionController extends AbstractTransactionController<C
             "shared/transaction/sub/chargeTransaction/chargeTransactionDetails",
             CreateChargeTransactionDTO.class,
             UpdateChargeTransactionDTO.class
-            );
+        );
         this.fakeEWalletService = fakeEWalletService;
     }
 
@@ -88,14 +89,14 @@ public class ChargeTransactionController extends AbstractTransactionController<C
 
     @Override
     @PostMapping("/admin/chargeTransactions/create")
-    public String createByAdmin(@Valid @ModelAttribute CreateChargeTransactionDTO createTransactionDTO) throws BankingSystemException {
-        return super.createByAdmin(createTransactionDTO);
+    public ModelAndView createByAdmin(@Valid @ModelAttribute CreateChargeTransactionDTO createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
+        return super.createByAdmin(createTransactionDTO, bindingResult);
     }
 
     @Override
     @PostMapping("/me/chargeTransactions/create")
-    public String createByCustomer(CreateChargeTransactionDTO createTransactionDTO) throws BankingSystemException {
-        return super.createByCustomer(createTransactionDTO);
+    public ModelAndView createByCustomer(@Valid @ModelAttribute CreateChargeTransactionDTO createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
+        return super.createByCustomer(createTransactionDTO, bindingResult);
     }
 
     @Override
@@ -106,7 +107,7 @@ public class ChargeTransactionController extends AbstractTransactionController<C
 
     @Override
     @PostMapping("/admin/chargeTransactions/{id}/edit")
-    public String updateByAdmin(@PathVariable Long id, @Valid @ModelAttribute UpdateChargeTransactionDTO updateTransactionDTO) {
+    public String updateByAdmin(@PathVariable Long id, @Valid @ModelAttribute UpdateChargeTransactionDTO updateTransactionDTO) throws BankingSystemException {
         return super.updateByAdmin(id, updateTransactionDTO);
     }
 

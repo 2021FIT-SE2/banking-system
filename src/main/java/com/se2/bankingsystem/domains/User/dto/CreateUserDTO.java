@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.se2.bankingsystem.base.TimeStamps;
 import com.se2.bankingsystem.domains.Authority.entity.AuthorityName;
 import com.se2.bankingsystem.domains.User.entity.User;
+import com.se2.bankingsystem.domains.User.validators.UniqueUserPhoneNumber;
+import com.se2.bankingsystem.domains.User.validators.UniqueUserUsername;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +23,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CreateUserDTO implements TimeStamps {
 
+    @UniqueUserUsername
     @Size(min = User.MIN_LENGTH_USERNAME, max = User.MAX_LENGTH_USERNAME)
     private String username;
 
@@ -29,6 +32,7 @@ public class CreateUserDTO implements TimeStamps {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    @UniqueUserPhoneNumber
     @Size(min = User.MIN_LENGTH_PHONE_NUMBER, max = User.MAX_LENGTH_PHONE_NUMBER)
     private String phoneNumber;
 

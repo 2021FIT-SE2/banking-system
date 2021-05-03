@@ -19,7 +19,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -95,18 +94,7 @@ public class AuthenticationController {
     ) throws BankingSystemException {
         ModelAndView modelAndView = new ModelAndView();
 
-        // Check uniqueness
-        if (!customerService.isEmailUnique(createCustomerDTO.getEmail()))
-            bindingResult.addError(new FieldError("createCustomerDTO", "email", "Email is already taken, please choose another one"));
-
-        if (!userService.isUsernameUnique(createCustomerDTO.getUsername()))
-            bindingResult.addError(new FieldError("createCustomerDTO", "username", "Username is already taken, please choose another one"));
-
-        if (!userService.isPhoneNumberUnique(createCustomerDTO.getPhoneNumber()))
-            bindingResult.addError(new FieldError("createCustomerDTO", "phoneNumber", "Phone Number is already taken, please choose another one"));
-
         if (bindingResult.hasErrors()) {
-            log.info(bindingResult.getAllErrors().toString());
             modelAndView.setViewName("public/register");
         } else {
             customerService.create(createCustomerDTO);

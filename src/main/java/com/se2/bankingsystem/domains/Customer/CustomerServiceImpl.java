@@ -121,6 +121,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public boolean existsById(Long id) {
+        return customerRepository.existsById(id);
+    }
+
+    @Override
     public Customer getById(Long id) {
         return customerRepository.findById(id).orElse(null);
     }

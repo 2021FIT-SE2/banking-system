@@ -2,9 +2,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}" />
+<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}"/>
 
-<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/prefix.jsp">
+<c:set var="commonPrefix" value="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}"/>
+
+<jsp:include page="${commonPrefix}/prefix.jsp">
 
     <jsp:param name="title" value="Wallet Details"/>
 
@@ -97,18 +99,23 @@
                             <td>${withdrawTransaction.withdrawAmount}</td>
                             <td>${withdrawTransaction.customerAccount.id}</td>
 
-                            <fmt:parseDate value="${withdrawTransaction.createdAt}" pattern="yyyy-MM-dd" var="createdAt" type="date"/>
-                            <td><fmt:formatDate value="${createdAt}" pattern="HH:mm dd/MM/yyyy" /></td>
+                            <fmt:parseDate value="${withdrawTransaction.createdAt}" pattern="yyyy-MM-dd" var="createdAt"
+                                           type="date"/>
+                            <td><fmt:formatDate value="${createdAt}" pattern="HH:mm dd/MM/yyyy"/></td>
 
-                            <fmt:parseDate value="${withdrawTransaction.updatedAt}" pattern="yyyy-MM-dd" var="updatedAt" type="date"/>
-                            <td><fmt:formatDate value="${updatedAt}" pattern="HH:mm dd/MM/yyyy" /></td>
+                            <fmt:parseDate value="${withdrawTransaction.updatedAt}" pattern="yyyy-MM-dd" var="updatedAt"
+                                           type="date"/>
+                            <td><fmt:formatDate value="${updatedAt}" pattern="HH:mm dd/MM/yyyy"/></td>
 
                             <td>
-                                <a href="/admin/withdrawTransactions/${withdrawTransaction.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
-                                <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
+                                <a href="/admin/withdrawTransactions/${withdrawTransaction.id}/edit"><i
+                                        class="ti-pencil-alt fa-2x text-primary"></i></a>
+                                <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal"
+                                      data-target="#modalConfirm"></i></a>
                             </td>
                         </tr>
-                        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -118,8 +125,11 @@
                                         </button>
                                     </div>
                                     <div class="modal-footer d-flex justify-content-md-center">
-                                        <a href="/admin/customers/${withdrawTransaction.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <a href="/admin/customers/${withdrawTransaction.id}/delete">
+                                            <button type="submit" id="btn-yes" class="btn btn-primary">Yes</button>
+                                        </a>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -132,4 +142,4 @@
     </div>
 </div>
 <!-- END HERE -->
-<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/suffix.jsp"/>
+<jsp:include page="${commonPrefix}/suffix.jsp"/>

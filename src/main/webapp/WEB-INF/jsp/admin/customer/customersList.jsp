@@ -1,18 +1,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}" />
+<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}"/>
 
-<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/prefix.jsp">
+<c:set var="commonPrefix" value="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}"/>
 
-    <jsp:param name="title" value="Manage Customers" />
+<jsp:include page="${commonPrefix}/prefix.jsp">
 
-    <jsp:param name="parentLinkText" value="Manage Customers" />
-    <jsp:param name="parentLinkUrl" value="/admin/customers" />
+    <jsp:param name="title" value="Manage Customers"/>
 
-    <jsp:param name="childLinkText" value="List" />
-    <jsp:param name="childLinkUrl" value="/admin/customers" />
+    <jsp:param name="parentLinkText" value="Manage Customers"/>
+    <jsp:param name="parentLinkUrl" value="/admin/customers"/>
 
-    <jsp:param name="activeSidebarElementID" value="customer-list" />
+    <jsp:param name="childLinkText" value="List"/>
+    <jsp:param name="childLinkUrl" value="/admin/customers"/>
+
+    <jsp:param name="activeSidebarElementID" value="customer-list"/>
 </jsp:include>
 
 <!-- START HERE -->
@@ -55,11 +57,14 @@
                         <td>${customer.gender}</td>
                         <td>${customer.address}</td>
                         <td>
-                            <a href="/admin/customers/${customer.id}/edit"><i class="ti-pencil-alt fa-2x text-primary"></i></a>
-                            <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal" data-target="#modalDelete"></i></a>
+                            <a href="/admin/customers/${customer.id}/edit"><i
+                                    class="ti-pencil-alt fa-2x text-primary"></i></a>
+                            <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal"
+                                  data-target="#modalConfirm"></i></a>
                         </td>
                     </tr>
-                    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -69,7 +74,9 @@
                                     </button>
                                 </div>
                                 <div class="modal-footer d-flex justify-content-md-center">
-                                    <a href="/admin/customers/${customer.id}/delete"><button type="submit" id="btn-yes" class="btn btn-primary">Yes</button></a>
+                                    <a href="/admin/customers/${customer.id}/delete">
+                                        <button type="submit" id="btn-yes" class="btn btn-primary">Yes</button>
+                                    </a>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 
                                 </div>
@@ -83,4 +90,4 @@
     </div>
 </div>
 <!-- END HERE -->
-<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/suffix.jsp"/>
+<jsp:include page="${commonPrefix}/suffix.jsp"/>

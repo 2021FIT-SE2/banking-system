@@ -4,5 +4,6 @@
       "name": "security.enabled",
       "type": "java.lang.Boolean",
       "description": "Decide whether to enable spring security or not."
-  }
-] }
+    }
+  ]
+}

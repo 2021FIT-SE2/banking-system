@@ -4,5 +4,5 @@ public interface CRUDService<ModelType, IdType, CreateDTOType, UpdateDTOType> ex
     ReadService<ModelType, IdType>,
     CreateService<ModelType, CreateDTOType>,
     UpdateService<ModelType, IdType, UpdateDTOType>,
-    DeleteService<IdType>
-{ }
+    DeleteService<IdType> {
+}

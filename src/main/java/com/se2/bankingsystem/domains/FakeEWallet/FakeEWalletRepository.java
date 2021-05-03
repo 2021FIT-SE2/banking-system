@@ -12,4 +12,6 @@ import java.util.List;
 public interface FakeEWalletRepository extends JpaRepository<FakeEWallet, Long> {
 
     List<FakeEWallet> findAllByCustomerId(Long customerId);
+
+    boolean existsById(Long id);
 }

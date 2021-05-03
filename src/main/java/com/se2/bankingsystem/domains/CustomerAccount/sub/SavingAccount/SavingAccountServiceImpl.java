@@ -37,7 +37,7 @@ public class SavingAccountServiceImpl extends AbstractCustomerAccountServiceImpl
     private void increaseSavingOnEveryday(LocalDateTime localDateTime) {
         List<SavingAccount> savingAccounts = ((SavingAccountRepository) abstractCustomerAccountRepository).findAllThatNeedsSavingIncrease(localDateTime);
 
-        for (SavingAccount account: savingAccounts) {
+        for (SavingAccount account : savingAccounts) {
             log.info(account.toString());
         }
     }

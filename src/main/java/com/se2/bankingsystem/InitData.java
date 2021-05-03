@@ -50,7 +50,7 @@ public class InitData {
                     .username(username)
                     .password(password)
                     .firstName("Admin")
-                    .lastName("SQA 2021")
+                    .lastName("SE2 2021")
                     .phoneNumber("0969696969")
                     .role(AuthorityName.ADMIN)
                     .build();

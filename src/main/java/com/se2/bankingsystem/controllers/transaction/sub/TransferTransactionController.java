@@ -11,6 +11,7 @@ import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.entity.
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -77,14 +78,14 @@ public class TransferTransactionController extends AbstractTransactionController
 
     @Override
     @PostMapping("/admin/transferTransactions/create")
-    public String createByAdmin(@Valid @ModelAttribute CreateTransferTransactionDTO createTransactionDTO) throws BankingSystemException {
-        return super.createByAdmin(createTransactionDTO);
+    public ModelAndView createByAdmin(@Valid @ModelAttribute CreateTransferTransactionDTO createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
+        return super.createByAdmin(createTransactionDTO, bindingResult);
     }
 
     @Override
     @PostMapping("/me/transferTransactions/create")
-    public String createByCustomer(CreateTransferTransactionDTO createTransactionDTO) throws BankingSystemException {
-        return super.createByCustomer(createTransactionDTO);
+    public ModelAndView createByCustomer(@Valid @ModelAttribute CreateTransferTransactionDTO createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
+        return super.createByCustomer(createTransactionDTO, bindingResult);
     }
 
     @Override
@@ -95,7 +96,7 @@ public class TransferTransactionController extends AbstractTransactionController
 
     @Override
     @PostMapping("/admin/transferTransactions/{id}/edit")
-    public String updateByAdmin(@PathVariable Long id, @Valid @ModelAttribute UpdateTransferTransactionDTO updateTransactionDTO) {
+    public String updateByAdmin(@PathVariable Long id, @Valid @ModelAttribute UpdateTransferTransactionDTO updateTransactionDTO) throws BankingSystemException {
         return super.updateByAdmin(id, updateTransactionDTO);
     }
 

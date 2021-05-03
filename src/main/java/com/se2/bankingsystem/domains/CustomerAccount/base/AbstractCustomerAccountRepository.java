@@ -8,4 +8,7 @@ import java.util.List;
 public interface AbstractCustomerAccountRepository<T extends CustomerAccount> extends JpaRepository<T, String> {
 
     List<T> findAllByCustomerId(Long customerId);
+
+    @Override
+    boolean existsById(String s);
 }

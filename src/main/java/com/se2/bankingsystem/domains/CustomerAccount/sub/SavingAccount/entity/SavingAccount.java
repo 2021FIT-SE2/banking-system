@@ -48,6 +48,13 @@ public class SavingAccount extends CustomerAccount implements Withdrawable {
     public void withdraw(@Positive Long amount) throws BankingSystemException {
         if (amount > currentSaving)
             throw new BankingSystemException("Cannot withdraw with amount bigger than current saving");
+
+        LocalDate now = LocalDate.now();
+        LocalDate endDate = now.plusMonths(savingDuration.getMonthValue());
+
+        if (now.isBefore(endDate))
+            throw new BankingSystemException("Cannot withdraw from saving account when still in saving duration");
+
         setCurrentSaving(this.getCurrentSaving() - amount);
     }
 }

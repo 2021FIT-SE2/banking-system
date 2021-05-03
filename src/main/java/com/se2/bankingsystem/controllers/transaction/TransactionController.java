@@ -1,7 +1,12 @@
 package com.se2.bankingsystem.controllers.transaction;
 
 import com.se2.bankingsystem.domains.Authority.AuthorityService;
+import com.se2.bankingsystem.domains.Authority.entity.AuthorityName;
 import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountService;
+import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
+import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.entity.LoanAccount;
+import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.entity.NormalAccount;
+import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.entity.SavingAccount;
 import com.se2.bankingsystem.domains.Transaction.TransactionService;
 import com.se2.bankingsystem.domains.Transaction.dto.CreateTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.dto.UpdateTransactionDTO;
@@ -68,5 +73,25 @@ public class TransactionController extends AbstractTransactionController<Transac
     @PostMapping("/me/transactions/{id}/delete")
     public String deleteByCustomer(@PathVariable Long id) {
         return super.deleteByCustomer(id);
+    }
+
+    private String getRedirectViewName(CustomerAccount customerAccount) throws ClassNotFoundException {
+
+        String viewName;
+        if (authorityService.getCurrentAuthority().equals(AuthorityName.ADMIN.name()))
+            viewName = "redirect:/admin/";
+        else
+            viewName = "redirect:/me/";
+
+        if (customerAccount instanceof LoanAccount) {
+            viewName += "chargeTransactions/";
+        } else if (customerAccount instanceof NormalAccount) {
+            viewName += "transferTransactions/";
+        } else if (customerAccount instanceof SavingAccount) {
+            viewName += "withdrawTransactions/";
+        } else {
+            throw new ClassNotFoundException();
+        }
+        return viewName;
     }
 }

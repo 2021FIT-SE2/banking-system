@@ -109,7 +109,9 @@
                     <ul>
                         <li class="active"><a href="./index.html">Home</a></li>
                         <li><a href="https://portal.vietcombank.com.vn/en-us/news/Pages/home.aspx">News</a></li>
-                        <li><a href="https://portal.vietcombank.com.vn/en-us/about/Pages/Home.aspx?devicechannel=default">About us</a></li>
+                        <li>
+                            <a href="https://portal.vietcombank.com.vn/en-us/about/Pages/Home.aspx?devicechannel=default">About
+                                us</a></li>
                         <%--                        <li><a href="#">Pages</a>--%>
                         <%--                            <ul class="dropdown">--%>
                         <%--                                <li><a href="./pricing.html">Pricing</a></li>--%>
@@ -333,36 +335,36 @@
                 </div>
             </div>
 
-        <div class="row yearly__plans">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="pricing__item">
-                    <h4>USD</h4>
-                    <h3>22,980.00/<span>23,160.00</span></h3>
-                    <a href="#" class="primary-btn">View details</a>
+            <div class="row yearly__plans">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="pricing__item">
+                        <h4>USD</h4>
+                        <h3>22,980.00/<span>23,160.00</span></h3>
+                        <a href="#" class="primary-btn">View details</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="pricing__item">
+                        <h4>EUR</h4>
+                        <h3>27,046.24/<span>28,174.59</span></h3>
+                        <a href="#" class="primary-btn">View details</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="pricing__item">
+                        <h4>GPB</h4>
+                        <h3>31,306.84/<span>32,288.33</span></h3>
+                        <a href="#" class="primary-btn">View details</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="pricing__item">
+                        <h4>JPY</h4>
+                        <h3>208.12/<span>216.80</span></h3>
+                        <a href="#" class="primary-btn">View details</a>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="pricing__item">
-                    <h4>EUR</h4>
-                    <h3>27,046.24/<span>28,174.59</span></h3>
-                    <a href="#" class="primary-btn">View details</a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="pricing__item">
-                    <h4>GPB</h4>
-                    <h3>31,306.84/<span>32,288.33</span></h3>
-                    <a href="#" class="primary-btn">View details</a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="pricing__item">
-                    <h4>JPY</h4>
-                    <h3>208.12/<span>216.80</span></h3>
-                    <a href="#" class="primary-btn">View details</a>
-                </div>
-            </div>
-        </div>
         </div>
     </div>
 </section>

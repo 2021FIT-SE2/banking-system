@@ -3,7 +3,11 @@ package com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.se2.bankingsystem.domains.Transaction.dto.CreateTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.entity.TransactionType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;

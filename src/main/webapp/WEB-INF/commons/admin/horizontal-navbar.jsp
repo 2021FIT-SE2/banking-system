@@ -53,7 +53,7 @@
                         <li class="waves-effect waves-light">
                             <div class="media">
                                 <img class="d-flex align-self-center img-radius"
-                                     src="<c:url value="resources/img/avatar-4.jpg" />"
+                                     src="<c:url value="resources/img/profile-admin.png" />"
                                      alt="Generic placeholder image">
                                 <div class="media-body">
                                     <h5 class="notification-user">Joseph William</h5>
@@ -80,7 +80,7 @@
                 </li>
                 <li class="user-profile header-notification">
                     <a class="waves-effect waves-light">
-                        <img src="<c:url value="resources/img/avatar-4.jpg" />" class="img-radius"
+                        <img src="<c:url value="resources/img/profile-admin.png" />" class="img-radius"
                              alt="User-Profile-Image">
                         <span>${pageContext.request.userPrincipal.name}</span>
                         <i class="ti-angle-down"></i>

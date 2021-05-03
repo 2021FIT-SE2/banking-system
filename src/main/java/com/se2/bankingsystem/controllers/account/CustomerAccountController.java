@@ -39,13 +39,13 @@ public class CustomerAccountController extends AbstractCustomerAccountController
         );
     }
 
-    @GetMapping({"/admin/customerAccounts"})
+    @GetMapping({ "/admin/customerAccounts" })
     @Override
     public ModelAndView showTableViewByAdmin() {
         return super.showTableViewByAdmin();
     }
 
-    @GetMapping({ "/me/accounts"})
+    @GetMapping({ "/me/accounts" })
     @Override
     public ModelAndView showTableViewByCustomer() {
         return super.showTableViewByCustomer();
@@ -64,7 +64,7 @@ public class CustomerAccountController extends AbstractCustomerAccountController
         return super.deleteByCustomer(id);
     }
 
-    @GetMapping({"/admin/customerAccounts/{id}", "/me/accounts/{id}"})
+    @GetMapping({ "/admin/customerAccounts/{id}", "/me/accounts/{id}" })
     public ModelAndView showDetailsView(@PathVariable String id) throws ClassNotFoundException {
         CustomerAccount customerAccount = customerAccountService.getById(id);
 
@@ -74,7 +74,7 @@ public class CustomerAccountController extends AbstractCustomerAccountController
         return new ModelAndView(viewName);
     }
 
-    @GetMapping({"/admin/customerAccounts/{id}/edit", "/me/accounts/{id}/edit"})
+    @GetMapping({ "/admin/customerAccounts/{id}/edit", "/me/accounts/{id}/edit" })
     public ModelAndView showEditView(@PathVariable String id) throws ClassNotFoundException {
         CustomerAccount customerAccount = customerAccountService.getById(id);
 

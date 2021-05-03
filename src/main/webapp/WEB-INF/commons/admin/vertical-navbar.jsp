@@ -4,10 +4,11 @@
     <div class="pcoded-inner-navbar main-menu">
         <div class="">
             <div class="main-menu-header">
-                <img class="img-80 img-radius" src="<c:url value="resources/img/avatar-4.jpg" />"
+                <img class="img-80 img-radius" src="<c:url value="resources/img/profile-admin.png" />"
                      alt="User-Profile-Image">
                 <div class="user-details">
-                    <span id="more-details">${pageContext.request.userPrincipal.name}<i class="fa fa-caret-down"></i></span>
+                    <span id="more-details">${pageContext.request.userPrincipal.name}<i
+                            class="fa fa-caret-down"></i></span>
                 </div>
             </div>
             <div class="main-menu-content">
@@ -30,11 +31,11 @@
                 </a>
             </li>
         </ul>
-<%--        <div class="pcoded-navigation-label">Customer</div>--%>
+        <%--        <div class="pcoded-navigation-label">Customer</div>--%>
         <ul class="pcoded-item pcoded-left-item">
             <li class="pcoded-hasmenu${param.activeSidebarElementID.startsWith("customer-") ? " active" : ""}">
                 <a href="<c:url value="/admin/customers"/>" class="waves-effect waves-dark">
-                        <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
+                    <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i><b>BC</b></span>
                     <span class="pcoded-mtext">Manage Customers</span>
                     <span class="pcoded-mcaret"></span>
                 </a>
@@ -80,7 +81,7 @@
                 </ul>
             </li>
         </ul>
-<%--        <div class="pcoded-navigation-label">Transaction</div>--%>
+        <%--        <div class="pcoded-navigation-label">Transaction</div>--%>
 
         <ul class="pcoded-item pcoded-left-item">
             <li class="pcoded-hasmenu${param.activeSidebarElementID.toLowerCase().contains("transaction") ? " active" : ""}">

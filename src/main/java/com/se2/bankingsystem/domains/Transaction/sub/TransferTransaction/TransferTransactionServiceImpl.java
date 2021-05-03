@@ -2,9 +2,9 @@ package com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction;
 
 import com.se2.bankingsystem.config.exception.BankingSystemException;
 import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountRepository;
-import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import com.se2.bankingsystem.domains.CustomerAccount.behaviours.Chargeable;
 import com.se2.bankingsystem.domains.CustomerAccount.behaviours.Transferable;
+import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import com.se2.bankingsystem.domains.Transaction.base.AbstractTransactionServiceImpl;
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.dto.CreateTransferTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.dto.UpdateTransferTransactionDTO;
@@ -18,7 +18,7 @@ import javax.persistence.EntityNotFoundException;
 @Service
 @Transactional
 public class TransferTransactionServiceImpl extends AbstractTransactionServiceImpl<TransferTransaction, CreateTransferTransactionDTO, UpdateTransferTransactionDTO> implements TransferTransactionService {
-    
+
     public TransferTransactionServiceImpl(CustomerAccountRepository customerAccountRepository, TransferTransactionRepository transactionRepository, ModelMapper modelMapper) {
         super(customerAccountRepository, transactionRepository, modelMapper);
     }

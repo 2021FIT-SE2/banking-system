@@ -1,6 +1,7 @@
 package com.se2.bankingsystem.domains.CustomerAccount.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.se2.bankingsystem.domains.Customer.validators.ExistingCustomerIdentifier;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @SuperBuilder
 public class CreateCustomerAccountDTO {
+
+    @ExistingCustomerIdentifier
     @NotNull
     private Long customerID;
 

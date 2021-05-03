@@ -8,18 +8,21 @@ import com.se2.bankingsystem.domains.CustomerAccount.dto.UpdateCustomerAccountDT
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import com.se2.bankingsystem.domains.Transaction.TransactionService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
 
 @AllArgsConstructor
+@Slf4j
 public abstract class AbstractCustomerAccountController<E extends CustomerAccount, C extends CreateCustomerAccountDTO, U extends UpdateCustomerAccountDTO> {
 
     protected final AbstractCustomerAccountService<E, C, U> customerAccountService;
@@ -96,23 +99,27 @@ public abstract class AbstractCustomerAccountController<E extends CustomerAccoun
         return modelAndView;
     }
 
-    public String createByAdmin(@Valid @ModelAttribute C createCustomerAccountDTO) throws BankingSystemException {
-        customerAccountService.create(createCustomerAccountDTO);
-        return "redirect:/admin/" + entityName + "s";
+    public ModelAndView createByAdmin(@Valid @ModelAttribute C createCustomerAccountDTO, BindingResult bindingResult) throws BankingSystemException {
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        log.info("HIT");
+
+        createIfNoErrorsOrElseRedirectToForm(createCustomerAccountDTO, bindingResult, modelAndView);
+
+        return modelAndView;
     }
 
-    public String createByCustomer(@Valid @ModelAttribute C createCustomerAccountDTO) throws BankingSystemException {
+    public ModelAndView createByCustomer(@Valid @ModelAttribute C createCustomerAccountDTO, BindingResult bindingResult) throws BankingSystemException {
 
-//        if (!authorityService.hasCustomerAccountOwnerAccess(createCustomerAccountDTO.getCustomerAccountID()))
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No such account");
+        ModelAndView modelAndView = new ModelAndView();
 
-        try {
-            customerAccountService.create(createCustomerAccountDTO);
-        } catch (EntityNotFoundException e) {
+        createCustomerAccountDTO.setCustomerID(authorityService.getPrincipal().getId());
+        log.info("HIT customer");
 
-        }
+        createIfNoErrorsOrElseRedirectToForm(createCustomerAccountDTO, bindingResult, modelAndView);
 
-        return "redirect:/me/" + entityName + "s";
+        return modelAndView;
     }
 
     public ModelAndView showUpdateViewByAdmin(@PathVariable String id) {
@@ -127,8 +134,22 @@ public abstract class AbstractCustomerAccountController<E extends CustomerAccoun
         return modelAndView;
     }
 
-    public String updateByAdmin(@PathVariable String id, @Valid @ModelAttribute U updateCustomerAccountDTO) {
+    public String updateByAdmin(@PathVariable String id, @Valid @ModelAttribute U updateCustomerAccountDTO) throws BankingSystemException {
         customerAccountService.updateById(id, updateCustomerAccountDTO);
         return "redirect:/admin/" + entityName + "s";
+    }
+
+    private String getRedirectTableViewName() {
+        String currentAuthorityName = authorityService.getCurrentAuthority();
+        return "redirect:/" + currentAuthorityName.toLowerCase(Locale.ROOT) + "/" + entityName + "s";
+    }
+
+    private void createIfNoErrorsOrElseRedirectToForm(C createCustomerAccountDTO, BindingResult bindingResult, ModelAndView modelAndView) throws BankingSystemException {
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName(createViewName);
+        } else {
+            customerAccountService.create(createCustomerAccountDTO);
+            modelAndView.setViewName(getRedirectTableViewName());
+        }
     }
 }

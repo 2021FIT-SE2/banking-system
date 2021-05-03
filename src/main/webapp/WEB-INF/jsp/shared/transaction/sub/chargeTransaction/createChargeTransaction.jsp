@@ -2,7 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}"/>
 
-<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/prefix.jsp">
+<c:set var="commonPrefix" value="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}"/>
+
+<jsp:include page="${commonPrefix}/prefix.jsp">
 
     <jsp:param name="title" value="Create Charge Transaction"/>
 
@@ -36,7 +38,9 @@
 
                                 <c:when test="${authority == 'CUSTOMER'}">
                                     <form:select class="form-control" path="customerAccountID">
-                                        <option value="" disabled selected hidden class="text-secondary">Select beneficial Account</option>
+                                        <option value="" disabled selected hidden class="text-secondary">Select
+                                            beneficial Account
+                                        </option>
                                         <%--@elvariable id="customerAccountList" type="java.util.List"--%>
                                         <c:forEach var="customerAccount" items="${customerAccountList}">
                                             <%--@elvariable id="customerAccount" type="com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount"--%>
@@ -51,7 +55,7 @@
                                     Internal Error
                                 </c:otherwise>
 
-                            </c:choose >
+                            </c:choose>
                             <span class="form-bar"></span>
                             <form:errors path="customerAccountID" cssClass="text-warning"/>
                         </div>
@@ -62,7 +66,9 @@
                         <div class="col-sm-9">
                             <c:if test="${authority == 'CUSTOMER'}">
                                 <form:select class="form-control" path="walletID">
-                                    <option value="" disabled selected hidden class="text-secondary">Select a wallet to charge from</option>
+                                    <option value="" disabled selected hidden class="text-secondary">Select a wallet to
+                                        charge from
+                                    </option>
                                     <%--@elvariable id="walletList" type="java.util.List"--%>
                                     <c:forEach var="wallet" items="${walletList}">
                                         <%--@elvariable id="wallet" type="com.se2.bankingsystem.domains.FakeEWallet.entity.FakeEWallet"--%>
@@ -90,16 +96,19 @@
                     <br><br>
                     <div class="d-flex justify-content-md-center">
                         <button id="btn-save" type="button" class="btn btn-success" data-toggle="modal"
-                                data-target="#modalAdd">Add
+                                data-target="#modalConfirm">Add
                         </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <button id="btn-reset" type="button" class="btn btn-danger">Reset</button>
                     </div>
+
+                    <jsp:include page="${commonPrefix}/confirm-dialog.jsp">
+                        <jsp:param name="message" value="Confirm updating this Saving Account?"/>
+                    </jsp:include>
+
                 </form:form>
             </div>
 
         </div>
     </div>
 </div>
-<jsp:include page="/WEB-INF/commons/admin/add-confirm.jsp"/>
-
-<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/suffix.jsp"/>
+<jsp:include page="${commonPrefix}/suffix.jsp"/>

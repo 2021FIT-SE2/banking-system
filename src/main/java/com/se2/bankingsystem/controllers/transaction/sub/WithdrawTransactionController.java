@@ -13,6 +13,7 @@ import com.se2.bankingsystem.domains.Transaction.sub.WithdrawTransaction.entity.
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +42,7 @@ public class WithdrawTransactionController extends AbstractTransactionController
             "shared/transaction/sub/withdrawTransaction/withdrawTransactionDetails",
             CreateWithdrawTransactionDTO.class,
             UpdateWithdrawTransactionDTO.class
-            );
+        );
         this.fakeEWalletService = fakeEWalletService;
     }
 
@@ -86,16 +87,15 @@ public class WithdrawTransactionController extends AbstractTransactionController
         return modelAndView;
     }
 
-    @Override
     @PostMapping("/admin/withdrawTransactions/create")
-    public String createByAdmin(@Valid @ModelAttribute CreateWithdrawTransactionDTO createTransactionDTO) throws BankingSystemException {
-        return super.createByAdmin(createTransactionDTO);
+    public ModelAndView createByAdmin(@Valid @ModelAttribute CreateWithdrawTransactionDTO createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
+        return super.createByAdmin(createTransactionDTO, bindingResult);
     }
 
     @Override
     @PostMapping("/me/withdrawTransactions/create")
-    public String createByCustomer(CreateWithdrawTransactionDTO createTransactionDTO) throws BankingSystemException {
-        return super.createByCustomer(createTransactionDTO);
+    public ModelAndView createByCustomer(@Valid @ModelAttribute CreateWithdrawTransactionDTO createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
+        return super.createByCustomer(createTransactionDTO, bindingResult);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class WithdrawTransactionController extends AbstractTransactionController
 
     @Override
     @PostMapping("/admin/withdrawTransactions/{id}/edit")
-    public String updateByAdmin(@PathVariable Long id, @Valid @ModelAttribute UpdateWithdrawTransactionDTO updateTransactionDTO) {
+    public String updateByAdmin(@PathVariable Long id, @Valid @ModelAttribute UpdateWithdrawTransactionDTO updateTransactionDTO) throws BankingSystemException {
         return super.updateByAdmin(id, updateTransactionDTO);
     }
 

@@ -1,18 +1,21 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}" />
+<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}"/>
 
-<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/prefix.jsp">
+<c:set var="commonPrefix" value="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}"/>
 
-    <jsp:param name="title" value="Create Customer" />
+<jsp:include page="${commonPrefix}/prefix.jsp">
 
-    <jsp:param name="parentLinkText" value="Manage Customer" />
-    <jsp:param name="parentLinkUrl" value="/admin/customers" />
+    <jsp:param name="title" value="Create Customer"/>
 
-    <jsp:param name="childLinkText" value="Create New" />
-    <jsp:param name="childLinkUrl" value="/admin/customers/1/edit" />
+    <jsp:param name="parentLinkText" value="Manage Customer"/>
+    <jsp:param name="parentLinkUrl" value="/admin/customers"/>
 
-    <jsp:param name="activeSidebarElementID" value="add-customer" />
+    <jsp:param name="childLinkText" value="Create New"/>
+    <jsp:param name="childLinkUrl" value="/admin/customers/1/edit"/>
+
+    <jsp:param name="activeSidebarElementID" value="add-customer"/>
 </jsp:include>
 
 <!-- START HERE -->
@@ -79,7 +82,7 @@
                         <form:label cssClass="col-sm-3 col-form-label" path="gender">Gender</form:label>
 
                         <div class="col-sm-9"><form:select path="gender" type="text" class="form-control form-select"
-                                                            required="required" value="${customer.gender}">
+                                                           required="required" value="${customer.gender}">
                             <form:option value="MALE" label="Male"/>
                             <form:option value="FEMALE" label="Female"/>
                         </form:select>
@@ -92,7 +95,7 @@
                     <fieldset class="form-group row">
                         <form:label cssClass="col-sm-3 col-form-label" path="dob">Date Of Birth</form:label>
                         <div class="col-sm-9"><form:input path="dob" type="date" class="form-control"
-                                                           required="required" value="${customer.dob}"/>
+                                                          required="required" value="${customer.dob}"/>
                             <span class="form-bar"></span>
                             <form:errors path="dob" cssClass="text-warning"/>
                         </div>
@@ -101,21 +104,26 @@
                     <fieldset class="form-group row">
                         <form:label cssClass="col-sm-3 col-form-label" path="address">Address</form:label>
                         <div class="col-sm-9"><form:input path="address" type="text" class="form-control"
-                                                           required="required" value="${customer.address}"/>
+                                                          required="required" value="${customer.address}"/>
                             <span class="form-bar"></span>
                             <form:errors path="address" cssClass="text-warning"/>
                         </div>
                     </fieldset>
 
                     <div class="col-md-8 offset-md-5">
-                        <button id="btn-save" type="button" class="btn btn-success" data-toggle="modal" data-target="#modalSave">Save</button>&nbsp;
+                        <button id="btn-save" type="button" class="btn btn-success" data-toggle="modal"
+                                data-target="#modalConfirm">Save
+                        </button>&nbsp;
                     </div>
+
+                    <jsp:include page="${commonPrefix}/confirm-dialog.jsp">
+                        <jsp:param name="message" value="Confirm update this Customer?"/>
+                    </jsp:include>
                 </form:form>
             </div>
         </div>
     </div>
 </div>
-<jsp:include page="/WEB-INF/commons/admin/save-confirm.jsp"/>
 
 <!-- END HERE -->
-<jsp:include page="/WEB-INF/commons/${authority == 'ADMIN' ? 'admin' : 'customer'}/suffix.jsp"/>
+<jsp:include page="${commonPrefix}/suffix.jsp"/>

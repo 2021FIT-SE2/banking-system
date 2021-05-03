@@ -2,8 +2,8 @@ package com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction;
 
 import com.se2.bankingsystem.config.exception.BankingSystemException;
 import com.se2.bankingsystem.domains.CustomerAccount.CustomerAccountRepository;
-import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import com.se2.bankingsystem.domains.CustomerAccount.behaviours.Chargeable;
+import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import com.se2.bankingsystem.domains.FakeEWallet.FakeEWalletRepository;
 import com.se2.bankingsystem.domains.FakeEWallet.entity.FakeEWallet;
 import com.se2.bankingsystem.domains.Transaction.base.AbstractTransactionServiceImpl;
@@ -53,10 +53,10 @@ public class ChargeTransactionServiceImpl extends AbstractTransactionServiceImpl
     }
 
     @Override
-    public ChargeTransaction updateById(Long id, UpdateChargeTransactionDTO updateTransactionDTO) {
-        ChargeTransaction transferTransaction = abstractTransactionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        modelMapper.map(updateTransactionDTO, transferTransaction);
-        super.setCustomerAccount(transferTransaction, updateTransactionDTO.getCustomerAccountID());
-        return transferTransaction;
+    public ChargeTransaction updateById(Long id, UpdateChargeTransactionDTO updateTransactionDTO) throws BankingSystemException {
+        ChargeTransaction chargeTransaction = abstractTransactionRepository.findById(id).orElseThrow(() -> new BankingSystemException("Charge Transaction not Found"));
+        modelMapper.map(updateTransactionDTO, chargeTransaction);
+        super.setCustomerAccount(chargeTransaction, updateTransactionDTO.getCustomerAccountID());
+        return chargeTransaction;
     }
 }

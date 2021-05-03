@@ -12,14 +12,18 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
+
+import static com.se2.bankingsystem.utils.StringUtils.lowerFirstLetter;
 
 @AllArgsConstructor
 @Slf4j
@@ -108,24 +112,33 @@ public abstract class AbstractTransactionController<E extends Transaction, C ext
         return modelAndView;
     }
 
-    public String createByAdmin(@Valid @ModelAttribute C createTransactionDTO) throws BankingSystemException {
-        transactionService.create(createTransactionDTO);
-        return "redirect:/admin/" + entityName + "s";
+    public ModelAndView createByAdmin(@Valid @ModelAttribute C createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
+        ModelAndView modelAndView = new ModelAndView();
+
+        createIfNoErrorsOrElseRedirectToForm(createTransactionDTO, bindingResult, modelAndView);
+
+        return modelAndView;
     }
 
-    public String createByCustomer(@Valid @ModelAttribute C createTransactionDTO) throws BankingSystemException {
+    public ModelAndView createByCustomer(@Valid @ModelAttribute C createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
+        ModelAndView modelAndView = new ModelAndView();
 
-        if (!authorityService.hasCustomerAccountOwnerAccess(createTransactionDTO.getCustomerAccountID()))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No such account");
+        String customerAccountID = createTransactionDTO.getCustomerAccountID();
 
-        try {
+        checkCustomerAccountOwnershipOrElseAddError(customerAccountID, bindingResult);
+
+        createIfNoErrorsOrElseRedirectToForm(createTransactionDTO, bindingResult, modelAndView);
+
+        return modelAndView;
+    }
+
+    private void createIfNoErrorsOrElseRedirectToForm(C createTransactionDTO, BindingResult bindingResult, ModelAndView modelAndView) throws BankingSystemException {
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName(createViewName);
+        } else {
             transactionService.create(createTransactionDTO);
-        } catch (EntityNotFoundException e) {
-            log.info("HELLO, ERROR");
-            log.info(e.toString());
+            modelAndView.setViewName(getRedirectTableViewName());
         }
-
-        return "redirect:/me/" + entityName + "s";
     }
 
     public ModelAndView showUpdateViewByAdmin(@PathVariable Long id) {
@@ -140,8 +153,23 @@ public abstract class AbstractTransactionController<E extends Transaction, C ext
         return modelAndView;
     }
 
-    public String updateByAdmin(@PathVariable Long id, @Valid @ModelAttribute U updateTransactionDTO) {
+    public String updateByAdmin(@PathVariable Long id, @Valid @ModelAttribute U updateTransactionDTO) throws BankingSystemException {
         transactionService.updateById(id, updateTransactionDTO);
-        return "redirect:/admin/" + entityName + "s";
+        return getRedirectTableViewName();
+    }
+
+    protected void checkCustomerAccountOwnershipOrElseAddError(String customerAccountID, BindingResult bindingResult) {
+
+        boolean currentUserIsOwnerOfAccount = authorityService.hasCustomerAccountOwnerAccess(customerAccountID);
+
+        String objectName = lowerFirstLetter(createDTOType.getSimpleName());
+
+        if (!currentUserIsOwnerOfAccount)
+            bindingResult.addError(new FieldError(objectName, "customerAccountID", "Customer Account ID Not Found"));
+    }
+
+    private String getRedirectTableViewName() {
+        String currentAuthorityName = authorityService.getCurrentAuthority();
+        return "redirect:/" + currentAuthorityName.toLowerCase(Locale.ROOT) + "/" + entityName + "s";
     }
 }

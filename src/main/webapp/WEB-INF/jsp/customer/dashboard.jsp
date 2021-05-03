@@ -2,15 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/commons/customer/prefix.jsp">
 
-    <jsp:param name="title" value="Dashboard" />
+    <jsp:param name="title" value="Dashboard"/>
 
-    <jsp:param name="parentLinkText" value="Me" />
-    <jsp:param name="parentLinkUrl" value="/me/dashboard" />
+    <jsp:param name="parentLinkText" value="Me"/>
+    <jsp:param name="parentLinkUrl" value="/me/dashboard"/>
 
-    <jsp:param name="childLinkText" value="Dashboard" />
-    <jsp:param name="childLinkUrl" value="/me/dashboard" />
+    <jsp:param name="childLinkText" value="Dashboard"/>
+    <jsp:param name="childLinkUrl" value="/me/dashboard"/>
 
-    <jsp:param name="activeSidebarElementID" value="dashboard" />
+    <jsp:param name="activeSidebarElementID" value="dashboard"/>
 </jsp:include>
 
 <div class="row">

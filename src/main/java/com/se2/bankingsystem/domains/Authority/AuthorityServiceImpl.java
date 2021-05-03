@@ -12,7 +12,6 @@ import com.se2.bankingsystem.domains.User.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -96,7 +95,12 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public User getPrincipal() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof User)
+            return (User) principal;
+        else
+            return null;
     }
 
     @Override

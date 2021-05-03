@@ -30,12 +30,12 @@ public class HomeController {
             User currentUser = (User) authentication.getPrincipal();
             modelAndView.addObject(currentUser);
 
-            for (GrantedAuthority grantedAuthority: authentication.getAuthorities()) {
+            for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
                 // If logged in as admin, redirect to admin dashboard
                 if (grantedAuthority.getAuthority().equals("ADMIN"))
                     viewName = "redirect:admin/dashboard";
 
-                // If logged in as customer, redirect to customer dashboard
+                    // If logged in as customer, redirect to customer dashboard
                 else if (grantedAuthority.getAuthority().equals("CUSTOMER"))
                     viewName = "redirect:me/dashboard";
             }

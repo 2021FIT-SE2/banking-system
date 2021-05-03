@@ -1,20 +1,20 @@
 "use strict";
-$(document).ready(function() {
+$(document).ready(function () {
     // wave effect js
     Waves.init();
     Waves.attach('.flat-buttons', ['waves-button']);
     Waves.attach('.float-buttons', ['waves-button', 'waves-float']);
     Waves.attach('.float-button-light', ['waves-button', 'waves-float', 'waves-light']);
     Waves.attach('.flat-buttons', ['waves-button', 'waves-float', 'waves-light', 'flat-buttons']);
-    $(document).ready(function(){
-        $(".header-notification").click(function(){
+    $(document).ready(function () {
+        $(".header-notification").click(function () {
             $(this).find(".show-notification").slideToggle(500);
             $(this).toggleClass('active');
         });
     });
-    $(document).on("click", function(event){
+    $(document).on("click", function (event) {
         var $trigger = $(".header-notification");
-        if($trigger !== event.target && !$trigger.has(event.target).length){
+        if ($trigger !== event.target && !$trigger.has(event.target).length) {
             $(".show-notification").slideUp(300);
             $(".header-notification").removeClass('active');
         }
@@ -22,22 +22,23 @@ $(document).ready(function() {
     $('.theme-loader').animate({
         'opacity': '0',
     }, 1200);
-    setTimeout(function() {
+    setTimeout(function () {
         $('.theme-loader').remove();
     }, 2000);
     // $('.pcoded').addClass('loaded');
 
-    $('.form-control').on('blur', function() {
+    $('.form-control').on('blur', function () {
         if ($(this).val().length > 0) {
             $(this).addClass("fill");
         } else {
             $(this).removeClass("fill");
         }
     });
-    $('.form-control').on('focus', function() {
+    $('.form-control').on('focus', function () {
         $(this).addClass("fill");
     });
 });
+
 function toggleFullScreen() {
     var a = $(window).height() - 10;
 

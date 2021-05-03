@@ -29,7 +29,6 @@
 }
 
 
-
 /*
 *
 * ==========================================
@@ -56,6 +55,7 @@ select.form-control {
     font-weight: bold;
     font-size: 0.9rem;
 }
+
 .form-control:focus {
     box-shadow: none;
 }

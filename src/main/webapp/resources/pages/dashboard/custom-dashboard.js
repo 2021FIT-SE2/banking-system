@@ -1,19 +1,19 @@
 'use strict';
-$(document).ready(function() {
+$(document).ready(function () {
     floatchart()
-    $(window).on('resize', function() {
+    $(window).on('resize', function () {
         floatchart();
     });
-    $('#mobile-collapse').on('click', function() {
-        setTimeout(function() {
+    $('#mobile-collapse').on('click', function () {
+        setTimeout(function () {
             floatchart();
         }, 700);
     });
-    $(function() {
-        $("#selectall").click(function() {
+    $(function () {
+        $("#selectall").click(function () {
             $('.case').attr('checked', this.checked);
         });
-        $(".case").click(function() {
+        $(".case").click(function () {
             if ($(".case").length == $(".case:checked").length) {
                 $("#selectall").attr("checked", "checked");
             } else {
@@ -23,7 +23,7 @@ $(document).ready(function() {
     });
 
     // seo ecommerce start
-    $(function() {
+    $(function () {
         var chart = AmCharts.makeChart("seo-ecommerce-barchart", {
             "type": "serial",
             "theme": "light",
@@ -254,7 +254,7 @@ $(document).ready(function() {
 });
 
 function floatchart() {
-    $(function() {
+    $(function () {
         //flot options
         var options = {
             legend: {

@@ -16,12 +16,12 @@ $(document).ready(function () {
         ActiveItemStyle: 'style0',
         ItemBorder: true,
         ItemBorderStyle: 'none',
-        NavbarImage:'false',
-        ActiveNavbarImage:'img1',
+        NavbarImage: 'false',
+        ActiveNavbarImage: 'img1',
         SubItemBorder: true,
         DropDownIconStyle: 'style3', // Value should be style1,style2,style3
         menutype: 'st2', // Value should be st1, st2, st3, st4, st5 menu icon style
-        layouttype:'light', // Value should be light / dark
+        layouttype: 'light', // Value should be light / dark
         FixedNavbarPosition: true,  // Value should be true / false  header postion
         FixedHeaderPosition: true,  // Value should be true / false  sidebar menu postion
         collapseVerticalLeftHeader: true,
@@ -43,6 +43,7 @@ $(document).ready(function () {
             phone: "expanded", // value should be offcanvas/collapsed/expanded/compact/fullpage/ex-popover/sub-expanded
         },
     });
+
     function handlenavimg() {
         $('.theme-color > a.navbg-pattern').on("click", function () {
             var value = $(this).attr("navbg-pattern");
@@ -50,12 +51,13 @@ $(document).ready(function () {
         });
     };
     handlenavimg();
+
     /* layout type Change function Start */
     function handlelayouttheme() {
         $('.theme-color > a.Layout-type').on("click", function () {
             var layout = $(this).attr("layout-type");
             $('.pcoded').attr("layout-type", layout);
-            if(layout=='dark'){
+            if (layout == 'dark') {
                 $('.pcoded-header').attr("header-theme", "theme6");
                 $('.pcoded-navbar').attr("navbar-theme", "theme1");
                 $('.pcoded').attr("sidebar-img", "false");
@@ -65,21 +67,21 @@ $(document).ready(function () {
                 $('.pcoded-navigation-label').attr("menu-title-theme", "theme9");
 
             }
-            if(layout=='light'){
+            if (layout == 'light') {
                 $('.pcoded-header').attr("header-theme", "theme1");
                 $('.pcoded-navbar').attr("navbar-theme", "themelight1");
                 $('.pcoded').attr("sidebar-img", "false");
                 $('.pcoded-navigation-label').attr("menu-title-theme", "theme1");
                 $('body').removeClass('dark');
-				$('body').attr("themebg-pattern", "theme1");
+                $('body').attr("themebg-pattern", "theme1");
             }
-            if(layout=='img'){
-               $('.pcoded-header').attr("header-theme", "theme1");
-               $('.pcoded-navbar').attr("navbar-theme", "themelight1");
-               $('.pcoded').attr("sidebar-img", "true");
+            if (layout == 'img') {
+                $('.pcoded-header').attr("header-theme", "theme1");
+                $('.pcoded-navbar').attr("navbar-theme", "themelight1");
+                $('.pcoded').attr("sidebar-img", "true");
                 $('.pcoded').attr("frame-type", "theme1");
-               $('.pcoded-navigation-label').attr("menu-title-theme", "theme1");
-           }
+                $('.pcoded-navigation-label').attr("menu-title-theme", "theme1");
+            }
         });
     };
     handlelayouttheme();
@@ -102,6 +104,7 @@ $(document).ready(function () {
     };
     handleleftheadertheme();
     /* Left header Theme Change function Close */
+
     /* header Theme Change function Start */
     function handleheadertheme() {
         $('.theme-color > a.header-theme').on("click", function () {
@@ -117,16 +120,17 @@ $(document).ready(function () {
     };
     handleheadertheme();
     /* header Theme Change function Close */
+
     /* Navbar Theme Change function Start */
     function handlenavbartheme() {
         $('.theme-color > a.navbar-theme').on("click", function () {
             var navbartheme = $(this).attr("navbar-theme");
             $('.pcoded-navbar').attr("navbar-theme", navbartheme);
             $('.pcoded').attr("sidebar-img", "false");
-            if(navbartheme=='themelight1'){
+            if (navbartheme == 'themelight1') {
                 $('.pcoded-navigation-label').attr("menu-title-theme", "theme1");
             }
-            if(navbartheme=='theme1'){
+            if (navbartheme == 'theme1') {
                 $('.pcoded-navigation-label').attr("menu-title-theme", "theme6");
             }
         });
@@ -134,6 +138,7 @@ $(document).ready(function () {
 
     handlenavbartheme();
     /* Navbar Theme Change function Close */
+
     /* Active Item Theme Change function Start */
     function handleactiveitemtheme() {
         $('.theme-color > a.active-item-theme').on("click", function () {
@@ -144,6 +149,7 @@ $(document).ready(function () {
 
     handleactiveitemtheme();
     /* Active Item Theme Change function Close */
+
     /* SubItem Theme Change function Start */
     function handlesubitemtheme() {
         $('.theme-color > a.sub-item-theme').on("click", function () {
@@ -154,6 +160,7 @@ $(document).ready(function () {
 
     handlesubitemtheme();
     /* SubItem Theme Change function Close */
+
     /* Theme background pattren Change function Start */
     function handlethemebgpattern() {
         $('.theme-color > a.themebg-pattern').on("click", function () {
@@ -164,6 +171,7 @@ $(document).ready(function () {
 
     handlethemebgpattern();
     /* Theme background pattren Change function Close */
+
     /* Vertical Navigation View Change function start*/
     function handleVerticalNavigationViewChange() {
         $('#navigation-view').val('view1').on('change', function (get_value) {
@@ -190,6 +198,7 @@ $(document).ready(function () {
     };
     handlethemeverticallayout();
     /* Theme Layout Change function Close*/
+
     /* Menu effect change function start*/
     function handleverticalMenueffect() {
         $('#vertical-menu-effect').val('shrink').on('change', function (get_value) {
@@ -200,6 +209,7 @@ $(document).ready(function () {
 
     handleverticalMenueffect();
     /* Menu effect change function Close*/
+
     /* Vertical Menu Placement change function start*/
     function handleverticalMenuplacement() {
         $('#vertical-navbar-placement').val('left').on('change', function (get_value) {
@@ -212,6 +222,7 @@ $(document).ready(function () {
 
     handleverticalMenuplacement();
     /* Vertical Menu Placement change function Close*/
+
     /* Vertical Active Item Style change function Start*/
     function handleverticalActiveItemStyle() {
         $('#vertical-activeitem-style').val('style1').on('change', function (get_value) {
@@ -222,6 +233,7 @@ $(document).ready(function () {
 
     handleverticalActiveItemStyle();
     /* Vertical Active Item Style change function Close*/
+
     /* Vertical Item border change function Start*/
     function handleVerticalIItemBorder() {
         $('#vertical-item-border').change(function () {
@@ -235,6 +247,7 @@ $(document).ready(function () {
 
     handleVerticalIItemBorder();
     /* Vertical Item border change function Close*/
+
     /* Vertical SubItem border change function Start*/
     function handleVerticalSubIItemBorder() {
         $('#vertical-subitem-border').change(function () {
@@ -248,6 +261,7 @@ $(document).ready(function () {
 
     handleVerticalSubIItemBorder();
     /* Vertical SubItem border change function Close*/
+
     /* Vertical Item border Style change function Start*/
     function handleverticalboderstyle() {
         $('#vertical-border-style').val('solid').on('change', function (get_value) {
@@ -269,6 +283,7 @@ $(document).ready(function () {
 
     handleVerticalDropDownIconStyle();
     /* Vertical Dropdown Icon change function Close*/
+
     /* Vertical SubItem Icon change function Start*/
 
     function handleVerticalSubMenuItemIconStyle() {
@@ -280,6 +295,7 @@ $(document).ready(function () {
 
     handleVerticalSubMenuItemIconStyle();
     /* Vertical SubItem Icon change function Close*/
+
     /* Vertical Navbar Position change function Start*/
     function handlesidebarposition() {
         $('#sidebar-position').change(function () {
@@ -295,6 +311,7 @@ $(document).ready(function () {
 
     handlesidebarposition();
     /* Vertical Navbar Position change function Close*/
+
     /* Vertical Header Position change function Start*/
     function handleheaderposition() {
         $('#header-position').change(function () {
@@ -311,6 +328,7 @@ $(document).ready(function () {
     };
     handleheaderposition();
     /* Vertical Header Position change function Close*/
+
     /*  collapseable Left Header Change Function Start here*/
     function handlecollapseLeftHeader() {
         $('#collapse-left-header').change(function () {
@@ -326,6 +344,7 @@ $(document).ready(function () {
     handlecollapseLeftHeader();
     /*  collapseable Left Header Change Function Close here*/
 });
+
 function handlemenutype(get_value) {
     $('.pcoded').attr('nav-type', get_value);
 };

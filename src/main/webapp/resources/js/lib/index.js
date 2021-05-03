@@ -104,13 +104,13 @@
         $(".pricing__swipe-btn label").removeClass("active");
         $(this).addClass("active");
 
-        if(e.target.htmlFor == 'month') {
+        if (e.target.htmlFor == 'month') {
             $(".yearly__plans").removeClass('active');
             $(".monthly__plans").addClass('active');
         } else if (e.target.htmlFor == 'yearly') {
             $(".monthly__plans").removeClass('active');
             $(".yearly__plans").addClass('active');
-        }     
+        }
     });
     /*------------------
         Achieve Counter

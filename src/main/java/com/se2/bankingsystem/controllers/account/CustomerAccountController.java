@@ -51,7 +51,7 @@ public class CustomerAccountController extends AbstractCustomerAccountController
         return super.showTableViewByCustomer();
     }
 
-    @PostMapping("/admin/customerAccounts/{id}/delete")
+    @GetMapping("/admin/customerAccounts/{id}/delete")
     @Override
     public String deleteByAdmin(@PathVariable String id) {
         return super.deleteByAdmin(id);

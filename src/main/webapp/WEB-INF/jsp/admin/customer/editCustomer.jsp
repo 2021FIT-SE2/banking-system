@@ -7,15 +7,15 @@
 
 <jsp:include page="${commonPrefix}/prefix.jsp">
 
-    <jsp:param name="title" value="Create Customer"/>
+    <jsp:param name="title" value="Edit Customer"/>
 
     <jsp:param name="parentLinkText" value="Manage Customer"/>
     <jsp:param name="parentLinkUrl" value="/admin/customers"/>
 
-    <jsp:param name="childLinkText" value="Create New"/>
+    <jsp:param name="childLinkText" value="Edit"/>
     <jsp:param name="childLinkUrl" value="/admin/customers/1/edit"/>
 
-    <jsp:param name="activeSidebarElementID" value="add-customer"/>
+    <jsp:param name="activeSidebarElementID" value="customer-edit"/>
 </jsp:include>
 
 <!-- START HERE -->
@@ -23,7 +23,7 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-header">
-                <h5>Edit Customer </h5>
+                <h5>Edit Customer: ${customer.username}</h5>
             </div>
             <div class="card-block">
                 <form:form method="post" modelAttribute="updateCustomerDTO" cssClass="form-material">

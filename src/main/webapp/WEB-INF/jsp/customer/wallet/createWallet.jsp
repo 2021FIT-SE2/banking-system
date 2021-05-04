@@ -13,7 +13,7 @@
     <jsp:param name="childLinkText" value="Create New"/>
     <jsp:param name="childLinkUrl" value="/admin/customers/create"/>
 
-    <jsp:param name="activeSidebarElementID" value="customer-create"/>
+    <jsp:param name="activeSidebarElementID" value="wallet-create"/>
 </jsp:include>
 
 <!-- START HERE -->

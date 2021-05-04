@@ -27,6 +27,5 @@ public class CreateChargeTransactionDTO extends CreateTransactionDTO {
     @Builder.Default
     private TransactionType transactionType = TransactionType.CHARGE;
 
-    @NotNull
     private Long walletID;
 }

@@ -16,7 +16,7 @@
     <jsp:param name="childLinkText" value="Details"/>
     <jsp:param name="childLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/customers/${customer.id}"/>
 
-    <jsp:param name="activeSidebarElementID" value="add-customer"/>
+    <jsp:param name="activeSidebarElementID" value="customer-details"/>
 </jsp:include>
 
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/admin/customerDetails.css"/>">

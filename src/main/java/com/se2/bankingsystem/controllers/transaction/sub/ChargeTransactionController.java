@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static com.se2.bankingsystem.utils.StringUtils.lowerFirstLetter;
 
 @Controller
 @Slf4j
@@ -96,6 +99,9 @@ public class ChargeTransactionController extends AbstractTransactionController<C
     @Override
     @PostMapping("/me/chargeTransactions/create")
     public ModelAndView createByCustomer(@Valid @ModelAttribute CreateChargeTransactionDTO createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
+        if (createTransactionDTO.getWalletID() == null) {
+            bindingResult.addError(new FieldError("createChargeTransactionDTO", "walletID", "must not be null"));
+        }
         return super.createByCustomer(createTransactionDTO, bindingResult);
     }
 

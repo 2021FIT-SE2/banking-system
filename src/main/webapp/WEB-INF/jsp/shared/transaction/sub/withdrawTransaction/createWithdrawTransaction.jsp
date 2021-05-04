@@ -8,11 +8,11 @@
 
     <jsp:param name="title" value="Create Withdraw Transaction"/>
 
-    <jsp:param name="parentLink" value="Manage withdraw Transaction"/>
-    <jsp:param name="parentLinkUrl" value="/"/>
+    <jsp:param name="parentLinkText" value="Manage Withdraw Transactions"/>
+    <jsp:param name="parentLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/withdrawTransactions"/>
 
-    <jsp:param name="childLink" value="Create"/>
-    <jsp:param name="childLinkUrl" value="/"/>
+    <jsp:param name="childLinkText" value="Create"/>
+    <jsp:param name="childLinkUrl" value="/${authority == 'ADMIN' ? 'admin' : 'me'}/withdrawTransactions/create"/>
 
     <jsp:param name="activeSidebarElementID" value="add-withdrawTransaction"/>
 </jsp:include>
@@ -68,27 +68,29 @@
                             <form:errors cssClass="text-warning"/>
                         </div>
                     </fieldset>
-                    <fieldset class="form-group row row">
-                        <form:label cssClass="col-sm-3 col-form-label" path="walletID">Wallet</form:label>
-                        <div class="col-sm-9">
-                            <c:if test="${authority == 'CUSTOMER'}">
-                                <form:select class="form-control" path="walletID">
-                                    <option value="" disabled selected hidden class="text-secondary">Select a wallet to
-                                        charge from
-                                    </option>
-                                    <%--@elvariable id="walletList" type="java.util.List"--%>
-                                    <c:forEach var="wallet" items="${walletList}">
-                                        <%--@elvariable id="wallet" type="com.se2.bankingsystem.domains.FakeEWallet.entity.FakeEWallet"--%>
-                                        <form:option value="${wallet.id}">
-                                            ID: ${wallet.id} - ${wallet.provider}
-                                        </form:option>
-                                    </c:forEach>
-                                </form:select>
-                            </c:if>
-                            <span class="form-bar"></span>
-                            <form:errors path="walletID" cssClass="text-warning"/>
-                        </div>
-                    </fieldset>
+                    <c:if test="${authority == 'CUSTOMER'}">
+                        <fieldset class="form-group row row">
+                            <form:label cssClass="col-sm-3 col-form-label" path="walletID">Wallet</form:label>
+                            <div class="col-sm-9">
+                                <c:if test="${authority == 'CUSTOMER'}">
+                                    <form:select class="form-control" path="walletID">
+                                        <option value="" disabled selected hidden class="text-secondary">Select a wallet to
+                                            charge from
+                                        </option>
+                                        <%--@elvariable id="walletList" type="java.util.List"--%>
+                                        <c:forEach var="wallet" items="${walletList}">
+                                            <%--@elvariable id="wallet" type="com.se2.bankingsystem.domains.FakeEWallet.entity.FakeEWallet"--%>
+                                            <form:option value="${wallet.id}">
+                                                ID: ${wallet.id} - ${wallet.provider}
+                                            </form:option>
+                                        </c:forEach>
+                                    </form:select>
+                                </c:if>
+                                <span class="form-bar"></span>
+                                <form:errors path="walletID" cssClass="text-warning"/>
+                            </div>
+                        </fieldset>
+                    </c:if>
                     <br><br>
                     <div class="d-flex justify-content-md-center">
                         <button id="btn-save" type="button" class="btn btn-success" data-toggle="modal"

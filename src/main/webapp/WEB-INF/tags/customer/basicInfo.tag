@@ -2,6 +2,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ attribute name="customer" required="true" type="com.se2.bankingsystem.domains.Customer.entity.Customer" %>
 <%@ taglib prefix="customer" tagdir="/WEB-INF/tags/customer" %>
+<c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}"/>
+
 
 <div class="row gutters">
     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-flex">
@@ -10,7 +12,7 @@
                 <div class="account-settings">
                     <div class="user-profile">
                         <div class="user-avatar">
-                            <img src="<c:url value="resources/img/${gender == 'MALE' ? 'profile-male' : 'profile-female'}.png"/>" alt="Normal Account Icon">
+                            <img src="<c:url value="resources/img/${customer.gender == 'MALE' ? 'profile-male' : 'profile-female'}.png"/>" alt="Normal Account Icon">
                         </div>
                         <h5 class="user-name">${customer.firstName} ${customer.lastName}</h5>
                         <h6 class="user-phone-number">Owner</h6>
@@ -23,9 +25,21 @@
         <div class="card">
             <div class="card-body">
                 <div class="row gutters" style="margin-bottom: 10px">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                         <h6 class="mb-2 text-primary">Account Owner Details</h6>
                     </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                        <div class="text-right">
+                            <c:if test="${authority == 'ADMIN'}">
+                                <a href="/admin/customers/${customer.id}/edit"><i
+                                        class="ti-pencil-alt fa-2x text-primary"></i></a>
+                                <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal"
+                                      data-target="#modalConfirm"></i></a>
+                            </c:if>
+                        </div>
+                    </div>
+
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <fieldset class="form-group">
                             <label for="customer-username">Username</label>

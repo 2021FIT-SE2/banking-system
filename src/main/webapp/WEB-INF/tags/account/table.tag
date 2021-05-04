@@ -77,11 +77,11 @@
                                         class="ti-pencil-alt fa-2x text-primary"></i></a>
                                 <a><i class="ti-trash fa-2x text-danger" id="icon-delete" data-toggle="modal"
                                       data-target="#modalConfirm"></i></a>
-                                <form action="/${authority == 'ADMIN' ? 'admin' : 'me'}/transactions/${transaction.id}/delete"
+                                <form action="/${authority == 'ADMIN' ? 'admin/customerAccounts' : 'me/accounts'}/${customerAccount.id}/delete"
                                       method="get">
                                     <jsp:include page="${commonPrefix}/confirm-dialog.jsp">
                                         <jsp:param name="message"
-                                                   value="Confirm delete Transfer Transaction with ID ${transferTransaction.id}?"/>
+                                                   value="Confirm delete Customer Account with ID ${customerAccount.id}?"/>
                                     </jsp:include>
                                 </form>
                             </c:if>

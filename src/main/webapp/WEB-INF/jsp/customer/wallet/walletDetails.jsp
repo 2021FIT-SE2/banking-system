@@ -11,12 +11,12 @@
     <jsp:param name="title" value="Wallet Details"/>
 
     <jsp:param name="parentLinkText" value="Manage Wallet"/>
-    <jsp:param name="parentLinkUrl" value="/admin/customers"/>
+    <jsp:param name="parentLinkUrl" value="/me/"/>
 
     <jsp:param name="childLinkText" value="Wallet Details"/>
-    <jsp:param name="childLinkUrl" value="/admin/customers/1/details"/>
+    <jsp:param name="childLinkUrl" value="/me/wallets/${fakeEWallet.id}/details"/>
 
-    <jsp:param name="activeSidebarElementID" value="add-customer"/>
+    <jsp:param name="activeSidebarElementID" value="wallet-details"/>
 </jsp:include>
 
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/admin/customerDetails.css"/>">

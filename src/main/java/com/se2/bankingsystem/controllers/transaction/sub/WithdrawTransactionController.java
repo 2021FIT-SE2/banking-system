@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -95,6 +96,9 @@ public class WithdrawTransactionController extends AbstractTransactionController
     @Override
     @PostMapping("/me/withdrawTransactions/create")
     public ModelAndView createByCustomer(@Valid @ModelAttribute CreateWithdrawTransactionDTO createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
+        if (createTransactionDTO.getWalletID() == null) {
+            bindingResult.addError(new FieldError("createWithdrawTransactionDTO", "walletID", "must not be null"));
+        }
         return super.createByCustomer(createTransactionDTO, bindingResult);
     }
 

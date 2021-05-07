@@ -16,6 +16,9 @@
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900&display=swap"
           rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
     <link rel="icon" type="image/x-icon" href="<c:url value="/resources/img/favicon.ico"/>">
     <link rel="stylesheet" type="text/css" media="all" href="<c:url value="/resources/pages/waves/css/waves.min.css"/>">
     <link rel="stylesheet" type="text/css"
@@ -28,5 +31,11 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/customer/jquery.mCustomScrollbar.css"/>">
 
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/customer/style.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/customer/style-dashboard-customer.css"/>">
+
+<%--    <link href="<c:url value="/resources/vendor/aos/aos.css" />" rel="stylesheet">--%>
+    <link href="<c:url value="/resources/vendor/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/vendor/boxicons/css/boxicons.min.css"/>" rel="stylesheet">
+
 </head>
 <body>

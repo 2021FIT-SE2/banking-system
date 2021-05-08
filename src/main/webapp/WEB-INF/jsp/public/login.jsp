@@ -54,13 +54,11 @@
 
                         <form:form method="post" modelAttribute="loginDTO">
                             <div class="form-group last mb-4">
-                                <form:label path="username">Username</form:label>
-                                <form:input path="username" type="text" class="form-control" id="username"/>
+                                <form:input path="username" type="text" class="form-control" id="username" placeholder="Username"/>
                             </div>
 
                             <div class="form-group last mb-4">
-                                <form:label path="password">Password</form:label>
-                                <form:input path="password" type="password" class="form-control" id="password"/>
+                                <form:input path="password" type="password" class="form-control" id="password" placeholder="Password"/>
                             </div>
 
                             <button type="submit" class="btn btn-block btn-primary">Sign In</button>

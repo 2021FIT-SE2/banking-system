@@ -20,11 +20,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
-
-import static com.se2.bankingsystem.utils.StringUtils.lowerFirstLetter;
 
 @Controller
 
@@ -92,17 +91,17 @@ public class ChargeTransactionController extends AbstractTransactionController<C
 
     @Override
     @PostMapping("/admin/chargeTransactions/create")
-    public ModelAndView createByAdmin(@Valid @ModelAttribute CreateChargeTransactionDTO createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
-        return super.createByAdmin(createTransactionDTO, bindingResult);
+    public ModelAndView createByAdmin(@Valid @ModelAttribute CreateChargeTransactionDTO createTransactionDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws BankingSystemException {
+        return super.createByAdmin(createTransactionDTO, bindingResult, redirectAttributes);
     }
 
     @Override
     @PostMapping("/me/chargeTransactions/create")
-    public ModelAndView createByCustomer(@Valid @ModelAttribute CreateChargeTransactionDTO createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
+    public ModelAndView createByCustomer(@Valid @ModelAttribute CreateChargeTransactionDTO createTransactionDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws BankingSystemException {
         if (createTransactionDTO.getWalletID() == null) {
             bindingResult.addError(new FieldError("createChargeTransactionDTO", "walletID", "must not be null"));
         }
-        return super.createByCustomer(createTransactionDTO, bindingResult);
+        return super.createByCustomer(createTransactionDTO, bindingResult, redirectAttributes);
     }
 
     @Override
@@ -113,19 +112,19 @@ public class ChargeTransactionController extends AbstractTransactionController<C
 
     @Override
     @PostMapping("/admin/chargeTransactions/{id}/edit")
-    public String updateByAdmin(@PathVariable Long id, @Valid @ModelAttribute UpdateChargeTransactionDTO updateTransactionDTO) throws BankingSystemException {
-        return super.updateByAdmin(id, updateTransactionDTO);
+    public String updateByAdmin(@PathVariable Long id, @Valid @ModelAttribute UpdateChargeTransactionDTO updateTransactionDTO, RedirectAttributes redirectAttributes) throws BankingSystemException {
+        return super.updateByAdmin(id, updateTransactionDTO, redirectAttributes);
     }
 
     @Override
     @PostMapping("/admin/chargeTransactions/{id}/delete")
-    public String deleteByAdmin(@PathVariable Long id) {
-        return super.deleteByAdmin(id);
+    public String deleteByAdmin(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        return super.deleteByAdmin(id, redirectAttributes);
     }
 
     @Override
     @PostMapping("/me/chargeTransactions/{id}/delete")
-    public String deleteByCustomer(@PathVariable Long id) {
-        return super.deleteByCustomer(id);
+    public String deleteByCustomer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        return super.deleteByCustomer(id, redirectAttributes);
     }
 }

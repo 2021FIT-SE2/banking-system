@@ -28,5 +28,6 @@
 <%--@elvariable id="customerAccountList" type="java.util.List<com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount>"--%>
 <account:table customerAccountList="${customerAccountList}"/>
 
+<jsp:include page="${commonPrefix}/success-dialog.jsp"/>
 <!-- END HERE -->
 <jsp:include page="${commonPrefix}/suffix.jsp"/>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -76,14 +77,14 @@ public class TransferTransactionController extends AbstractTransactionController
 
     @Override
     @PostMapping("/admin/transferTransactions/create")
-    public ModelAndView createByAdmin(@Valid @ModelAttribute CreateTransferTransactionDTO createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
-        return super.createByAdmin(createTransactionDTO, bindingResult);
+    public ModelAndView createByAdmin(@Valid @ModelAttribute CreateTransferTransactionDTO createTransactionDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws BankingSystemException {
+        return super.createByAdmin(createTransactionDTO, bindingResult, redirectAttributes);
     }
 
     @Override
     @PostMapping("/me/transferTransactions/create")
-    public ModelAndView createByCustomer(@Valid @ModelAttribute CreateTransferTransactionDTO createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
-        return super.createByCustomer(createTransactionDTO, bindingResult);
+    public ModelAndView createByCustomer(@Valid @ModelAttribute CreateTransferTransactionDTO createTransactionDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws BankingSystemException {
+        return super.createByCustomer(createTransactionDTO, bindingResult, redirectAttributes);
     }
 
     @Override
@@ -94,19 +95,19 @@ public class TransferTransactionController extends AbstractTransactionController
 
     @Override
     @PostMapping("/admin/transferTransactions/{id}/edit")
-    public String updateByAdmin(@PathVariable Long id, @Valid @ModelAttribute UpdateTransferTransactionDTO updateTransactionDTO) throws BankingSystemException {
-        return super.updateByAdmin(id, updateTransactionDTO);
+    public String updateByAdmin(@PathVariable Long id, @Valid @ModelAttribute UpdateTransferTransactionDTO updateTransactionDTO, RedirectAttributes redirectAttributes) throws BankingSystemException {
+        return super.updateByAdmin(id, updateTransactionDTO, redirectAttributes);
     }
 
     @Override
     @PostMapping("/admin/transferTransactions/{id}/delete")
-    public String deleteByAdmin(@PathVariable Long id) {
-        return super.deleteByAdmin(id);
+    public String deleteByAdmin(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        return super.deleteByAdmin(id, redirectAttributes);
     }
 
     @Override
     @PostMapping("/me/transferTransactions/{id}/delete")
-    public String deleteByCustomer(@PathVariable Long id) {
-        return super.deleteByCustomer(id);
+    public String deleteByCustomer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        return super.deleteByCustomer(id, redirectAttributes);
     }
 }

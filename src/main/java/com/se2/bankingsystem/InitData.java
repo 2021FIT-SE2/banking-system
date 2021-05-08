@@ -55,7 +55,7 @@ public class InitData {
                     .build();
 
             userService.create(createUserDTO);
-//            testData();
+            testData();
         }
     }
 

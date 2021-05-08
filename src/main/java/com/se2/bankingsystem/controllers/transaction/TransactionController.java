@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 
@@ -64,15 +65,15 @@ public class TransactionController extends AbstractTransactionController<Transac
     }
 
     @Override
-    @PostMapping("/admin/transactions/{id}/delete")
-    public String deleteByAdmin(@PathVariable Long id) {
-        return super.deleteByAdmin(id);
+    @GetMapping("/admin/transactions/{id}/delete")
+    public String deleteByAdmin(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        return super.deleteByAdmin(id, redirectAttributes);
     }
 
     @Override
-    @PostMapping("/me/transactions/{id}/delete")
-    public String deleteByCustomer(@PathVariable Long id) {
-        return super.deleteByCustomer(id);
+    @GetMapping("/me/transactions/{id}/delete")
+    public String deleteByCustomer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        return super.deleteByCustomer(id, redirectAttributes);
     }
 
     private String getRedirectViewName(CustomerAccount customerAccount) throws ClassNotFoundException {

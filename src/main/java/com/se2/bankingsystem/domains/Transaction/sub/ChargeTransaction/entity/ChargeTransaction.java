@@ -30,9 +30,8 @@ public class ChargeTransaction extends Transaction {
     @NotNull
     private Long redeemAmount;
 
-    @NotNull
     @ManyToOne
-    @JoinColumn(name = "wallet_id", nullable = false)
+    @JoinColumn(name = "wallet_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private FakeEWallet wallet;

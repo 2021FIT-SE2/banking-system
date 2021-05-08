@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 
@@ -53,15 +54,15 @@ public class CustomerAccountController extends AbstractCustomerAccountController
 
     @GetMapping("/admin/customerAccounts/{id}/delete")
     @Override
-    public String deleteByAdmin(@PathVariable String id) {
-        return super.deleteByAdmin(id);
+    public String deleteByAdmin(@PathVariable String id, RedirectAttributes redirectAttributes) {
+        return super.deleteByAdmin(id, redirectAttributes);
     }
 
     @PostMapping("/me/accounts/{id}/delete")
     @PreAuthorize("authorityServiceImpl.hasCustomerAccountOwnerAccess(#id)")
     @Override
-    public String deleteByCustomer(@PathVariable String id) {
-        return super.deleteByCustomer(id);
+    public String deleteByCustomer(@PathVariable String id, RedirectAttributes redirectAttributes) {
+        return super.deleteByCustomer(id, redirectAttributes);
     }
 
     @GetMapping({ "/admin/customerAccounts/{id}", "/me/accounts/{id}" })

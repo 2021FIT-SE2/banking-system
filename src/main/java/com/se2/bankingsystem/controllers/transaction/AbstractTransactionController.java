@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -82,16 +83,19 @@ public abstract class AbstractTransactionController<E extends Transaction, C ext
         return modelAndView;
     }
 
-    public String deleteByAdmin(@PathVariable Long id) {
+    public String deleteByAdmin(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         transactionService.deleteById(id);
-        return "redirect:/admin/transactions";
+        redirectAttributes.addFlashAttribute("dialogMessage", "Transaction with ID " + id + " was deleted successfully!");
+        return getRedirectTableViewName();
     }
 
-    public String deleteByCustomer(@PathVariable Long id) {
+    public String deleteByCustomer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         if (!authorityService.hasTransactionOwnerAccess(id))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction not found");
         transactionService.deleteById(id);
-        return "redirect:/me/transactions";
+
+        redirectAttributes.addFlashAttribute("dialogMessage", "Transaction with ID " + id + " was deleted successfully!");
+        return getRedirectTableViewName();
     }
 
     public ModelAndView showCreateViewByAdmin() {
@@ -112,31 +116,32 @@ public abstract class AbstractTransactionController<E extends Transaction, C ext
         return modelAndView;
     }
 
-    public ModelAndView createByAdmin(@Valid @ModelAttribute C createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
+    public ModelAndView createByAdmin(@Valid @ModelAttribute C createTransactionDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws BankingSystemException {
         ModelAndView modelAndView = new ModelAndView();
 
-        createIfNoErrorsOrElseRedirectToForm(createTransactionDTO, bindingResult, modelAndView);
+        createIfNoErrorsOrElseRedirectToForm(createTransactionDTO, bindingResult, modelAndView, redirectAttributes);
 
         return modelAndView;
     }
 
-    public ModelAndView createByCustomer(@Valid @ModelAttribute C createTransactionDTO, BindingResult bindingResult) throws BankingSystemException {
+    public ModelAndView createByCustomer(@Valid @ModelAttribute C createTransactionDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws BankingSystemException {
         ModelAndView modelAndView = new ModelAndView();
 
         String customerAccountID = createTransactionDTO.getCustomerAccountID();
 
         checkCustomerAccountOwnershipOrElseAddError(customerAccountID, bindingResult);
 
-        createIfNoErrorsOrElseRedirectToForm(createTransactionDTO, bindingResult, modelAndView);
+        createIfNoErrorsOrElseRedirectToForm(createTransactionDTO, bindingResult, modelAndView, redirectAttributes);
 
         return modelAndView;
     }
 
-    private void createIfNoErrorsOrElseRedirectToForm(C createTransactionDTO, BindingResult bindingResult, ModelAndView modelAndView) throws BankingSystemException {
+    private void createIfNoErrorsOrElseRedirectToForm(C createTransactionDTO, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) throws BankingSystemException {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName(createViewName);
         } else {
-            transactionService.create(createTransactionDTO);
+            E transaction = transactionService.create(createTransactionDTO);
+            redirectAttributes.addFlashAttribute("dialogMessage", "Transaction with ID " + transaction.getId() + " was created successfully!");
             modelAndView.setViewName(getRedirectTableViewName());
         }
     }
@@ -153,8 +158,9 @@ public abstract class AbstractTransactionController<E extends Transaction, C ext
         return modelAndView;
     }
 
-    public String updateByAdmin(@PathVariable Long id, @Valid @ModelAttribute U updateTransactionDTO) throws BankingSystemException {
+    public String updateByAdmin(@PathVariable Long id, @Valid @ModelAttribute U updateTransactionDTO, RedirectAttributes redirectAttributes) throws BankingSystemException {
         transactionService.updateById(id, updateTransactionDTO);
+        redirectAttributes.addFlashAttribute("dialogMessage", "Transaction with ID " + id + " was updated successfully!");
         return getRedirectTableViewName();
     }
 

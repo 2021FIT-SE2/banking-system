@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -66,14 +67,14 @@ public class SavingAccountController extends AbstractCustomerAccountController<S
 
     @GetMapping("/admin/savingAccounts/{id}/delete")
     @Override
-    public String deleteByAdmin(@PathVariable String id) {
-        return super.deleteByAdmin(id);
+    public String deleteByAdmin(@PathVariable String id, RedirectAttributes redirectAttributes) {
+        return super.deleteByAdmin(id, redirectAttributes);
     }
 
     @GetMapping("/me/savingAccounts/{id}/delete")
     @Override
-    public String deleteByCustomer(@PathVariable String id) {
-        return super.deleteByCustomer(id);
+    public String deleteByCustomer(@PathVariable String id, RedirectAttributes redirectAttributes) {
+        return super.deleteByCustomer(id, redirectAttributes);
     }
 
     @GetMapping({ "/admin/savingAccounts/create", "/me/savingAccounts/create" })
@@ -84,14 +85,14 @@ public class SavingAccountController extends AbstractCustomerAccountController<S
 
     @PostMapping("/admin/savingAccounts/create")
     @Override
-    public ModelAndView createByAdmin(@Valid @ModelAttribute CreateSavingAccountDTO createCustomerAccountDTO, BindingResult bindingResult) throws BankingSystemException {
-        return super.createByAdmin(createCustomerAccountDTO, bindingResult);
+    public ModelAndView createByAdmin(@Valid @ModelAttribute CreateSavingAccountDTO createCustomerAccountDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws BankingSystemException {
+        return super.createByAdmin(createCustomerAccountDTO, bindingResult, redirectAttributes);
     }
 
     @PostMapping("/me/savingAccounts/create")
     @Override
-    public ModelAndView createByCustomer(@Valid @ModelAttribute CreateSavingAccountDTO createCustomerAccountDTO, BindingResult bindingResult) throws BankingSystemException {
-        return super.createByCustomer(createCustomerAccountDTO, bindingResult);
+    public ModelAndView createByCustomer(@Valid @ModelAttribute CreateSavingAccountDTO createCustomerAccountDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws BankingSystemException {
+        return super.createByCustomer(createCustomerAccountDTO, bindingResult, redirectAttributes);
     }
 
     @GetMapping("/admin/savingAccounts/{id}/edit")
@@ -102,7 +103,7 @@ public class SavingAccountController extends AbstractCustomerAccountController<S
 
     @PostMapping("/admin/savingAccounts/{id}/edit")
     @Override
-    public String updateByAdmin(@PathVariable String id, UpdateSavingAccountDTO updateCustomerAccountDTO) throws BankingSystemException {
-        return super.updateByAdmin(id, updateCustomerAccountDTO);
+    public String updateByAdmin(@PathVariable String id, UpdateSavingAccountDTO updateCustomerAccountDTO, RedirectAttributes redirectAttributes) throws BankingSystemException {
+        return super.updateByAdmin(id, updateCustomerAccountDTO, redirectAttributes);
     }
 }

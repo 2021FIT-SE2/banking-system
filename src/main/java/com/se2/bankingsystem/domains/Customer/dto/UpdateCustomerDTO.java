@@ -25,7 +25,6 @@ import static com.se2.bankingsystem.domains.Customer.entity.Customer.MIN_LENGTH_
 @SuperBuilder
 public class UpdateCustomerDTO extends UpdateUserDTO {
 
-    @UniqueCustomerEmail
     @Email
     private String email;
 

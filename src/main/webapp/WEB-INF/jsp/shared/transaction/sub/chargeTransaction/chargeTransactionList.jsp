@@ -83,5 +83,7 @@
         </div>
     </div>
 </div>
+
+<jsp:include page="${commonPrefix}/success-dialog.jsp"/>
 <!-- END HERE -->
 <jsp:include page="${commonPrefix}/suffix.jsp"/>

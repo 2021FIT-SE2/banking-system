@@ -32,9 +32,8 @@ public class WithdrawTransaction extends Transaction {
     @Positive
     private Long withdrawAmount;
 
-    @NotNull
     @ManyToOne
-    @JoinColumn(name = "wallet_id", nullable = false)
+    @JoinColumn(name = "wallet_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private FakeEWallet wallet;

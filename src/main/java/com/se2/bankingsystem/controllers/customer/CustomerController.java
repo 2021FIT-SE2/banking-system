@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -68,13 +69,14 @@ public class CustomerController {
     }
 
     @PostMapping("/admin/customers/create")
-    public ModelAndView create(@Valid @ModelAttribute CreateCustomerDTO createCustomerDTO, BindingResult bindingResult) throws BankingSystemException {
+    public ModelAndView create(@Valid @ModelAttribute CreateCustomerDTO createCustomerDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws BankingSystemException {
         ModelAndView modelAndView = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("admin/customer/createCustomer");
         } else {
-            customerService.create(createCustomerDTO);
+            Customer customer = customerService.create(createCustomerDTO);
+            redirectAttributes.addFlashAttribute("dialogMessage", "Customer " + customer.getUsername() + " was created successfully!");
             modelAndView.setViewName("redirect:/admin/customers");
         }
 
@@ -97,20 +99,22 @@ public class CustomerController {
     }
 
     @PostMapping("/admin/customers/{customerID}/edit")
-    public ModelAndView update(@PathVariable Long customerID, @Valid @ModelAttribute UpdateCustomerDTO updateCustomerDTO, BindingResult bindingResult) throws BankingSystemException {
+    public ModelAndView update(@PathVariable Long customerID, @Valid @ModelAttribute UpdateCustomerDTO updateCustomerDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws BankingSystemException {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("admin/customer/editCustomer");
         } else {
-            customerService.updateById(customerID, updateCustomerDTO);
+            Customer customer = customerService.updateById(customerID, updateCustomerDTO);
+            redirectAttributes.addFlashAttribute("dialogMessage", "Customer " + customer.getUsername() + " was updated successfully!");
             modelAndView.setViewName("redirect:/admin/customers");
         }
         return modelAndView;
     }
 
     @GetMapping("/admin/customers/{customerID}/delete")
-    public String delete(@PathVariable Long customerID) {
+    public String delete(@PathVariable Long customerID, RedirectAttributes redirectAttributes) {
         customerService.deleteById(customerID);
+        redirectAttributes.addFlashAttribute("dialogMessage", "Customer with ID " + customerID + " successfully deleted");
         return "redirect:/admin/customers";
     }
 }

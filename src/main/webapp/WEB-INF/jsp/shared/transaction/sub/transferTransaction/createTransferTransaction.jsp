@@ -107,4 +107,5 @@
     </div>
 </div>
 
+<jsp:include page="${commonPrefix}/success-dialog.jsp"/>
 <jsp:include page="${commonPrefix}/suffix.jsp"/>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -78,16 +79,18 @@ public abstract class AbstractCustomerAccountController<E extends CustomerAccoun
         return modelAndView;
     }
 
-    public String deleteByAdmin(@PathVariable String id) {
+    public String deleteByAdmin(@PathVariable String id, RedirectAttributes redirectAttributes) {
         customerAccountService.deleteById(id);
-        return "redirect:/admin/customerAccounts";
+        redirectAttributes.addFlashAttribute("dialogMessage", "Customer Account with ID " + id + " was deleted successfully!");
+        return getRedirectTableViewName();
     }
 
-    public String deleteByCustomer(@PathVariable String id) {
+    public String deleteByCustomer(@PathVariable String id, RedirectAttributes redirectAttributes) {
         if (!authorityService.hasCustomerAccountOwnerAccess(id))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer Account not found");
         customerAccountService.deleteById(id);
-        return "redirect:/me/" + entityName + "s";
+        redirectAttributes.addFlashAttribute("dialogMessage", "Customer Account with ID " + id + " was deleted successfully!");
+        return getRedirectTableViewName();
     }
 
     public ModelAndView showCreateView() {
@@ -99,25 +102,22 @@ public abstract class AbstractCustomerAccountController<E extends CustomerAccoun
         return modelAndView;
     }
 
-    public ModelAndView createByAdmin(@Valid @ModelAttribute C createCustomerAccountDTO, BindingResult bindingResult) throws BankingSystemException {
+    public ModelAndView createByAdmin(@Valid @ModelAttribute C createCustomerAccountDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws BankingSystemException {
 
         ModelAndView modelAndView = new ModelAndView();
 
-        
-
-        createIfNoErrorsOrElseRedirectToForm(createCustomerAccountDTO, bindingResult, modelAndView);
+        createIfNoErrorsOrElseRedirectToForm(createCustomerAccountDTO, bindingResult, modelAndView, redirectAttributes);
 
         return modelAndView;
     }
 
-    public ModelAndView createByCustomer(@Valid @ModelAttribute C createCustomerAccountDTO, BindingResult bindingResult) throws BankingSystemException {
+    public ModelAndView createByCustomer(@Valid @ModelAttribute C createCustomerAccountDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws BankingSystemException {
 
         ModelAndView modelAndView = new ModelAndView();
 
         createCustomerAccountDTO.setCustomerID(authorityService.getPrincipal().getId());
-        
 
-        createIfNoErrorsOrElseRedirectToForm(createCustomerAccountDTO, bindingResult, modelAndView);
+        createIfNoErrorsOrElseRedirectToForm(createCustomerAccountDTO, bindingResult, modelAndView, redirectAttributes);
 
         return modelAndView;
     }
@@ -134,8 +134,9 @@ public abstract class AbstractCustomerAccountController<E extends CustomerAccoun
         return modelAndView;
     }
 
-    public String updateByAdmin(@PathVariable String id, @Valid @ModelAttribute U updateCustomerAccountDTO) throws BankingSystemException {
-        customerAccountService.updateById(id, updateCustomerAccountDTO);
+    public String updateByAdmin(@PathVariable String id, @Valid @ModelAttribute U updateCustomerAccountDTO, RedirectAttributes redirectAttributes) throws BankingSystemException {
+        E customerAccount = customerAccountService.updateById(id, updateCustomerAccountDTO);
+        redirectAttributes.addFlashAttribute("dialogMessage", "Customer Account with ID " + customerAccount.getId() + " was updated successfully!");
         return "redirect:/admin/" + entityName + "s";
     }
 
@@ -144,11 +145,12 @@ public abstract class AbstractCustomerAccountController<E extends CustomerAccoun
         return "redirect:/" + currentAuthorityName.toLowerCase(Locale.ROOT) + "/" + entityName + "s";
     }
 
-    private void createIfNoErrorsOrElseRedirectToForm(C createCustomerAccountDTO, BindingResult bindingResult, ModelAndView modelAndView) throws BankingSystemException {
+    private void createIfNoErrorsOrElseRedirectToForm(C createCustomerAccountDTO, BindingResult bindingResult, ModelAndView modelAndView, RedirectAttributes redirectAttributes) throws BankingSystemException {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName(createViewName);
         } else {
-            customerAccountService.create(createCustomerAccountDTO);
+            E customerAccount = customerAccountService.create(createCustomerAccountDTO);
+            redirectAttributes.addFlashAttribute("dialogMessage", "Customer Account with ID " + customerAccount.getId() + " was added successfully!");
             modelAndView.setViewName(getRedirectTableViewName());
         }
     }

@@ -10,7 +10,7 @@ import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import com.se2.bankingsystem.domains.Transaction.TransactionService;
 import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -24,7 +24,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@Slf4j
+
 @AllArgsConstructor
 public class CustomerController {
 

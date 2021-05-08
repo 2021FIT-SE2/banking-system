@@ -11,7 +11,7 @@ import com.se2.bankingsystem.domains.Transaction.TransactionService;
 import com.se2.bankingsystem.domains.Transaction.dto.CreateTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.dto.UpdateTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
-import lombok.extern.slf4j.Slf4j;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@Slf4j
+
 public class TransactionController extends AbstractTransactionController<Transaction, CreateTransactionDTO, UpdateTransactionDTO> {
 
     public TransactionController(TransactionService transactionService, AuthorityService authorityService, CustomerAccountService customerAccountService, ModelMapper modelMapper) {

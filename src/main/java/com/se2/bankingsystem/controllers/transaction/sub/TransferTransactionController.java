@@ -8,7 +8,6 @@ import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.Transfe
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.dto.CreateTransferTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.dto.UpdateTransferTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.TransferTransaction.entity.TransferTransaction;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -21,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 @Controller
-@Slf4j
 public class TransferTransactionController extends AbstractTransactionController<TransferTransaction, CreateTransferTransactionDTO, UpdateTransferTransactionDTO> {
 
     public TransferTransactionController(TransferTransactionService transactionService, AuthorityService authorityService, CustomerAccountService customerAccountService, ModelMapper modelMapper) {

@@ -9,7 +9,7 @@ import com.se2.bankingsystem.domains.Transaction.dto.CreateTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.dto.UpdateTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.entity.Transaction;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -26,7 +26,7 @@ import java.util.Locale;
 import static com.se2.bankingsystem.utils.StringUtils.lowerFirstLetter;
 
 @AllArgsConstructor
-@Slf4j
+
 public abstract class AbstractTransactionController<E extends Transaction, C extends CreateTransactionDTO, U extends UpdateTransactionDTO> {
 
     protected final AbstractTransactionService<E, C, U> transactionService;

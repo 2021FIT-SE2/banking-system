@@ -7,7 +7,7 @@ import com.se2.bankingsystem.domains.Customer.CustomerService;
 import com.se2.bankingsystem.domains.Customer.dto.CreateCustomerDTO;
 import com.se2.bankingsystem.domains.User.UserService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 @Controller
-@Slf4j
+
 @AllArgsConstructor
 public class AuthenticationController {
 
@@ -98,7 +98,7 @@ public class AuthenticationController {
             modelAndView.setViewName("public/register");
         } else {
             customerService.create(createCustomerDTO);
-            modelAndView.setViewName("redirect:/login");
+            modelAndView.setViewName("redirect:/login?registrationSuccess=true");
         }
         return modelAndView;
     }

@@ -26,7 +26,7 @@ import static com.se2.bankingsystem.domains.Customer.entity.Customer.MIN_LENGTH_
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 public class CreateCustomerDTO extends CreateUserDTO {
 
     @UniqueCustomerEmail

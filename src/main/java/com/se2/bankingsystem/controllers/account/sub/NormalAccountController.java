@@ -8,7 +8,7 @@ import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.dto.Creat
 import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.dto.UpdateNormalAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.entity.NormalAccount;
 import com.se2.bankingsystem.domains.Transaction.TransactionService;
-import lombok.extern.slf4j.Slf4j;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 @Controller
-@Slf4j
+
 public class NormalAccountController extends AbstractCustomerAccountController<NormalAccount, CreateNormalAccountDTO, UpdateNormalAccountDTO> {
 
     public NormalAccountController(NormalAccountService customerAccountService, AuthorityService authorityService, TransactionService transactionService, ModelMapper modelMapper) {

@@ -142,6 +142,20 @@
                         </spring:bind>
                     </div>
 
+                    <div class="input-group col-lg-12 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-birthday-cake text-muted"></i>
+                            </span>
+                        </div>
+                        <spring:bind path="dob">
+                            <form:input required="true" path="dob" id="dob" type="date" name="dob"
+                                        placeholder="Date of Birth"
+                                        class="form-control bg-white border-left-1 border-md${status.error ? ' is-invalid' : ''}"/>
+                            <form:errors path="dob" cssClass="invalid-feedback"/>
+                        </spring:bind>
+                    </div>
+
                     <!-- Password -->
                     <div class="input-group col-lg-6 mb-4">
                         <div class="input-group-prepend">

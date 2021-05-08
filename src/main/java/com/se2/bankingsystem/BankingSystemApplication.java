@@ -11,12 +11,14 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication
 public class BankingSystemApplication extends SpringBootServletInitializer implements CommandLineRunner {
 
-    private final InitData initData;
-
     @Autowired
-    public BankingSystemApplication(InitData initData) {
+    public void setInitData(InitData initData) {
         this.initData = initData;
     }
+
+    private InitData initData;
+
+    public BankingSystemApplication() { }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

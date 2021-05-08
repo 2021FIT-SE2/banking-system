@@ -8,7 +8,7 @@ import com.se2.bankingsystem.domains.CustomerAccount.dto.UpdateCustomerAccountDT
 import com.se2.bankingsystem.domains.CustomerAccount.entity.CustomerAccount;
 import com.se2.bankingsystem.domains.Transaction.TransactionService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Locale;
 
 @AllArgsConstructor
-@Slf4j
+
 public abstract class AbstractCustomerAccountController<E extends CustomerAccount, C extends CreateCustomerAccountDTO, U extends UpdateCustomerAccountDTO> {
 
     protected final AbstractCustomerAccountService<E, C, U> customerAccountService;
@@ -103,7 +103,7 @@ public abstract class AbstractCustomerAccountController<E extends CustomerAccoun
 
         ModelAndView modelAndView = new ModelAndView();
 
-        log.info("HIT");
+        
 
         createIfNoErrorsOrElseRedirectToForm(createCustomerAccountDTO, bindingResult, modelAndView);
 
@@ -115,7 +115,7 @@ public abstract class AbstractCustomerAccountController<E extends CustomerAccoun
         ModelAndView modelAndView = new ModelAndView();
 
         createCustomerAccountDTO.setCustomerID(authorityService.getPrincipal().getId());
-        log.info("HIT customer");
+        
 
         createIfNoErrorsOrElseRedirectToForm(createCustomerAccountDTO, bindingResult, modelAndView);
 

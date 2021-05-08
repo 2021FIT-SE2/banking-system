@@ -5,12 +5,12 @@ import com.se2.bankingsystem.domains.CustomerAccount.behaviours.InterestRate;
 import com.se2.bankingsystem.utils.NumberToWordConverter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang3.StringUtils;
 
 @AllArgsConstructor
 @Getter
-@Slf4j
+
 public enum LoanDuration implements InterestRate, AccountDuration {
     M1(3.5, 1),
     M2(3.5, 2),

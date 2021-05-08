@@ -10,7 +10,7 @@ import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.entity.Loan
 import com.se2.bankingsystem.domains.CustomerAccount.sub.NormalAccount.entity.NormalAccount;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.entity.SavingAccount;
 import com.se2.bankingsystem.domains.Transaction.TransactionService;
-import lombok.extern.slf4j.Slf4j;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@Slf4j
+
 public class CustomerAccountController extends AbstractCustomerAccountController<CustomerAccount, CreateCustomerAccountDTO, UpdateCustomerAccountDTO> {
 
     public CustomerAccountController(AbstractCustomerAccountService<CustomerAccount, CreateCustomerAccountDTO, UpdateCustomerAccountDTO> customerAccountService, AuthorityService authorityService, TransactionService transactionService, ModelMapper modelMapper) {

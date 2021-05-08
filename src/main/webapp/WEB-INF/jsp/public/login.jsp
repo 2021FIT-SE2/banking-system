@@ -48,6 +48,10 @@
                             <p class="text-danger">Incorrect Username or Password</p>
                         </c:if>
 
+                        <c:if test="${param.containsKey('registrationSuccess')}">
+                            <p class="text-success">Registration Completed Successfully, now you can login</p>
+                        </c:if>
+
                         <form:form method="post" modelAttribute="loginDTO">
                             <div class="form-group last mb-4">
                                 <form:label path="username">Username</form:label>

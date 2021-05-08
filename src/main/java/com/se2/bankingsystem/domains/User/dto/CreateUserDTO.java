@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateUserDTO implements TimeStamps {

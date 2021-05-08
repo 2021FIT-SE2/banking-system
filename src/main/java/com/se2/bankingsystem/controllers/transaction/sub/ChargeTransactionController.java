@@ -10,7 +10,7 @@ import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.ChargeTra
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.dto.CreateChargeTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.dto.UpdateChargeTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.ChargeTransaction.entity.ChargeTransaction;
-import lombok.extern.slf4j.Slf4j;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -27,7 +27,7 @@ import java.util.List;
 import static com.se2.bankingsystem.utils.StringUtils.lowerFirstLetter;
 
 @Controller
-@Slf4j
+
 public class ChargeTransactionController extends AbstractTransactionController<ChargeTransaction, CreateChargeTransactionDTO, UpdateChargeTransactionDTO> {
 
     private final FakeEWalletService fakeEWalletService;

@@ -10,7 +10,6 @@ import com.se2.bankingsystem.domains.Transaction.sub.WithdrawTransaction.Withdra
 import com.se2.bankingsystem.domains.Transaction.sub.WithdrawTransaction.dto.CreateWithdrawTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.WithdrawTransaction.dto.UpdateWithdrawTransactionDTO;
 import com.se2.bankingsystem.domains.Transaction.sub.WithdrawTransaction.entity.WithdrawTransaction;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -25,7 +24,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@Slf4j
 public class WithdrawTransactionController extends AbstractTransactionController<WithdrawTransaction, CreateWithdrawTransactionDTO, UpdateWithdrawTransactionDTO> {
 
     private final FakeEWalletService fakeEWalletService;

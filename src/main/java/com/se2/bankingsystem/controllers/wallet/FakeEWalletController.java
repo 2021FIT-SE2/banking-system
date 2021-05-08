@@ -8,7 +8,7 @@ import com.se2.bankingsystem.domains.FakeEWallet.entity.FakeEWallet;
 import com.se2.bankingsystem.domains.Transaction.sub.WithdrawTransaction.WithdrawTransactionService;
 import com.se2.bankingsystem.domains.Transaction.sub.WithdrawTransaction.entity.WithdrawTransaction;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +24,7 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/me")
-@Slf4j
+
 public class FakeEWalletController {
 
     private final FakeEWalletService walletService;

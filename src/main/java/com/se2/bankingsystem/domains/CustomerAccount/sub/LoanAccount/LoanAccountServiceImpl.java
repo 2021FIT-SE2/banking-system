@@ -5,13 +5,13 @@ import com.se2.bankingsystem.domains.CustomerAccount.base.AbstractCustomerAccoun
 import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.dto.CreateLoanAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.dto.UpdateLoanAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.LoanAccount.entity.LoanAccount;
-import lombok.extern.slf4j.Slf4j;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
-@Slf4j
+
 public class LoanAccountServiceImpl extends AbstractCustomerAccountServiceImpl<LoanAccount, CreateLoanAccountDTO, UpdateLoanAccountDTO> implements LoanAccountService {
 
     public LoanAccountServiceImpl(CustomerRepository customerRepository, LoanAccountRepository abstractCustomerAccountRepository, ModelMapper modelMapper) {

@@ -5,7 +5,7 @@ import com.se2.bankingsystem.domains.CustomerAccount.base.AbstractCustomerAccoun
 import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.dto.CreateSavingAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.dto.UpdateSavingAccountDTO;
 import com.se2.bankingsystem.domains.CustomerAccount.sub.SavingAccount.entity.SavingAccount;
-import lombok.extern.slf4j.Slf4j;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@Slf4j
+
 public class SavingAccountServiceImpl extends AbstractCustomerAccountServiceImpl<SavingAccount, CreateSavingAccountDTO, UpdateSavingAccountDTO> implements SavingAccountService {
 
     public SavingAccountServiceImpl(CustomerRepository customerRepository, SavingAccountRepository abstractCustomerAccountRepository, ModelMapper modelMapper) {
@@ -38,7 +38,7 @@ public class SavingAccountServiceImpl extends AbstractCustomerAccountServiceImpl
         List<SavingAccount> savingAccounts = ((SavingAccountRepository) abstractCustomerAccountRepository).findAllThatNeedsSavingIncrease(localDateTime);
 
         for (SavingAccount account : savingAccounts) {
-            log.info(account.toString());
+            
         }
     }
 }

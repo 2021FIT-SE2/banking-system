@@ -5,7 +5,7 @@ import com.se2.bankingsystem.domains.Authority.entity.Authority;
 import com.se2.bankingsystem.domains.User.dto.CreateUserDTO;
 import com.se2.bankingsystem.domains.User.dto.UpdateUserDTO;
 import com.se2.bankingsystem.domains.User.entity.User;
-import lombok.extern.slf4j.Slf4j;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-@Slf4j
+
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;

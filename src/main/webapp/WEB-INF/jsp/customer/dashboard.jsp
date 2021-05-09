@@ -190,7 +190,7 @@
                                 </div>
                             </td>
                             <td class="text-right">
-                                <h6 class="f-w-700">Created an account 1  ago<i
+                                <h6 class="f-w-700">Created an account 10 minutes ago<i
                                         class="fas fa-level-down-alt text-c-red m-l-10"></i>
                                 </h6>
                             </td>
@@ -209,7 +209,7 @@
                                 </div>
                             </td>
                             <td class="text-right">
-                                <h6 class="f-w-700">Create an account 30 minutes<i
+                                <h6 class="f-w-700">Create an account 30 minutes ago<i
                                         class="fas fa-level-up-alt text-c-green m-l-10"></i>
                                 </h6>
                             </td>

@@ -43,9 +43,8 @@
                                      src="<c:url value="resources/img/avatar-2.jpg" />"
                                      alt="Generic placeholder image">
                                 <div class="media-body">
-                                    <h5 class="notification-user">Customer</h5>
-                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
-                                        elit.</p>
+                                    <h5 class="notification-user">Customer:180472192***</h5>
+                                    <p class="notification-msg">+100$</p>
                                     <span class="notification-time">30 minutes ago</span>
                                 </div>
                             </div>
@@ -56,10 +55,9 @@
                                      src="<c:url value="resources/img/profile-admin.png" />"
                                      alt="Generic placeholder image">
                                 <div class="media-body">
-                                    <h5 class="notification-user">Joseph William</h5>
-                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
-                                        elit.</p>
-                                    <span class="notification-time">30 minutes ago</span>
+                                    <h5 class="notification-user">Customer: 7243932993***</h5>
+                                    <p class="notification-msg">+2000$</p>
+                                    <span class="notification-time">38 minutes ago</span>
                                 </div>
                             </div>
                         </li>
@@ -69,10 +67,9 @@
                                      src="<c:url value="resources/img/avatar-3.jpg" />"
                                      alt="Generic placeholder image">
                                 <div class="media-body">
-                                    <h5 class="notification-user">Sara Soudein</h5>
-                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
-                                        elit.</p>
-                                    <span class="notification-time">30 minutes ago</span>
+                                    <h5 class="notification-user">Customer: 350959393***</h5>
+                                    <p class="notification-msg">+150$</p>
+                                    <span class="notification-time">40 minutes ago</span>
                                 </div>
                             </div>
                         </li>
@@ -87,11 +84,6 @@
                     </a>
                     <ul class="show-notification profile-notification">
                         <li class="waves-effect waves-light">
-                            <a>
-                                <i class="ti-settings"></i> Settings
-                            </a>
-                        </li>
-                        <li class="waves-effect waves-light">
                             <a href="<c:url value="/me/profile" />">
                                 <i class="ti-user"></i> Profile
                             </a>
@@ -101,11 +93,7 @@
                                 <i class="ti-email"></i> My Messages
                             </a>
                         </li>
-                        <li class="waves-effect waves-light">
-                            <a href="auth-lock-screen.html">
-                                <i class="ti-lock"></i> Lock Screen
-                            </a>
-                        </li>
+
                         <li class="waves-effect waves-light">
                             <a href="<c:url value="/logout" />">
                                 <i class="ti-layout-sidebar-left"></i> Logout

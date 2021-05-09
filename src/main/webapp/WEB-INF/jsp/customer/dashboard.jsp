@@ -26,7 +26,7 @@
                             </div>
                             <div class="col-8 p-l-0">
                                 <h5>10K</h5>
-                                <p class="text-muted m-b-0">Visitors</p>
+                                <p class="text-muted m-b-0">Customers</p>
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                             </div>
                             <div class="col-8 p-l-0">
                                 <h5>100%</h5>
-                                <p class="text-muted m-b-0">Volume</p>
+                                <p class="text-muted m-b-0">Satisfied</p>
                             </div>
                         </div>
                     </div>
@@ -46,11 +46,11 @@
                     <div class="col-sm-6 p-b-20 p-t-20 b-r-default">
                         <div class="row align-items-center text-center">
                             <div class="col-4 p-r-0">
-                                <i class="far fa-file-alt text-c-red f-24"></i>
+                                <i class="fas fa-signal text-c-red f-24"></i>
                             </div>
                             <div class="col-8 p-l-0">
-                                <h5>2000+</h5>
-                                <p class="text-muted m-b-0">Files</p>
+                                <h5>600K</h5>
+                                <p class="text-muted m-b-0">Transactions</p>
                             </div>
                         </div>
                     </div>
@@ -145,10 +145,10 @@
                     </div>
                     <div class="col-9 cst-cont">
                         <h5>17</h5>
-                        <p class="m-b-0">Achievements</p>
+                        <p class="m-b-0">Partner</p>
                     </div>
                 </div>
-            </div>
+            </div>s
         </div>
     </div>
     <!-- Material statistics card end -->
@@ -190,7 +190,7 @@
                                 </div>
                             </td>
                             <td class="text-right">
-                                <h6 class="f-w-700">$78.001<i
+                                <h6 class="f-w-700">Created an account 1  ago<i
                                         class="fas fa-level-down-alt text-c-red m-l-10"></i>
                                 </h6>
                             </td>
@@ -209,7 +209,7 @@
                                 </div>
                             </td>
                             <td class="text-right">
-                                <h6 class="f-w-700">$89.051<i
+                                <h6 class="f-w-700">Create an account 30 minutes<i
                                         class="fas fa-level-up-alt text-c-green m-l-10"></i>
                                 </h6>
                             </td>
@@ -228,7 +228,7 @@
                                 </div>
                             </td>
                             <td class="text-right">
-                                <h6 class="f-w-700">$89.051<i
+                                <h6 class="f-w-700">Create an account 1 hours ago<i
                                         class="fas fa-level-up-alt text-c-green m-l-10"></i>
                                 </h6>
                             </td>
@@ -247,7 +247,7 @@
                                 </div>
                             </td>
                             <td class="text-right">
-                                <h6 class="f-w-700">$89.051<i
+                                <h6 class="f-w-700">Create an account 1 hours ago<i
                                         class="fas fa-level-up-alt text-c-green m-l-10"></i>
                                 </h6>
                             </td>
@@ -266,20 +266,20 @@
             <div class="col-md-6">
                 <div class="card text-center order-visitor-card">
                     <div class="card-block">
-                        <h6 class="m-b-0">Total Subscription</h6>
+                        <h6 class="m-b-0">New Customer in April</h6>
                         <h4 class="m-t-15 m-b-15"><i
-                                class="fa fa-arrow-down m-r-15 text-c-red"></i>7652
+                                class="fa fa-arrow-up m-r-15 text-c-red"></i>765
                         </h4>
-                        <p class="m-b-0">48% From Last 24 Hours</p>
+                        <p class="m-b-0">18% From Last 6 Months</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="card text-center order-visitor-card">
                     <div class="card-block">
-                        <h6 class="m-b-0">Order Status</h6>
+                        <h6 class="m-b-0">No. of Transactions in April</h6>
                         <h4 class="m-t-15 m-b-15"><i
-                                class="fa fa-arrow-up m-r-15 text-c-green"></i>6325
+                                class="fa fa-arrow-up m-r-15 text-c-green"></i>63250
                         </h4>
                         <p class="m-b-0">36% From Last 6 Months</p>
                     </div>
@@ -341,21 +341,21 @@
             <div class="card-block">
                 <div class="row">
                     <div class="col-xl-3 col-md-6">
-                        <h6>Published Project</h6>
-                        <h5 class="m-b-30 f-w-700">532<span
+                        <h6>Account successfully</h6>
+                        <h5 class="m-b-30 f-w-700">5320<span
                                 class="text-c-green m-l-10">+1.69%</span></h5>
                         <div class="progress">
                             <div class="progress-bar bg-c-red"
-                                 style="width:25%"></div>
+                                 style="width:95%"></div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
-                        <h6>Completed Task</h6>
+                        <h6>Completed Transactions</h6>
                         <h5 class="m-b-30 f-w-700">4,569<span
                                 class="text-c-red m-l-10">-0.5%</span></h5>
                         <div class="progress">
                             <div class="progress-bar bg-c-blue"
-                                 style="width:65%"></div>
+                                 style="width:90%"></div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
@@ -373,7 +373,7 @@
                                 class="text-c-green m-l-10">+0.35%</span></h5>
                         <div class="progress">
                             <div class="progress-bar bg-c-yellow"
-                                 style="width:45%"></div>
+                                 style="width:55%"></div>
                         </div>
                     </div>
                 </div>
@@ -382,5 +382,6 @@
     </div>
     <!-- Project statistics end -->
 </div>
+
 <!-- END HERE -->
 <jsp:include page="/WEB-INF/commons/customer/suffix.jsp"/>

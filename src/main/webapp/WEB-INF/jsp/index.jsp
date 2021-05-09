@@ -119,7 +119,7 @@
                         <%--                                <li><a href="./404.html">404</a></li>--%>
                         <%--                            </ul>--%>
                         <%--                        </li>--%>
-                        <li><a href="#">Help</a></li>
+
                         <li><a href="#">Contact</a></li>
                     </ul>
                 </nav>
@@ -517,9 +517,9 @@
                 </div>
             </div>
             <div class="footer__text-copyright">
-                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                <p>
                     Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                   </p>
             </div>
         </div>
     </div>

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -21,6 +22,7 @@ import javax.validation.constraints.NotNull;
 public class CreateChargeTransactionDTO extends CreateTransactionDTO {
 
     @NotNull
+    @Positive
     private Long redeemAmount;
 
     @JsonIgnore

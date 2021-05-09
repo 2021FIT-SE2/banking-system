@@ -4,7 +4,6 @@
 <%@ taglib prefix="customer" tagdir="/WEB-INF/tags/customer" %>
 <c:set var="authority" value="${pageContext.request.userPrincipal.authorities[0].name}"/>
 
-
 <div class="row gutters">
     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-flex">
         <div class="card w-100">

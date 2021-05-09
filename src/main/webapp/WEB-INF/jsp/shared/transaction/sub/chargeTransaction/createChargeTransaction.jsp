@@ -104,7 +104,7 @@
                     </div>
 
                     <jsp:include page="${commonPrefix}/confirm-dialog.jsp">
-                        <jsp:param name="message" value="Confirm updating this Saving Account?"/>
+                        <jsp:param name="message" value="Confirm creating this Charge Transaction?"/>
                     </jsp:include>
 
                 </form:form>

@@ -40,11 +40,8 @@ public class CustomerServiceIntegrationTest {
 
     @Test
     public void testCreate_Success() throws BankingSystemException {
-
         CreateCustomerDTO createCustomerDTO = CustomerDataSample.getCreateCustomerDTO();
-
         customerService.create(createCustomerDTO);
-
         assertEquals(1, customerRepository.count());
     }
 

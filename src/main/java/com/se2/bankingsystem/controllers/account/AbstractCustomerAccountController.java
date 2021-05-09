@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Locale;
 
 @AllArgsConstructor
-
 public abstract class AbstractCustomerAccountController<E extends CustomerAccount, C extends CreateCustomerAccountDTO, U extends UpdateCustomerAccountDTO> {
 
     protected final AbstractCustomerAccountService<E, C, U> customerAccountService;

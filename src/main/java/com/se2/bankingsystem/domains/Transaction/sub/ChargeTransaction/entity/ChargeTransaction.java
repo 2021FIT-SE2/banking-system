@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -28,6 +29,7 @@ import javax.validation.constraints.NotNull;
 public class ChargeTransaction extends Transaction {
 
     @NotNull
+    @Positive
     private Long redeemAmount;
 
     @ManyToOne

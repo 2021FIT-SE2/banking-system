@@ -52,7 +52,7 @@
 **<h2>Usage</h2>**
 - **Requires** JAVA 11 SDK and MySQL 8 (version 8.0.23) to be installed
 - Create a database named `bankingsystem` and then either:
-    - Go to `src/main/resources/application-deploy.properties` and change the following to:
+    - Go to `src/main/resources/application-dev.properties` and change the following to:
         - `spring.datasource.username=YOUR_DB_USERNAME`
         - `spring.datasource.password=YOUR_DB_PASSWORD`
         - `spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:3306/bankingsystem`

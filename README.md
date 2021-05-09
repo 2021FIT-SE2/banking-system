@@ -62,4 +62,25 @@
 - If you do not want any data to be initialized in your database, go to `src/main/java/com/se2/bankingsystem/InitData.java` and comment out the line (around line 134) containing `testData();` before running it for the first time.
 - To reset the database, `drop database bankingsystem;` and `create database bankingsystem;`, `InitData` will be run again.
 
+**<h2>Demo Accounts</h2>**
+- Admin: 
+    - Username: admin
+    - Password: se2@2021
+      **<br><br>**
+- Customers:
+    - Username: tangbaminh
+    - Password: 1801040147
+      **<br><br>**
+    - Username: nguyenthuyduong
+    - Password: 1801040052
+      **<br><br>**
+    - Username: duonghoangnam
+    - Password: 1801040153
+      **<br><br>**
+    - Username: anthiphuong
+    - Password: 1801040169
+      **<br><br>**
+    - Username: tranthingocanh
+    - Password: 1801040017
+    
 Cheers
